@@ -1,3 +1,0 @@
-sample 				bamfile				contig
-sample1	test_data/empty_test_data/reads/sample_0.r1.fq.gz       		test_data/empty_test_data/spades/contigs.fasta
-sample2	test_data/empty_test_data/reads/sample_0.r1.fq.gz       		test_data/empty_test_data/assembly_dir1/contigs.fasta

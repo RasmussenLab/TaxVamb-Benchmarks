@@ -1,3 +1,0 @@
-read1 				read2				assembly_dir
-reads/sample_0.r1.fq.gz	reads/sample_0.r2.fq.gz       		assembly_dir1
-reads/sample_1.r1.fq.gz	reads/sample_1.r2.fq.gz       		assembly_dir2

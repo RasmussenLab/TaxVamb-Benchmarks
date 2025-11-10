@@ -1,5 +1,0 @@
-sample		read1 						read2
-sample0		test_data/empty_test_data/reads/sample_0.r1.fq.gz	test_data/empty_test_data/reads/sample_0.r2.fq.gz 
-sample0		test_data/empty_test_data/reads/sample_1.r1.fq.gz	test_data/empty_test_data/reads/sample_1.r2.fq.gz 
-sample1		test_data/empty_test_data/reads/sample_0.r1.fq.gz	test_data/empty_test_data/reads/sample_0.r2.fq.gz 
-sample1		test_data/empty_test_data/reads/sample_1.r1.fq.gz	test_data/empty_test_data/reads/sample_1.r2.fq.gz 

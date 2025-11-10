@@ -1,8 +1,0 @@
-sample 				bamfile				contig
-Aero    /maps/projects/rasmussen/data/taxvamb_benchmarks/taxvamb_benchmarks/airways/assembly_mapping_output/mapped/SRR24002803.bam  /maps/projects/rasmussen/data/taxvamb_benchmarks/taxvamb_benchmarks/airways/spades_output/contigs.flt.fna.gz
-Aero    /maps/projects/rasmussen/data/taxvamb_benchmarks/taxvamb_benchmarks/airways/assembly_mapping_output/mapped/SRR24002801.bam  /maps/projects/rasmussen/data/taxvamb_benchmarks/taxvamb_benchmarks/airways/spades_output/contigs.flt.fna.gz
-Aero    /maps/projects/rasmussen/data/taxvamb_benchmarks/taxvamb_benchmarks/airways/assembly_mapping_output/mapped/SRR24002802.bam  /maps/projects/rasmussen/data/taxvamb_benchmarks/taxvamb_benchmarks/airways/spades_output/contigs.flt.fna.gz
-Aero    /maps/projects/rasmussen/data/taxvamb_benchmarks/taxvamb_benchmarks/airways/assembly_mapping_output/mapped/SRR24002804.bam  /maps/projects/rasmussen/data/taxvamb_benchmarks/taxvamb_benchmarks/airways/spades_output/contigs.flt.fna.gz
-Aero    /maps/projects/rasmussen/data/taxvamb_benchmarks/taxvamb_benchmarks/airways/assembly_mapping_output/mapped/SRR24002808.bam  /maps/projects/rasmussen/data/taxvamb_benchmarks/taxvamb_benchmarks/airways/spades_output/contigs.flt.fna.gz
-Aero    /maps/projects/rasmussen/data/taxvamb_benchmarks/taxvamb_benchmarks/airways/assembly_mapping_output/mapped/SRR24002809.bam  /maps/projects/rasmussen/data/taxvamb_benchmarks/taxvamb_benchmarks/airways/spades_output/contigs.flt.fna.gz
-Aero    /maps/projects/rasmussen/data/taxvamb_benchmarks/taxvamb_benchmarks/airways/assembly_mapping_output/mapped/SRR24002800.bam  /maps/projects/rasmussen/data/taxvamb_benchmarks/taxvamb_benchmarks/airways/spades_output/contigs.flt.fna.gz
