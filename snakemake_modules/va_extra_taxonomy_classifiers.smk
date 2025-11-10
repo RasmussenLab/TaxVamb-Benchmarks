@@ -1,5 +1,6 @@
 ########### METABULI ####################
 
+
 rulename = "metabuli"
 rule metabuli:
     input:
@@ -44,6 +45,56 @@ rule metabuli_taxconv:
        """
 
 
+
+all_targets = {
+    "Airways":"/maps/projects/rasmussen/data/taxvamb_benchmarks/taxvamb_benchmarks/taxvamb_paper_benchmarks/new_tax_metabuli/airways_taxonomy_metabuli_otu.tsv",
+    "Oral":"/maps/projects/rasmussen/data/taxvamb_benchmarks/taxvamb_benchmarks/taxvamb_paper_benchmarks/new_tax_metabuli/oral_taxonomy_metabuli_otu.tsv",
+    "Skin":"/maps/projects/rasmussen/data/taxvamb_benchmarks/taxvamb_benchmarks/taxvamb_paper_benchmarks/new_tax_metabuli/skin_taxonomy_metabuli_otu.tsv",
+    "Urogenital":"/maps/projects/rasmussen/data/taxvamb_benchmarks/taxvamb_benchmarks/taxvamb_paper_benchmarks/new_tax_metabuli/urog_taxonomy_metabuli_otu.tsv",
+    "Gastrointestinal":"/maps/projects/rasmussen/data/taxvamb_benchmarks/taxvamb_benchmarks/taxvamb_paper_benchmarks/new_tax_metabuli/gi_taxonomy_metabuli_otu.tsv",
+}
+#
+# # Run taxvamb 
+# rulename = "run_taxvamb_metabuli"
+# rule run_taxvamb_metabuli:
+#     input:
+#         contigs_decompressed = OUTDIR /  "{key}/metadecoder/{key}_contigs.flt.fna",
+#         contigs = contigs_all,
+#         bamfiles = lambda wildcards: expand(OUTDIR / "{key}/assembly_mapping_output/mapped_sorted/{id}.sort.bam", key=wildcards.key, id=sample_id[wildcards.key]),
+#         taxonomy= OUTDIR /  "{key}/classifiers/metabuli/taxvamb_formatted_classifications.tsv",
+#         # taxonomy =  lambda wildcards: all_targets[wildcards.key]#"{gt_tax}",
+#     output:
+#         directory = directory(os.path.join(OUTDIR,"{key}", 'metabuli_taxvamb_default')),
+#         out_tax = directory(os.path.join(OUTDIR,"{key}", "metabuli_taxvamb_default_taxonomy_formatted.tsv")),
+#         out_id = directory(os.path.join(OUTDIR,"{key}", "id.txt")),
+#         out_id_tax = directory(os.path.join(OUTDIR,"{key}", "tax_id.txt")),
+#         bins = os.path.join(OUTDIR,"{key}",'metabuli_taxvamb_default','vaevae_clusters_split.tsv'),
+#         compo = os.path.join(OUTDIR, '{key}','metabuli_taxvamb_default/composition.npz'),
+#     threads: threads_fn(rulename)
+#     resources: walltime = walltime_fn(rulename), mem_gb = mem_gb_fn(rulename), gpu=gpu_fn(rulename)
+#     benchmark: config.get("benchmark", "benchmark/") + "{key}_" + rulename
+#     log: config.get("log", f"{str(OUTDIR)}/log/") + "{key}_" + rulename
+#     conda: THIS_FILE_DIR / "envs/vamb.yaml"
+#     shell:
+#         """
+#         rm -rf {output.directory}
+#
+#         # Get list of contig names in each file
+#         cat {input.contigs_decompressed} | grep '>' | sed 's/>//' > {output.out_id}
+#         cut -f1 {input.taxonomy} > {output.out_id_tax}
+#
+#         # Format tax
+#         echo -e "contigs\tpredictions" > {output.out_tax}
+#         cat {input.taxonomy} | awk -F "\t" '{{print $1 "\t" $9 }}' >> {output.out_tax}
+#
+#         # For missing contigs without tax annotation add tax annotation
+#         python /maps/projects/rasmussen/data/taxvamb_benchmarks/taxvamb_benchmarks/taxvamb_paper_benchmarks/scripts/fix_tax.py {output.out_id} {output.out_id_tax} >> {output.out_tax}
+#
+#         vamb bin taxvamb --cuda --taxonomy {output.out_tax} --outdir {output.directory} --fasta {input.contigs} -p {threads} --bamfiles {input.bamfiles} # &> {log}
+#         """
+
+
+
 # Run taxvamb 
 rulename = "run_taxvamb_metabuli"
 rule run_taxvamb_metabuli:
@@ -65,6 +116,7 @@ rule run_taxvamb_metabuli:
         rm -rf {output.directory}
         vamb bin taxvamb --cuda --taxonomy {input.taxonomy} --outdir {output.directory} --fasta {input.contigs} -p {threads} --bamfiles {input.bamfiles} # &> {log}
         """
+# cat metadecoder/Airways_contigs.flt.fna | grep '>' | sed 's/>//' > id.txt
 
 
 # # Run taxvamb 
@@ -167,7 +219,8 @@ rule kraken2:
     resources: walltime = walltime_fn(rulename), mem_gb = mem_gb_fn(rulename), gpu=gpu_fn(rulename)
     benchmark: config.get("benchmark", "benchmark/") + "{key}_" + rulename
     log: config.get("log", f"{str(OUTDIR)}/log/") + "{key}_" + rulename
-    conda: THIS_FILE_DIR / "envs/kraken2.yaml"
+    # conda: THIS_FILE_DIR / "envs/kraken2.yaml"  
+    conda: "/maps/projects/rasmussen/data/taxvamb_benchmarks/taxvamb_benchmarks/airways/.snakemake/conda/28749b7330b451f59560ddf3dac9c4c9_"
     shell:
         """
         kraken2 --minimum-hit-groups 3 --db {params.database} --threads {threads}  {input.contigs_decompressed} > {output.kraken2}
@@ -396,7 +449,7 @@ rule run_taxvamb_gtdb_no_predictor:
     shell:
         """
         # Format taxonomy file
-        echo -e "contigs\tpredictions" > {input.mmseqs2_out}.formatted
+        echo -e "contigs\tpredictions" > {input.mmseqs2_out}.formatted_nopred
         #sed 's/\t$/\tunknown/' {input.mmseqs2_out} |  awk -F "\t" '{{print $1 "\t" $9 }}' >> {input.mmseqs2_out}.formatted
         cat {input.mmseqs2_out} |  awk -F "\t" '{{print $1 "\t" $9 }}' >> {input.mmseqs2_out}.formatted_nopred
         rm -rf {output.directory}
@@ -407,15 +460,15 @@ rule run_taxvamb_gtdb_no_predictor:
 all_bin_dirs_clas = {
     # "kraken_taxvamb_default": OUTDIR / "{key}/kraken_taxvamb_default/vaevae_clusters_split.tsv",
     # "kraken_taxvamb_no_predictor": OUTDIR / "{key}/kraken_taxvamb_no_predictor/vaevae_clusters_split.tsv",
-    # "run_taxvamb_centrifuge": OUTDIR / "{key}/centrifuge_taxvamb/vaevae_clusters_split.tsv",
+    "run_taxvamb_centrifuge": OUTDIR / "{key}/centrifuge_taxvamb/vaevae_clusters_split.tsv",
     # "centrifuge_taxvamb_no_predictor": OUTDIR / "{key}/centrifuge_taxvamb_no_predictor/vaevae_clusters_split.tsv",
     # "metabuli_taxvamb_default": OUTDIR / "{key}/metabuli_taxvamb_default/vaevae_clusters_split.tsv",
     # "metabuli_taxvamb_no_predictor": OUTDIR / "{key}/metabuli_taxvamb_no_predictor/vaevae_clusters_split.tsv",
     # "run_taxvamb_gtdb": OUTDIR / "{key}/gtdb_taxvamb_default/vaevae_clusters_split.tsv",
-    # "run_taxvamb_gtdb_w_unknown": OUTDIR / "{key}/gtdb_taxvamb_default_w_unknown/vaevae_clusters_split.tsv",
+    "run_taxvamb_gtdb_w_unknown": OUTDIR / "{key}/gtdb_taxvamb_default_w_unknown/vaevae_clusters_split.tsv",
+    # "run_taxvamb_gtdb_no_predictor": OUTDIR / "{key}/gtdb_taxvamb_default_no_predictor/vaevae_clusters_split.tsv",
     # "kalmari_taxvamb_default": OUTDIR / "{key}/kalmari_taxvamb_default/vaevae_clusters_split.tsv",
     # "trembl_taxvamb_default": OUTDIR / "{key}/trembl_taxvamb_default/vaevae_clusters_split.tsv",
-    # "run_taxvamb_gtdb_no_predictor": OUTDIR / "{key}/gtdb_taxvamb_default_no_predictor/vaevae_clusters_split.tsv",
 }
 bin_dir_names_clas = all_bin_dirs_clas.keys()
 

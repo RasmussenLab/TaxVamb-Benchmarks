@@ -121,6 +121,40 @@ rule run_taxvamb_kalmari:
         bins = os.path.join(OUTDIR,"{key}",'kalmari_taxvamb_default','vaevae_clusters_split.tsv'),
         compo = os.path.join(OUTDIR, '{key}','kalmari_taxvamb_default/composition.npz'),
     threads: threads_fn(rulename)
+    params: script =THIS_FILE_DIR / "files_used_in_snakemake_workflow/format_trembl_kalmari.py"
+    resources: walltime = walltime_fn(rulename), mem_gb = mem_gb_fn(rulename), gpu=gpu_fn(rulename)
+    benchmark: config.get("benchmark", "benchmark/") + "{key}_" + rulename
+    log: config.get("log", f"{str(OUTDIR)}/log/") + "{key}_" + rulename
+    conda: THIS_FILE_DIR / "envs/vamb.yaml"
+    shell:
+        """
+        pip install typer
+        # Format taxonomy file
+        # echo -e "contigs\tpredictions" > {input.mmseqs2_out}.formatted
+        # awk -F "\t" '{{print $1 "\t" $5 }}' {input.mmseqs2_out} >> {input.mmseqs2_out}.formatted
+        # sed 's/\t$/\tunknown/' {input.mmseqs2_out} |  awk -F "\t" '{{print $1 "\t" $5 }}' >> {input.mmseqs2_out}.formatted
+
+        cut -f1,5 {input.mmseqs2_out} > {input.mmseqs2_out}.cut.tsv
+        echo -e "contigs\tpredictions" > {input.mmseqs2_out}.formatted
+        python {params.script} {input.mmseqs2_out}.cut.tsv >> {input.mmseqs2_out}.formatted
+
+        rm -rf {output.directory}
+        vamb bin taxvamb --cuda --taxonomy {input.mmseqs2_out}.formatted --outdir {output.directory} --fasta {input.contigs} -p {threads} --bamfiles {input.bamfiles} # &> {log}
+        """
+
+
+# Run taxvamb 
+rulename = "run_taxvamb_gtdb"
+rule run_taxvamb_gtdb_w_unknown:
+    input:
+        contigs = contigs_all,
+        bamfiles = lambda wildcards: expand(OUTDIR / "{key}/assembly_mapping_output/mapped_sorted/{id}.sort.bam", key=wildcards.key, id=sample_id[wildcards.key]),
+        mmseqs2_out = OUTDIR /  "{key}/classifiers/mmseqs2/gtdb_lca.tsv",
+    output:
+        directory = directory(os.path.join(OUTDIR,"{key}", 'gtdb_taxvamb_default_w_unknown')),
+        bins = os.path.join(OUTDIR,"{key}",'gtdb_taxvamb_default_w_unknown','vaevae_clusters_split.tsv'),
+        compo = os.path.join(OUTDIR, '{key}','gtdb_taxvamb_default_w_unknown/composition.npz'),
+    threads: threads_fn(rulename)
     resources: walltime = walltime_fn(rulename), mem_gb = mem_gb_fn(rulename), gpu=gpu_fn(rulename)
     benchmark: config.get("benchmark", "benchmark/") + "{key}_" + rulename
     log: config.get("log", f"{str(OUTDIR)}/log/") + "{key}_" + rulename
@@ -128,13 +162,11 @@ rule run_taxvamb_kalmari:
     shell:
         """
         # Format taxonomy file
-        echo -e "contigs\tpredictions" > {input.mmseqs2_out}.formatted
-        # awk -F "\t" '{{print $1 "\t" $5 }}' {input.mmseqs2_out} >> {input.mmseqs2_out}.formatted
-        sed 's/\t$/\tunknown/' {input.mmseqs2_out} |  awk -F "\t" '{{print $1 "\t" $5 }}' >> {input.mmseqs2_out}.formatted
+        echo -e "contigs\tpredictions" > {input.mmseqs2_out}.formatted_w_unknown
+        sed 's/\t$/\tunknown/' {input.mmseqs2_out} |  awk -F "\t" '{{print $1 "\t" $9 }}' >> {input.mmseqs2_out}.formatted_w_unknown
         rm -rf {output.directory}
-        vamb bin taxvamb --cuda --taxonomy {input.mmseqs2_out}.formatted --outdir {output.directory} --fasta {input.contigs} -p {threads} --bamfiles {input.bamfiles} # &> {log}
+        vamb bin taxvamb --cuda --taxonomy {input.mmseqs2_out}.formatted_w_unknown --outdir {output.directory} --fasta {input.contigs} -p {threads} --bamfiles {input.bamfiles} # &> {log}
         """
-
 
 # Run taxvamb 
 rulename = "run_taxvamb_gtdb"
@@ -151,12 +183,13 @@ rule run_taxvamb_gtdb:
     resources: walltime = walltime_fn(rulename), mem_gb = mem_gb_fn(rulename), gpu=gpu_fn(rulename)
     benchmark: config.get("benchmark", "benchmark/") + "{key}_" + rulename
     log: config.get("log", f"{str(OUTDIR)}/log/") + "{key}_" + rulename
-    # conda: THIS_FILE_DIR / "envs/vamb.yaml"
+    conda: THIS_FILE_DIR / "envs/vamb.yaml"
     shell:
         """
         # Format taxonomy file
         echo -e "contigs\tpredictions" > {input.mmseqs2_out}.formatted
-        sed 's/\t$/\tunknown/' {input.mmseqs2_out} |  awk -F "\t" '{{print $1 "\t" $9 }}' >> {input.mmseqs2_out}.formatted
+        # sed 's/\t$/\tunknown/' {input.mmseqs2_out} |  awk -F "\t" '{{print $1 "\t" $9 }}' >> {input.mmseqs2_out}.formatted
+        cat {input.mmseqs2_out} |  awk -F "\t" '{{print $1 "\t" $9 }}' >> {input.mmseqs2_out}.formatted
         rm -rf {output.directory}
         vamb bin taxvamb --cuda --taxonomy {input.mmseqs2_out}.formatted --outdir {output.directory} --fasta {input.contigs} -p {threads} --bamfiles {input.bamfiles} # &> {log}
         """
@@ -175,14 +208,20 @@ rule run_taxvamb_trembl:
     threads: threads_fn(rulename)
     resources: walltime = walltime_fn(rulename), mem_gb = mem_gb_fn(rulename), gpu=gpu_fn(rulename)
     benchmark: config.get("benchmark", "benchmark/") + "{key}_" + rulename
+    params: script =THIS_FILE_DIR / "files_used_in_snakemake_workflow/format_trembl_kalmari.py"
     log: config.get("log", f"{str(OUTDIR)}/log/") + "{key}_" + rulename
     conda: THIS_FILE_DIR / "envs/vamb.yaml"
     shell:
         """
         # Format taxonomy file
-        echo -e "contigs\tpredictions" > {input.mmseqs2_out}.formatted
-        sed 's/\t$/\tunknown/' {input.mmseqs2_out} |  awk -F "\t" '{{print $1 "\t" $9 }}' >> {input.mmseqs2_out}.formatted
+        # echo -e "contigs\tpredictions" > {input.mmseqs2_out}.formatted
+        # sed 's/\t$/\tunknown/' {input.mmseqs2_out} |  awk -F "\t" '{{print $1 "\t" $9 }}' >> {input.mmseqs2_out}.formatted
         # awk -F "\t" '{{print $1 "\t" $9 }}' {input.mmseqs2_out} >> {input.mmseqs2_out}.formatted
+
+        cut -f1,9 {input.mmseqs2_out} > {input.mmseqs2_out}.cut.tsv
+        echo -e "contigs\tpredictions" > {input.mmseqs2_out}.formatted
+        python {params.script} {input.mmseqs2_out}.cut.tsv >> {input.mmseqs2_out}.formatted
+
         rm -rf {output.directory}
         vamb bin taxvamb --cuda --taxonomy {input.mmseqs2_out}.formatted --outdir {output.directory} --fasta {input.contigs} -p {threads} --bamfiles {input.bamfiles} # &> {log}
         """

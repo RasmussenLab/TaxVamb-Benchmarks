@@ -4,7 +4,7 @@ rule bam_to_sam:
         bamfile = OUTDIR / "{key}/assembly_mapping_output/mapped_sorted/{id}.sort.bam"
     output:
         samfile = temp(OUTDIR / "{key}/assembly_mapping_output/mapped_sorted/{id}.sam.sort"),
-    threads: threads_fn(rulename)
+    threads: 2
     resources: walltime = walltime_fn(rulename), mem_gb = mem_gb_fn(rulename), gpu=gpu_fn(rulename)
     benchmark: config.get("benchmark", "benchmark/") + "{key}_{id}" + rulename
     log: config.get("log", f"{str(OUTDIR)}/log/") + "{key}_{id}" + rulename
@@ -69,17 +69,21 @@ rule metadecoder:
         metadecoder = directory(OUTDIR /  "{key}/metadecoder/clusters/clusters.metadecoder"),
         metadecoder_clusterfile = OUTDIR /  "{key}/metadecoder/clusters/clusters.metadecoder.1.fasta",
         metadecoder_bin_dir = directory(OUTDIR /  "{key}/metadecoder/clusters"),
-    threads: threads_fn(rulename)
-    resources: walltime = walltime_fn(rulename), mem_gb = mem_gb_fn(rulename), gpu=gpu_fn(rulename)
+    threads: 64
+    resources: walltime = walltime_fn(rulename), mem_gb = "1000", gpu=""
     benchmark: config.get("benchmark", "benchmark/") + "{key}_" + rulename
     log: config.get("log", f"{str(OUTDIR)}/log/") + "{key}_" + rulename
-    conda: THIS_FILE_DIR / "envs/meta_decoder.yaml"
+    conda: THIS_FILE_DIR / "envs/meta_decoder_2.yaml"
     shell:
         """
         # rm contigs.flt.fna.2500.metadecoder.dpgmm
         # rm contigs.flt.fna.2500.metadecoder.kmers
 
 
+
+        # module load cuda/12.2
+        # which pip
+        # pip install cupy-cuda12x
         # Actually cluster 
         metadecoder cluster -f {input.contigs_decompressed} -c {input.coverage_file} -s {input.seed} -o {output.metadecoder}
         echo metadecoder cluster done

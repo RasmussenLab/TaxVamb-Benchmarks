@@ -1,0 +1,8 @@
+sample 				bamfile				contig
+Human   /maps/projects/rasmussen/data/taxvamb_benchmarks/taxvamb_benchmarks/longread/human_bam/SRR15275210.sorted.bam /maps/projects/rasmussen/data/taxvamb_benchmarks/taxvamb_benchmarks/longread/human_longread_2025/contigs.fna.gz
+Human   /maps/projects/rasmussen/data/taxvamb_benchmarks/taxvamb_benchmarks/longread/human_bam/SRR15275211.sorted.bam /maps/projects/rasmussen/data/taxvamb_benchmarks/taxvamb_benchmarks/longread/human_longread_2025/contigs.fna.gz
+Human   /maps/projects/rasmussen/data/taxvamb_benchmarks/taxvamb_benchmarks/longread/human_bam/SRR15275212.sorted.bam /maps/projects/rasmussen/data/taxvamb_benchmarks/taxvamb_benchmarks/longread/human_longread_2025/contigs.fna.gz
+Human   /maps/projects/rasmussen/data/taxvamb_benchmarks/taxvamb_benchmarks/longread/human_bam/SRR15275213.sorted.bam /maps/projects/rasmussen/data/taxvamb_benchmarks/taxvamb_benchmarks/longread/human_longread_2025/contigs.fna.gz
+Sludge  /maps/projects/rasmussen/data/taxvamb_benchmarks/taxvamb_benchmarks/longread/sludge_bam/ERR10905741.sorted.bam /maps/projects/rasmussen/data/taxvamb_benchmarks/taxvamb_benchmarks/longread/sludge_2025/contigs.fna.gz
+Sludge  /maps/projects/rasmussen/data/taxvamb_benchmarks/taxvamb_benchmarks/longread/sludge_bam/ERR10905742.sorted.bam /maps/projects/rasmussen/data/taxvamb_benchmarks/taxvamb_benchmarks/longread/sludge_2025/contigs.fna.gz
+Sludge  /maps/projects/rasmussen/data/taxvamb_benchmarks/taxvamb_benchmarks/longread/sludge_bam/ERR10905743.sorted.bam /maps/projects/rasmussen/data/taxvamb_benchmarks/taxvamb_benchmarks/longread/sludge_2025/contigs.fna.gz

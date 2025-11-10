@@ -2,24 +2,24 @@
 # cuda: "True"
 
 ## databases
-database: "/maps/projects/rasmussen/people/bxc755/taxvamb_benchmarks/database_to_be_moved/data.ace.uq.edu.au/public/gtdb/data/releases/latest"
+database: "/maps/projects/rasmussen/data/taxvamb_benchmarks/taxvamb_benchmarks/database_to_be_moved/data.ace.uq.edu.au/public/gtdb/data/releases/latest"
 
-metabuli_database: "/maps/projects/rasmussen/people/bxc755/taxvamb_benchmarks/metabuli_db/gtdb"
-# metabuli_database: "/home/bxc755/rasmussen/people/bxc755/taxvamb_benchmarks/metabuli_database_220/gtdb+virus+human"
+metabuli_database: "/maps/projects/rasmussen/data/taxvamb_benchmarks/taxvamb_benchmarks/metabuli_db/gtdb"
+# metabuli_database: "/home/bxc755/rasmussen/data/taxvamb_benchmarks/taxvamb_benchmarks/metabuli_database_220/gtdb+virus+human"
 
-centrifuge_database_dir: "/maps/projects/rasmussen/people/bxc755/taxvamb_benchmarks/centri"
+centrifuge_database_dir: "/maps/projects/rasmussen/data/taxvamb_benchmarks/taxvamb_benchmarks/centri"
 centrifuge_database_name: "abv"
-gunc_database: "/maps/projects/rasmussen/people/bxc755/taxvamb_benchmarks/gunc_db/gunc_database/gunc_db_progenomes2.1.dmnd"
+gunc_database: "/maps/projects/rasmussen/data/taxvamb_benchmarks/taxvamb_benchmarks/gunc_db/gunc_database/gunc_db_progenomes2.1.dmnd"
 
-checkm2_database: "/maps/projects/rasmussen/people/bxc755/taxvamb_benchmarks/checkm2_database/CheckM2_database/uniref100.KO.1.dmnd"
-kraken2_database: "/maps/projects/rasmussen/people/bxc755/taxvamb_benchmarks/airways/kraken_database_download"
+checkm2_database: "/maps/projects/rasmussen/data/taxvamb_benchmarks/taxvamb_benchmarks/checkm2_database/CheckM2_database/uniref100.KO.1.dmnd"
+kraken2_database: "/maps/projects/rasmussen/data/taxvamb_benchmarks/taxvamb_benchmarks/airways/kraken_database_download"
 
 # mmseqs databases
-mmseqs_db_gtdb: "/maps/projects/rasmussen/people/bxc755/taxvamb_benchmarks/download_gtdb/gtdb_mmseqs"
-mmseqs_db_trembl: "/maps/projects/rasmussen/people/bxc755/taxvamb_benchmarks/download_trembl/trembl_mmseqs"
-mmseqs_db_kalmari: "/maps/projects/rasmussen/people/bxc755/taxvamb_benchmarks/download_kalmari/kalmari_mmseqs"
+mmseqs_db_gtdb: "/maps/projects/rasmussen/data/taxvamb_benchmarks/taxvamb_benchmarks/download_gtdb/gtdb_mmseqs"
+mmseqs_db_trembl: "/maps/projects/rasmussen/data/taxvamb_benchmarks/taxvamb_benchmarks/download_trembl/trembl_mmseqs"
+mmseqs_db_kalmari: "/maps/projects/rasmussen/data/taxvamb_benchmarks/taxvamb_benchmarks/download_kalmari/kalmari_mmseqs"
 
-gunc_db: "/maps/projects/rasmussen/people/bxc755/taxvamb_benchmarks/gunc_db/gunc_database/gunc_db_progenomes2.1.dmnd"
+gunc_db: "/maps/projects/rasmussen/data/taxvamb_benchmarks/taxvamb_benchmarks/gunc_db/gunc_database/gunc_db_progenomes2.1.dmnd"
 
 # Use minimap - if False uses strobealign
 use_minimap: True
@@ -30,17 +30,50 @@ use_minimap: True
 # If these exceed the resources available they will be scaled down to match the hardware available. 
 # See https://snakemake.readthedocs.io/en/stable/snakefiles/rules.html#resources for reference
 default_walltime: "20-00:00:00"
-default_threads: 128
-default_mem_gb: 500
+default_threads: 64
+default_mem_gb: 250
 
 ## Specific rule resources
 # Below is the specific resources defined for the various rules in the pipeline 
 # If no specific resources are defined for a rule, the default will be used instead.
+minimap:
+  walltime: "20-00:00:00"
+  mem_gb: 250
+  threads: 34
+
+recluster:
+  walltime: "20-00:00:00"
+  mem_gb: 750
+  threads: 34
+
+bam_to_sam:
+  walltime: "20-00:00:00"
+  mem_gb: 30
+  threads: 2
+
+run_geNomad:
+  walltime: "20-00:00:00"
+  mem_gb: 500
+  threads: 64
+  gpu: " --partition=gpuqueue --gres=gpu:1 "
+
+download_genomad_db:
+  walltime: "20-00:00:00"
+  mem_gb: 500
+  threads: 64
+  gpu: " --partition=gpuqueue --gres=gpu:1 "
+
 run_taxvamb_kraken:
   walltime: "20-00:00:00"
   mem_gb: 500
   threads: 64
   gpu: " --partition=gpuqueue --gres=gpu:1 "
+
+format_bins_class_recluster:
+  walltime: "20-00:00:00"
+  mem_gb: 20
+  threads: 10
+
 run_taxvamb_premade:
   walltime: "20-00:00:00"
   mem_gb: 500
@@ -100,12 +133,29 @@ run_taxvamb_trembl:
   threads: 64
   gpu: " --partition=gpuqueue --gres=gpu:1 "
 
+format_bins_class_filtered:
+  walltime: "20-00:00:00"
+  mem_gb: 100
+  threads: 4
+format_bins_class_recluster:
+  walltime: "20-00:00:00"
+  mem_gb: 100
+  threads: 4
+format_bins_default_vamb_filtered:
+  walltime: "20-00:00:00"
+  mem_gb: 100
+  threads: 4
+
 run_vamb:
   walltime: "20-00:00:00"
   mem_gb: 500
   threads: 64
   gpu: " --partition=gpuqueue --gres=gpu:1 "
 
+metabuli_taxconv:
+  walltime: "162:00:00"
+  mem_gb: 20
+  threads: 4
 
 format_bins_class:
   walltime: "162:00:00"
@@ -139,15 +189,47 @@ format_bins_taxvamb_trembl:
   walltime: "162:00:00"
   mem_gb: 10
   threads: 2
+
+format_bins_class_filtered:
+  walltime: "288:00:00"
+  mem_gb: 50
+  threads: 4
+metadecoder:
+  walltime: "288:00:00"
+  mem_gb: 1500
+  threads: 127
+  gpu: ""
+metadecoder_pre:
+  walltime: "288:00:00"
+  mem_gb: 1500
+  threads: 127
+
 # gunc:
 #   walltime: "162:00:00"
 #   mem_gb: 100
 #   threads: 80
+metadecoder:
+  walltime: "1088:00:00"
+  mem_gb: 500
+  threads: 64
+  gpu: " --partition=gpuqueue --gres=gpu:1 "
 
 comebin:
-  walltime: "288:00:00"
+  walltime: "1088:00:00"
+  mem_gb: 500
+  threads: 64
+  gpu: " --partition=gpuqueue --gres=gpu:1 "
+
 semibin:
   walltime: "288:00:00"
+  mem_gb: 500
+  threads: 127
+  # gpu: " --partition=gpuqueue --gres=gpu:1 "
+semibinGPU:
+  walltime: "1088:00:00"
+  mem_gb: 500
+  threads: 64
+  gpu: " --partition=gpuqueue --gres=gpu:1 "
 
 centrifuge_db:
   walltime: "162:00:00"
@@ -162,10 +244,14 @@ kraken_db:
 #   mem_gb: 1300
 #   threads: 60
 #
-# mmseqs2_trembl:
-#   walltime: "162:00:00"
-#   mem_gb: 1300
-#   threads: 60
+mmseqs2_trembl:
+   walltime: "162:00:00"
+   mem_gb: 1300
+   threads: 60
+mmseqs2_gtdb:
+   walltime: "162:00:00"
+   mem_gb: 1300
+   threads: 60
 
 rename_contigs:
   threads: 1
@@ -184,8 +270,8 @@ samtools_sort:
   default_mem_gb: 20
 
 spades:
-  threads: 10
-  mem_gb: 200
+  threads: 100
+  mem_gb: 1000
 
 Strobealign_bam_default:
   threads: 10

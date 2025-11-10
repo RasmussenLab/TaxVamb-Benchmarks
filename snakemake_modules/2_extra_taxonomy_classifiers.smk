@@ -17,8 +17,7 @@ rule metabuli:
     conda: THIS_FILE_DIR / "envs/metabuli.yaml"
     shell:
         """
-        metabuli classify {input.contigs} {params.database} {output.metabuli} {wildcards.key}.metabuli --tie-ratio 1 --seq-mode 1 --threads {threads}
-        # metabuli classify {input.contigs} {params.database} {output.metabuli} {wildcards.key}.metabuli --seq-mode 1 --threads {threads}
+        metabuli classify {input.contigs} {params.database} {output.metabuli} {wildcards.key}.metabuli --seq-mode 1 --threads {threads}
         # metabuli classify {input.contigs} {params.database} {output.metabuli} {wildcards.key}.metabuli --accession-level 1 --seq-mode 1 --threads {threads}
         """
 
@@ -35,12 +34,11 @@ rule metabuli_taxconv:
    resources: walltime = walltime_fn(rulename), mem_gb = mem_gb_fn(rulename), gpu=gpu_fn(rulename)
    benchmark: config.get("benchmark", "benchmark/") + "{key}_" + rulename
    log: config.get("log", f"{str(OUTDIR)}/log/") + "{key}_" + rulename
-   conda: "taxconv"
-   # conda: "old_taxconv"
+   # conda: "taxconv"
    shell:
        """
-       taxconverter metabuli -c {input.metabuli_classification} -r {input.metabuli_report} -o {output.metabuli_classification}
-       # python {params.script} {input.metabuli_classification} {input.metabuli_report} > {output.metabuli_classification}
+       # taxconverter metabuli -c {input.metabuli_classification} -r {input.metabuli_report} -o {output.metabuli_classification}
+       python {params.script} {input.metabuli_classification} {input.metabuli_report} > {output.metabuli_classification}
        """
 
 
@@ -184,7 +182,6 @@ rule kraken_taxconv:
     benchmark: config.get("benchmark", "benchmark/") + "{key}_" + rulename
     log: config.get("log", f"{str(OUTDIR)}/log/") + "{key}_" + rulename
     conda: "taxconv"
-    # conda: "old_taxconv"
     shell:
         """
         taxconverter kraken2 -i {input.kraken2} -o {output.kraken2}
@@ -209,8 +206,8 @@ rule run_taxvamb_kraken:
     shell:
         """
         rm -rf {output.directory}
-        # sed 's/\t$/\tunknown/' {input.taxonomy}  > {input.taxonomy}.fmt
-        vamb bin taxvamb --cuda --taxonomy {input.taxonomy} --outdir {output.directory} --fasta {input.contigs} -p {threads} --bamfiles {input.bamfiles} # &> {log}
+        sed 's/\t$/\tunknown/' {input.taxonomy}  > {input.taxonomy}.fmt
+        vamb bin taxvamb --cuda --taxonomy {input.taxonomy}.fmt --outdir {output.directory} --fasta {input.contigs} -p {threads} --bamfiles {input.bamfiles} # &> {log}
         """
 
 
@@ -304,7 +301,6 @@ rule centri_taxconv:
     benchmark: config.get("benchmark", "benchmark/") + "{key}_" + rulename
     log: config.get("log", f"{str(OUTDIR)}/log/") + "{key}_" + rulename
     conda: "taxconv"
-    # conda: "old_taxconv"
     shell:
         """
         taxconverter centrifuge -i {input.centrifuge} -o {output.centrifuge}
@@ -351,8 +347,8 @@ rule run_taxvamb_centrifuge:
     shell:
         """
         rm -rf {output.directory}
-        # sed 's/\t$/\tunknown/' {input.taxonomy}  > {input.taxonomy}.fmt
-        vamb bin taxvamb --cuda  --taxonomy {input.taxonomy} --outdir {output.directory} --fasta {input.contigs} -p {threads} --bamfiles {input.bamfiles} # &> {log}
+        sed 's/\t$/\tunknown/' {input.taxonomy}  > {input.taxonomy}.fmt
+        vamb bin taxvamb --cuda  --taxonomy {input.taxonomy}.fmt --outdir {output.directory} --fasta {input.contigs} -p {threads} --bamfiles {input.bamfiles} # &> {log}
         """
 
 # Run taxvamb_no_predictor 
@@ -398,24 +394,22 @@ rule run_taxvamb_gtdb_no_predictor:
         # Format taxonomy file
         echo -e "contigs\tpredictions" > {input.mmseqs2_out}.formatted
         #sed 's/\t$/\tunknown/' {input.mmseqs2_out} |  awk -F "\t" '{{print $1 "\t" $9 }}' >> {input.mmseqs2_out}.formatted
-        cat {input.mmseqs2_out} |  awk -F "\t" '{{print $1 "\t" $9 }}' >> {input.mmseqs2_out}.formatted_nopred
+        cat {input.mmseqs2_out} |  awk -F "\t" '{{print $1 "\t" $9 }}' >> {input.mmseqs2_out}.formatted
         rm -rf {output.directory}
-        vamb bin taxvamb --cuda --no_predictor --taxonomy {input.mmseqs2_out}.formatted_nopred --outdir {output.directory} --fasta {input.contigs} -p {threads} --bamfiles {input.bamfiles} # &> {log}
+        vamb bin taxvamb --cuda --no_predictor --taxonomy {input.mmseqs2_out}.formatted --outdir {output.directory} --fasta {input.contigs} -p {threads} --bamfiles {input.bamfiles} # &> {log}
         """
 
 ## Collecting
 all_bin_dirs_clas = {
-    # "kraken_taxvamb_default": OUTDIR / "{key}/kraken_taxvamb_default/vaevae_clusters_split.tsv",
-    # "kraken_taxvamb_no_predictor": OUTDIR / "{key}/kraken_taxvamb_no_predictor/vaevae_clusters_split.tsv",
-    # "run_taxvamb_centrifuge": OUTDIR / "{key}/centrifuge_taxvamb/vaevae_clusters_split.tsv",
-    # "centrifuge_taxvamb_no_predictor": OUTDIR / "{key}/centrifuge_taxvamb_no_predictor/vaevae_clusters_split.tsv",
-    # "metabuli_taxvamb_default": OUTDIR / "{key}/metabuli_taxvamb_default/vaevae_clusters_split.tsv",
-    # "metabuli_taxvamb_no_predictor": OUTDIR / "{key}/metabuli_taxvamb_no_predictor/vaevae_clusters_split.tsv",
+    "metabuli_taxvamb_default": OUTDIR / "{key}/metabuli_taxvamb_default/vaevae_clusters_split.tsv",
     # "run_taxvamb_gtdb": OUTDIR / "{key}/gtdb_taxvamb_default/vaevae_clusters_split.tsv",
-    # "run_taxvamb_gtdb_w_unknown": OUTDIR / "{key}/gtdb_taxvamb_default_w_unknown/vaevae_clusters_split.tsv",
-    # "kalmari_taxvamb_default": OUTDIR / "{key}/kalmari_taxvamb_default/vaevae_clusters_split.tsv",
-    # "trembl_taxvamb_default": OUTDIR / "{key}/trembl_taxvamb_default/vaevae_clusters_split.tsv",
+    # "kraken_taxvamb_default": OUTDIR / "{key}/kraken_taxvamb_default/vaevae_clusters_split.tsv",
+    # "run_taxvamb_centrifuge": OUTDIR / "{key}/centrifuge_taxvamb/vaevae_clusters_split.tsv",
+    # "metabuli_taxvamb_no_predictor": OUTDIR / "{key}/metabuli_taxvamb_no_predictor/vaevae_clusters_split.tsv",
+    # "centrifuge_taxvamb_no_predictor": OUTDIR / "{key}/centrifuge_taxvamb_no_predictor/vaevae_clusters_split.tsv",
+    # "run_taxvamb_gtdb": OUTDIR / "{key}/gtdb_taxvamb_default/vaevae_clusters_split.tsv",
     # "run_taxvamb_gtdb_no_predictor": OUTDIR / "{key}/gtdb_taxvamb_default_no_predictor/vaevae_clusters_split.tsv",
+    # "kraken_taxvamb_no_predictor": OUTDIR / "{key}/kraken_taxvamb_no_predictor/vaevae_clusters_split.tsv",
 }
 bin_dir_names_clas = all_bin_dirs_clas.keys()
 
@@ -581,28 +575,28 @@ rule collect_gunc2:
 
 
 ## Collecting
-# all_bin_dirs_clas_2 = {
-#     # "metabuli_taxvamb_default": OUTDIR / "{key}/metabuli_taxvamb_default/vaevae_clusters_split.tsv",
-#     # "metabuli_taxvamb_no_predictor": OUTDIR / "{key}/metabuli_taxvamb_no_predictor/vaevae_clusters_split.tsv",
-#     # "run_taxvamb_premade": OUTDIR / "{key}/premade_taxvamb/vaevae_clusters_split.tsv",
-#     # "run_taxvamb_gtdb": OUTDIR / "{key}/gtdb_taxvamb_default/vaevae_clusters_split.tsv",
-#     # "run_taxvamb_gtdb_no_predictor": OUTDIR / "{key}/gtdb_taxvamb_default_no_predictor/vaevae_clusters_split.tsv",
-#     # "run_taxvamb_centrifuge": OUTDIR / "{key}/centrifuge_taxvamb/vaevae_clusters_split.tsv",
-#     # "kraken_taxvamb_default": OUTDIR / "{key}/kraken_taxvamb_default/vaevae_clusters_split.tsv",
-#     "kraken_taxvamb_no_predictor": OUTDIR / "{key}/kraken_taxvamb_no_predictor/vaevae_clusters_split.tsv",
-#     "centrifuge_taxvamb_no_predictor": OUTDIR / "{key}/centrifuge_taxvamb_no_predictor/vaevae_clusters_split.tsv",
-# }
-#
-# rulename = "run_all"
-# rule run_all:
-#     input:
-#         expand("{bins_clas_2}", bins_clas_2 = all_bin_dirs_clas_2.values())
-#         # expand(OUTDIR / "{{key}}/gunc/{bin_dir}",  bin_dir = bin_dir_names)
-#     output: 
-#         OUTDIR / "{key}/tmp/run_all.done"
-#     threads: threads_fn(rulename)
-#     resources: walltime = walltime_fn(rulename), mem_gb = mem_gb_fn(rulename), gpu=gpu_fn(rulename)
-#     shell:
-#         """
-#         touch  {output}
-#         """
+all_bin_dirs_clas_2 = {
+    # "metabuli_taxvamb_default": OUTDIR / "{key}/metabuli_taxvamb_default/vaevae_clusters_split.tsv",
+    "metabuli_taxvamb_no_predictor": OUTDIR / "{key}/metabuli_taxvamb_no_predictor/vaevae_clusters_split.tsv",
+    # "centrifuge_taxvamb_no_predictor": OUTDIR / "{key}/centrifuge_taxvamb_no_predictor/vaevae_clusters_split.tsv",
+    # "run_taxvamb_centrifuge": OUTDIR / "{key}/centrifuge_taxvamb/vaevae_clusters_split.tsv",
+    # "run_taxvamb_premade": OUTDIR / "{key}/premade_taxvamb/vaevae_clusters_split.tsv",
+    # "run_taxvamb_gtdb": OUTDIR / "{key}/gtdb_taxvamb_default/vaevae_clusters_split.tsv",
+    "run_taxvamb_gtdb_no_predictor": OUTDIR / "{key}/gtdb_taxvamb_default_no_predictor/vaevae_clusters_split.tsv",
+    # "kraken_taxvamb_default": OUTDIR / "{key}/kraken_taxvamb_default/vaevae_clusters_split.tsv",
+    # "kraken_taxvamb_no_predictor": OUTDIR / "{key}/kraken_taxvamb_no_predictor/vaevae_clusters_split.tsv",
+}
+
+rulename = "run_all"
+rule run_all:
+    input:
+        expand("{bins_clas_2}", bins_clas_2 = all_bin_dirs_clas_2.values())
+        # expand(OUTDIR / "{{key}}/gunc/{bin_dir}",  bin_dir = bin_dir_names)
+    output: 
+        OUTDIR / "{key}/tmp/run_all.done"
+    threads: threads_fn(rulename)
+    resources: walltime = walltime_fn(rulename), mem_gb = mem_gb_fn(rulename), gpu=gpu_fn(rulename)
+    shell:
+        """
+        touch  {output}
+        """

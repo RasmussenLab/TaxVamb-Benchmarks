@@ -36,3 +36,16 @@ http-v2/a/1/9/5/3
 selfcheck
 tmp
 transfer
+paper_benchmarks/benchmark
+paper_benchmarks
+test_data/empty_test_data
+temp
+.DS_Store
+.Makefile.swo
+._.DS_Store
+._run_fastp.smk
+.tmp.tmp.swp
+Binning_meets_taxonomy_TaxVAMB_improves_metagenome.pdf
+TODO.md
+WhatIsWrong.md
+TODO_apr12.md

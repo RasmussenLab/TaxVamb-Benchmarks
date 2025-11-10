@@ -14,23 +14,55 @@ rule gzip_semibins:
         touch {output.touch_me}
         """
 
+# # name: [filepath, bin suffix]
+# all_bin_dirs = {
+#             # Binners
+#             "semibin": ["{key}/semibin/bins", "fa"],
+#             "vamb": [os.path.join(OUTDIR,"{key}", 'vamb_default_bins_filtered'), ".fna"],
+#             "metabat": ["{key}/metabat/metabat", "fa"],
+#             "metadecoder": ["{key}/metadecoder/clusters", "fasta"],
+#             # Main classifiers
+#             "taxvamb_gtdb_mmseqs": [OUTDIR / "{key}/gtdb_taxvamb_default_bins_filtered", "fna"],
+#             # metabuli
+#             # centrifuge
+#             # Main classifiers with --no predictor
+#             # metabuli, centrifuge, gtdb
+#
+#             # Extra test classifiers
+#             "taxvamb_kalmari_mmseqs": [OUTDIR / "{key}/kalmari_taxvamb_default_bins_filtered", "fna"],
+#             "taxvamb_trembl_mmseqs": [OUTDIR / "{key}/trembl_taxvamb_default_bins_filtered", "fna"],
+#                 }
+
 # name: [filepath, bin suffix]
 all_bin_dirs = {
+            "reclustering_default_vamb": [OUTDIR / "{key}/reclustering/formatted_vamb_bins/default_vamb", ".fna"],
             # Binners
-            "semibin": ["{key}/semibin/bins", "fa"],
-            "vamb": [os.path.join(OUTDIR,"{key}", 'vamb_default_bins_filtered'), ".fna"],
-            "metabat": ["{key}/metabat/metabat", "fa"],
-            "metadecoder": ["{key}/metadecoder/clusters", "fasta"],
-            # Main classifiers
-            "taxvamb_gtdb_mmseqs": [OUTDIR / "{key}/gtdb_taxvamb_default_bins_filtered", "fna"],
-            # metabuli
-            # centrifuge
-            # Main classifiers with --no predictor
-            # metabuli, centrifuge, gtdb
-
-            # Extra test classifiers
-            "taxvamb_kalmari_mmseqs": [OUTDIR / "{key}/kalmari_taxvamb_default_bins_filtered", "fna"],
-            "taxvamb_trembl_mmseqs": [OUTDIR / "{key}/trembl_taxvamb_default_bins_filtered", "fna"],
+            # "centrifuge_taxvamb_no_predictor": [OUTDIR / "{key}/formatted_vamb_bins_filtered/centrifuge_taxvamb_no_predictor", ".fna"],
+            # "kraken_taxvamb_default": [OUTDIR / "{key}/formatted_vamb_bins_filtered/kraken_taxvamb_default", ".fna"],
+            # "kraken_taxvamb_no_predictor": [OUTDIR / "{key}/formatted_vamb_bins_filtered/kraken_taxvamb_no_predictor", ".fna"],
+            # "metabuli_taxvamb_default": [OUTDIR / "{key}/formatted_vamb_bins_filtered/metabuli_taxvamb_default", ".fna"],
+            # "metabuli_taxvamb_no_predictor": [OUTDIR / "{key}/formatted_vamb_bins_filtered/metabuli_taxvamb_no_predictor", ".fna"],
+            # "run_taxvamb_centrifuge": [OUTDIR / "{key}/formatted_vamb_bins_filtered/run_taxvamb_centrifuge", ".fna"],
+            # "run_taxvamb_gtdb_no_predictor": [OUTDIR / "{key}/formatted_vamb_bins_filtered/run_taxvamb_gtdb_no_predictor", ".fna"],
+            # "run_taxvamb_gtdb_w_unknown": [OUTDIR / "{key}/formatted_vamb_bins_filtered/run_taxvamb_gtdb_w_unknown", ".fna"],
+            # "default_vamb": [OUTDIR / "{key}/vamb_default_bins_filtered", ".fna"],
+            # "reclustering_centrifuge_taxvamb_no_predictor": [OUTDIR / "{key}/reclustering/formatted_vamb_bins/centrifuge_taxvamb_no_predictor", ".fna"],
+            # "reclustering_kraken_taxvamb_default": [OUTDIR / "{key}/reclustering/formatted_vamb_bins/kraken_taxvamb_default", ".fna"],
+            # "reclustering_kraken_taxvamb_no_predictor": [OUTDIR / "{key}/reclustering/formatted_vamb_bins/kraken_taxvamb_no_predictor", ".fna"],
+            # "reclustering_metabuli_taxvamb_default": [OUTDIR / "{key}/reclustering/formatted_vamb_bins/metabuli_taxvamb_default", ".fna"],
+            # "reclustering_metabuli_taxvamb_no_predictor": [OUTDIR / "{key}/reclustering/formatted_vamb_bins/metabuli_taxvamb_no_predictor", ".fna"],
+            # "reclustering_run_taxvamb_centrifuge": [OUTDIR / "{key}/reclustering/formatted_vamb_bins/run_taxvamb_centrifuge", ".fna"],
+            # "reclustering_run_taxvamb_gtdb_no_predictor": [OUTDIR / "{key}/reclustering/formatted_vamb_bins/run_taxvamb_gtdb_no_predictor", ".fna"],
+            "reclustering_run_taxvamb_gtdb_w_unknown": [OUTDIR / "{key}/reclustering/formatted_vamb_bins/run_taxvamb_gtdb_w_unknown", ".fna"],
+            # "metabat": [OUTDIR / "{key}/metabat/metabat", ".fa"],
+            # "metadecoder": [OUTDIR / "{key}/metadecoder/clusters", ".fasta"],
+            # "comebin": [OUTDIR / "{key}/comebin/comebin_res/comebin_res_bins", ".fa"],
+            # "semibin": [OUTDIR / "{key}/semibin/bins", ".fa"],
+            # "kalmari_taxvamb_default": [OUTDIR / "{key}/formatted_vamb_bins_filtered/kalmari_taxvamb_default", ".fna"],
+            # "trembl_taxvamb_default": [OUTDIR / "{key}/formatted_vamb_bins_filtered/trembl_taxvamb_default", ".fna"],
+            # "trembl_taxvamb_default_reclustering": [OUTDIR / "{key}/reclustering/formatted_vamb_bins/trembl_taxvamb_default", ".fna"],
+            # "kalmari_taxvamb_default_reclustering": [OUTDIR / "{key}/reclustering/formatted_vamb_bins/kalmari_taxvamb_default", ".fna"],
+            # # "semibin_LR": [OUTDIR / "{key}/semibin_LR/bins", ".fa"],
                 }
 bin_dir_names = all_bin_dirs.keys()
 
@@ -55,6 +87,7 @@ rule gunc:
         mkdir -p {output.dir}
         gunc run --input_dir {input.bin_dir} --file_suffix {params.suffix} --db_file {params.database} --threads {threads} --out_dir {output.dir} 
         """
+
 
 rulename = "collect_gunc"
 rule collect_gunc:

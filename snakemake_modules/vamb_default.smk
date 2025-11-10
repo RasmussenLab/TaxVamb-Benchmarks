@@ -8,6 +8,7 @@ rule run_vamb:
         directory = directory(os.path.join(OUTDIR,"{key}", 'vamb_default')),
         bins = os.path.join(OUTDIR,"{key}",'vamb_default','vae_clusters_split.tsv'),
         compo = os.path.join(OUTDIR, '{key}','vamb_default/composition.npz'),
+        latent = os.path.join(OUTDIR, '{key}','vamb_default/latent.npz'),
     threads: threads_fn(rulename)
     resources: walltime = walltime_fn(rulename), mem_gb = mem_gb_fn(rulename), gpu=gpu_fn(rulename)
     benchmark: config.get("benchmark", "benchmark/") + "{key}_" + rulename
@@ -70,7 +71,7 @@ rule default_vamb_checkm:
         bin_dir = directory(os.path.join(OUTDIR,"{key}", 'vamb_default_bins_filtered')),
     output:
         outdir = directory(OUTDIR /  "{key}/checkm2/default_vamb"),
-        file = directory(OUTDIR /  "{key}/checkm2/default_vamb/quality_report.tsv"),
+        file = OUTDIR /  "{key}/checkm2/default_vamb/quality_report.tsv",
     threads: threads_fn(rulename)
     params:
         database = config.get("checkm2_database")
@@ -82,3 +83,6 @@ rule default_vamb_checkm:
         """
         checkm2 predict --threads {threads} --input {input.bin_dir} --output-directory {output.outdir} --extension 'fna' --database_path {params.database}
         """
+
+
+
