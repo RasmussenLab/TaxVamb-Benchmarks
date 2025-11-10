@@ -418,37 +418,4 @@ rule gtdb_checkm:
         checkm2 predict --threads {threads} --input {input.bin_dir} --output-directory {output.outdir} --extension 'fna' --database_path {params.database}
         """
 
-# awk -F "\t" '{print $1 "\t" $5 }' kalmari_lca.tsv
 
-
-# mmseqs_db_gtdb: "/
-# mmseqs_db_trembl: #
-# mmseqs_db_kalmari:# rulename = "centrifuge"
-# rule centrifuge:
-#     output:
-#         centrifuge = OUTDIR /  "{key}/classifiers/centrifuge",
-#     threads: threads_fn(rulename)
-#     resources: walltime = walltime_fn(rulename), mem_gb = mem_gb_fn(rulename)
-#     benchmark: config.get("benchmark", "benchmark/") + "{key}_" + rulename
-#     log: config.get("log", f"{str(OUTDIR)}/log/") + "{key}_" + rulename
-#     conda: THIS_FILE_DIR / "envs/centrifuge.yaml"
-#     shell:
-#         """
-#
-#         -k 1
-#         """
-#
-# rulename = "kraken2"
-# rule kraken2:
-#     output:
-#         kraken2 = OUTDIR /  "{key}/classifiers/kraken2",
-#     threads: threads_fn(rulename)
-#     resources: walltime = walltime_fn(rulename), mem_gb = mem_gb_fn(rulename)
-#     benchmark: config.get("benchmark", "benchmark/") + "{key}_" + rulename
-#     log: config.get("log", f"{str(OUTDIR)}/log/") + "{key}_" + rulename
-#     conda: THIS_FILE_DIR / "envs/kraken2.yaml"
-#     shell:
-#         """
-#         echo
-#         """
-#

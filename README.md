@@ -1,5 +1,22 @@
 # Benchmark taxvamb against other binning tools
 
+This is the reposityory for creating most of the benchmarks in the Taxvamb paper.
+
+## Installation
+
+Clone the repository and install the package using conda
+```
+git clone https://github.com/RasmussenLab/PlasMAAG
+conda env create -n Benchmark_binners --file=taxvamb_paper_benchmarks/envs/benchmark_env.yaml
+```
+To use the program activate the conda environment
+```
+conda activate Benchmark_binners
+```
+
+Metabat is available as an docker image. To run it it is necessary to have singularity installed.
+See [documentation](https://docs.sylabs.io/guides/3.0/user-guide/installation.html) for how to install 
+
 ### Running using snakemake CLI directly 
 For using snakemake refer to the snakemake documentation: <https://snakemake.readthedocs.io/en/stable/>
 
@@ -19,6 +36,10 @@ test                test_data/bam/sample_1.bam     test_data/contigs/contigs.fas
 ```
 :heavy_exclamation_mark: Notice the header names are required to be: sample, bamfile and contig  
 :heavy_exclamation_mark: Furthermore the contig file should just be the same for each row.
+
+The input files are the following
+1) A contig file, if using several samples this is all of them concatenated
+2) BAM file(s) from mapping short reads to concatenated contig
 
 ### Running on a cluster with snakemake submiting jobs 
 For running PlasMAAG on a cluster with snakemake submiting jobs see the documentation for snakemake [here](https://snakemake.readthedocs.io/en/v7.19.1/executing/cluster.html)  
@@ -56,3 +77,5 @@ default_mem_gb: 50
 ```
 If these exceed the resources available they will be scaled down to match the hardware available. 
 
+#### Long read
+For longread change the semibin commands to use it's LR mode.

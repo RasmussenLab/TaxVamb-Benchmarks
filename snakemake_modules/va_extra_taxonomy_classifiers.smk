@@ -460,7 +460,7 @@ rule run_taxvamb_gtdb_no_predictor:
 all_bin_dirs_clas = {
     # "kraken_taxvamb_default": OUTDIR / "{key}/kraken_taxvamb_default/vaevae_clusters_split.tsv",
     # "kraken_taxvamb_no_predictor": OUTDIR / "{key}/kraken_taxvamb_no_predictor/vaevae_clusters_split.tsv",
-    "run_taxvamb_centrifuge": OUTDIR / "{key}/centrifuge_taxvamb/vaevae_clusters_split.tsv",
+    # "run_taxvamb_centrifuge": OUTDIR / "{key}/centrifuge_taxvamb/vaevae_clusters_split.tsv",
     # "centrifuge_taxvamb_no_predictor": OUTDIR / "{key}/centrifuge_taxvamb_no_predictor/vaevae_clusters_split.tsv",
     # "metabuli_taxvamb_default": OUTDIR / "{key}/metabuli_taxvamb_default/vaevae_clusters_split.tsv",
     # "metabuli_taxvamb_no_predictor": OUTDIR / "{key}/metabuli_taxvamb_no_predictor/vaevae_clusters_split.tsv",

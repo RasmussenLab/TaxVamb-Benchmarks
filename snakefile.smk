@@ -78,37 +78,30 @@ gpu_fn  = lambda rulename: config.get(rulename, {"gpu": default_gpu}).get("gpu",
 
 ## Collecting
 all_bin_dirs_recluster = {
-    "kraken_taxvamb_default": OUTDIR / "{key}/kraken_taxvamb_default",
-    "run_taxvamb_centrifuge": OUTDIR / "{key}/centrifuge_taxvamb",
+    # "kraken_taxvamb_default": OUTDIR / "{key}/kraken_taxvamb_default",
+    # "run_taxvamb_centrifuge": OUTDIR / "{key}/centrifuge_taxvamb",
     # "run_taxvamb_gtdb": OUTDIR / "{key}/gtdb_taxvamb_default",
     "run_taxvamb_gtdb_w_unknown": OUTDIR / "{key}/gtdb_taxvamb_default_w_unknown",
-    "metabuli_taxvamb_default": OUTDIR / "{key}/metabuli_taxvamb_default",
+    # "metabuli_taxvamb_default": OUTDIR / "{key}/metabuli_taxvamb_default",
     # "kraken_taxvamb_no_predictor": OUTDIR / "{key}/kraken_taxvamb_no_predictor",
     # "centrifuge_taxvamb_no_predictor": OUTDIR / "{key}/centrifuge_taxvamb_no_predictor",
     # "run_taxvamb_gtdb_no_predictor": OUTDIR / "{key}/gtdb_taxvamb_default_no_predictor",
     # "metabuli_taxvamb_no_predictor": OUTDIR / "{key}/metabuli_taxvamb_no_predictor",
-    "default_vamb": OUTDIR / "{key}/vamb_default",
-    "kalmari_taxvamb_default": OUTDIR / "{key}/kalmari_taxvamb_default",
-    "trembl_taxvamb_default": OUTDIR / "{key}/trembl_taxvamb_default",
+    # "default_vamb": OUTDIR / "{key}/vamb_default",
+    # "kalmari_taxvamb_default": OUTDIR / "{key}/kalmari_taxvamb_default",
+    # "trembl_taxvamb_default": OUTDIR / "{key}/trembl_taxvamb_default",
 }
 bin_dir_names_recluster = all_bin_dirs_recluster.keys()
 
 rule all:
     input:
-        checkm_semibin = expand(OUTDIR /  "{key}/checkm2/semibin", key=sample_id.keys()),
-        checkm_comebin = expand(OUTDIR /  "{key}/checkm2/comebin", key=sample_id.keys()),
-        checkm_metadecoder = expand(OUTDIR /  "{key}/checkm2/metadecoder", key=sample_id.keys()),
-        checkm_metabat = expand(OUTDIR /  "{key}/checkm2/metabat", key=sample_id.keys()),
-        # For CAMI without checkm
-        # directory = expand(OUTDIR / "{key}/reclustering/{bins_recluster}/output",key=sample_id.keys(), bins_recluster=bin_dir_names_recluster), ## WHEN USING THIS MAKE SURE NOT TO RERUN ANYTHING
-        # With checkm
-        # 
-        ## !! These are used on jun 14 !!
-        # checkm2 = expand(OUTDIR /  "{key}/tmp/checkm.done",key=sample_id.keys()), 
-        # directory = expand(OUTDIR / "{key}/checkm2/reclustering/{bins_recluster}",key=sample_id.keys(), bins_recluster=bin_dir_names_recluster), 
+        # checkm_semibin = expand(OUTDIR /  "{key}/checkm2/semibin", key=sample_id.keys()),
+        # checkm_comebin = expand(OUTDIR /  "{key}/checkm2/comebin", key=sample_id.keys()),
+        # checkm_metadecoder = expand(OUTDIR /  "{key}/checkm2/metadecoder", key=sample_id.keys()),
         # checkm_default_vamb = expand(OUTDIR /  "{key}/checkm2/default_vamb",key=sample_id.keys()),
         # checkm_metabat = expand(OUTDIR /  "{key}/checkm2/metabat", key=sample_id.keys()),
-        # checkm_default_vamb = expand(OUTDIR /  "{key}/checkm2/default_vamb",key=sample_id.keys()),
+        # reclustering = expand(OUTDIR / "{key}/reclustering/{bins_recluster}/output",key=sample_id.keys(), bins_recluster=bin_dir_names_recluster), 
+        checkm2 = expand(OUTDIR /  "{key}/tmp/checkm.done",key=sample_id.keys()), 
 
 rule Checkm_reclustering:
     input:
@@ -162,8 +155,6 @@ rule recluster:
         {output.directory} \
         kmeans \
         """
-        # --hmmout_path \
-        # {input.hmm_path} \
 
 # Run taxvamb 
 rulename = "format_bins_class_recluster"
@@ -217,7 +208,6 @@ rule sort:
         """
 	samtools sort --threads {threads} {input} -o {output} 2> {log}
 	"""
-
 
 ## Include the specific rules for each tool
 include: THIS_FILE_DIR / "snakemake_modules/vamb_default.smk"
