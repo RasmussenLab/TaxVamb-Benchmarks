@@ -371,45 +371,101 @@ rule Biotest:
 
 ## Collecting
 all_bin_dirs_recluster = {
-    # "kraken_taxvamb_default": OUTDIR / "{key}/kraken_taxvamb_default",
-    # "run_taxvamb_centrifuge": OUTDIR / "{key}/centrifuge_taxvamb",
-    "run_taxvamb_gtdb": OUTDIR / "{key}/gtdb_taxvamb_default",
-    # "metabuli_taxvamb_default": OUTDIR / "{key}/metabuli_taxvamb_default",
+    "kraken_taxvamb_default": OUTDIR / "{key}/kraken_taxvamb_default",
+    "run_taxvamb_centrifuge": OUTDIR / "{key}/centrifuge_taxvamb",
+    # "run_taxvamb_gtdb": OUTDIR / "{key}/gtdb_taxvamb_default",
+    "run_taxvamb_gtdb_w_unknown": OUTDIR / "{key}/gtdb_taxvamb_default_w_unknown",
+    "metabuli_taxvamb_default": OUTDIR / "{key}/metabuli_taxvamb_default",
     # "kraken_taxvamb_no_predictor": OUTDIR / "{key}/kraken_taxvamb_no_predictor",
     # "centrifuge_taxvamb_no_predictor": OUTDIR / "{key}/centrifuge_taxvamb_no_predictor",
     # "run_taxvamb_gtdb_no_predictor": OUTDIR / "{key}/gtdb_taxvamb_default_no_predictor",
     # "metabuli_taxvamb_no_predictor": OUTDIR / "{key}/metabuli_taxvamb_no_predictor",
     "default_vamb": OUTDIR / "{key}/vamb_default",
+    "kalmari_taxvamb_default": OUTDIR / "{key}/kalmari_taxvamb_default",
+    "trembl_taxvamb_default": OUTDIR / "{key}/trembl_taxvamb_default",
 }
 bin_dir_names_recluster = all_bin_dirs_recluster.keys()
 
-rule aeroReclustering:
+rule mmseqs_with_gunc:
     input:
-        checkm_semibin = expand(OUTDIR /  "{key}/checkm2/semibin", key=sample_id.keys()),
-        checkm_comebin = expand(OUTDIR /  "{key}/checkm2/comebin", key=sample_id.keys()),
-        checkm_metabat = expand(OUTDIR /  "{key}/checkm2/metabat", key=sample_id.keys()),
+        # 
         # For CAMI without checkm
-        # directory = expand(OUTDIR / "{key}/reclustering/{bins_recluster}/output",key=sample_id.keys(), bins_recluster=bin_dir_names_recluster), ## WHEN USING THIS MAKE SURE NOT TO RERUN ANYTHING
+        directory = expand(OUTDIR / "{key}/reclustering/{bins_recluster}/output",key=sample_id.keys(), bins_recluster=bin_dir_names_recluster), ## WHEN USING THIS MAKE SURE NOT TO RERUN ANYTHING
         # With checkm
         # 
         ## !! These are used on jun 14 !!
-        checkm2 = expand(OUTDIR /  "{key}/tmp/checkm.done",key=sample_id.keys()), ## WHEN USING THIS MAKE SURE NOT TO RERUN ANYTHING
-        directory = expand(OUTDIR / "{key}/checkm2/reclustering/{bins_recluster}",key=sample_id.keys(), bins_recluster=bin_dir_names_recluster), 
-        checkm_default_vamb = expand(OUTDIR /  "{key}/checkm2/default_vamb",key=sample_id.keys()),
+        # checkm2 = expand(OUTDIR /  "{key}/tmp/checkm.done",key=sample_id.keys()), ## WHEN USING THIS MAKE SURE NOT TO RERUN ANYTHING
+        # directory = expand(OUTDIR / "{key}/checkm2/reclustering/{bins_recluster}",key=sample_id.keys(), bins_recluster=bin_dir_names_recluster), 
+        # checkm_default_vamb = expand(OUTDIR /  "{key}/checkm2/default_vamb",key=sample_id.keys()),
+        # gunc = expand(OUTDIR /  "{key}/tmp/gunc.done",key=sample_id.keys()), ## WHEN USING THIS MAKE SURE NOT TO RERUN ANYTHING
 
-rule Reclustering:
+rule run_comebin_checkm:
     input:
-        # checkm_semibin = expand(OUTDIR /  "{key}/checkm2/semibin_LR", key=sample_id.keys()),
+        checkm_comebin = expand(OUTDIR /  "{key}/checkm2/comebin", key=sample_id.keys()),
+
+rule metabat_cami:
+    input:
+        checkm_metabat = expand(OUTDIR /  "{key}/checkm2/metabat", key=sample_id.keys()),
+
+rule comebin_madnessReclustering:
+    input:
+        checkm_comebin = expand(OUTDIR /  "{key}/checkm2/comebin", key=sample_id.keys()),
+        # bins = expand(OUTDIR / "{key}/comebin/comebin_res/comebin_res_bins", key=sample_id.keys())
+
+rule metadecoder_madnessReclustering:
+    input:
         # checkm_comebin = expand(OUTDIR /  "{key}/checkm2/comebin", key=sample_id.keys()),
+        checkm_metadecoder = expand(OUTDIR /  "{key}/checkm2/metadecoder", key=sample_id.keys()),
+
+rule madnessReclustering:
+    input:
+        checkm_semibin = expand(OUTDIR /  "{key}/checkm2/semibin", key=sample_id.keys()),
+        # checkm_comebin = expand(OUTDIR /  "{key}/checkm2/comebin", key=sample_id.keys()),
+        # checkm_metabat = expand(OUTDIR /  "{key}/checkm2/metabat", key=sample_id.keys()),
+        # checkm_metadecoder = expand(OUTDIR /  "{key}/checkm2/metadecoder", key=sample_id.keys()),
+        # 
         # For CAMI without checkm
         # directory = expand(OUTDIR / "{key}/reclustering/{bins_recluster}/output",key=sample_id.keys(), bins_recluster=bin_dir_names_recluster), ## WHEN USING THIS MAKE SURE NOT TO RERUN ANYTHING
         # With checkm
         # 
         ## !! These are used on jun 14 !!
         # checkm2 = expand(OUTDIR /  "{key}/tmp/checkm.done",key=sample_id.keys()), ## WHEN USING THIS MAKE SURE NOT TO RERUN ANYTHING
-        directory = expand(OUTDIR / "{key}/checkm2/reclustering/{bins_recluster}",key=sample_id.keys(), bins_recluster=bin_dir_names_recluster), 
+        # directory = expand(OUTDIR / "{key}/checkm2/reclustering/{bins_recluster}",key=sample_id.keys(), bins_recluster=bin_dir_names_recluster), 
+        # checkm_default_vamb = expand(OUTDIR /  "{key}/checkm2/default_vamb",key=sample_id.keys()),
+
+rule aeroReclustering:
+    input:
+        checkm_semibin = expand(OUTDIR /  "{key}/checkm2/semibin", key=sample_id.keys()),
+        # checkm_comebin = expand(OUTDIR /  "{key}/checkm2/comebin", key=sample_id.keys()),
         # checkm_metabat = expand(OUTDIR /  "{key}/checkm2/metabat", key=sample_id.keys()),
-        checkm_default_vamb = expand(OUTDIR /  "{key}/checkm2/default_vamb",key=sample_id.keys()),
+        # checkm_metadecoder = expand(OUTDIR /  "{key}/checkm2/metadecoder", key=sample_id.keys()),
+        # 
+        # For CAMI without checkm
+        # directory = expand(OUTDIR / "{key}/reclustering/{bins_recluster}/output",key=sample_id.keys(), bins_recluster=bin_dir_names_recluster), ## WHEN USING THIS MAKE SURE NOT TO RERUN ANYTHING
+        # With checkm
+        # 
+        ## !! These are used on jun 14 !!
+        # checkm2 = expand(OUTDIR /  "{key}/tmp/checkm.done",key=sample_id.keys()), ## WHEN USING THIS MAKE SURE NOT TO RERUN ANYTHING
+        # directory = expand(OUTDIR / "{key}/checkm2/reclustering/{bins_recluster}",key=sample_id.keys(), bins_recluster=bin_dir_names_recluster), 
+        # checkm_default_vamb = expand(OUTDIR /  "{key}/checkm2/default_vamb",key=sample_id.keys()),
+
+rule Reclustering:
+    input:
+        # checkm_semibin = expand(OUTDIR /  "{key}/checkm2/semibin", key=sample_id.keys()),
+        # checkm_comebin = expand(OUTDIR /  "{key}/checkm2/comebin", key=sample_id.keys()),
+        # checkm_comebin = expand(OUTDIR /  "{key}/checkm2/comebin", key=sample_id.keys()),
+        # checkm_metadecoder = expand(OUTDIR /  "{key}/checkm2/metadecoder", key=sample_id.keys()),
+        # checkm_metabat = expand(OUTDIR /  "{key}/checkm2/metabat", key=sample_id.keys()),
+        # For CAMI without checkm
+        # directory = expand(OUTDIR / "{key}/reclustering/{bins_recluster}/output",key=sample_id.keys(), bins_recluster=bin_dir_names_recluster), ## WHEN USING THIS MAKE SURE NOT TO RERUN ANYTHING
+        # With checkm
+        # 
+        ## !! These are used on jun 14 !!
+        checkm2 = expand(OUTDIR /  "{key}/tmp/checkm.done",key=sample_id.keys()), ## WHEN USING THIS MAKE SURE NOT TO RERUN ANYTHING
+        # directory = expand(OUTDIR / "{key}/checkm2/reclustering/{bins_recluster}",key=sample_id.keys(), bins_recluster=bin_dir_names_recluster), 
+        # checkm_default_vamb = expand(OUTDIR /  "{key}/checkm2/default_vamb",key=sample_id.keys()),
+        # checkm_metabat = expand(OUTDIR /  "{key}/checkm2/metabat", key=sample_id.keys()),
+        # checkm_default_vamb = expand(OUTDIR /  "{key}/checkm2/default_vamb",key=sample_id.keys()),
 
 
 rule Checkm_reclustering:
@@ -424,16 +480,20 @@ rulename = "format_bins_class_recluster"
 rule rename_vamb:
     input:
         bins = os.path.join(OUTDIR,"{key}",'vamb_default','vae_clusters_split.tsv'),
+        latent = os.path.join(OUTDIR, '{key}','vamb_default/latent.npz'),
     output:
         bins = os.path.join(OUTDIR,"{key}",'vamb_default','vaevae_clusters_split.tsv'),
+        latent = os.path.join(OUTDIR, '{key}','vamb_default/vaevae_latent.npz'),
     threads: threads_fn(rulename)
     resources: walltime = walltime_fn(rulename), mem_gb = mem_gb_fn(rulename), gpu=gpu_fn(rulename)
     shell:
         """
             cp {input.bins} {output.bins}
+            cp {input.latent} {output.latent}
         """
 
-rule recluster_LR:
+rulename = "recluster"
+rule recluster:
     input: 
         contigs_decompressed = OUTDIR /  "{key}/metadecoder/{key}_contigs.flt.fna",
         directory = lambda wildcards: all_bin_dirs_recluster[wildcards.bins_recluster],
@@ -458,8 +518,7 @@ rule recluster_LR:
         {input.contigs_decompressed} \
         {output.headers} \
         {output.directory} \
-        dbscan \
-        # kmeans \
+        kmeans \
         """
         # --hmmout_path \
         # {input.hmm_path} \
@@ -804,7 +863,7 @@ include: THIS_FILE_DIR / "snakemake_modules/metadecoder.smk"
 include: THIS_FILE_DIR / "snakemake_modules/semibin.smk"
 include: THIS_FILE_DIR / "snakemake_modules/taxonomy_classifiers.smk"
 include: THIS_FILE_DIR / "snakemake_modules/gunc.smk"
-include: THIS_FILE_DIR / "snakemake_modules/extra_taxonomy_classifiers.smk"
+include: THIS_FILE_DIR / "snakemake_modules/va_extra_taxonomy_classifiers.smk"
 
 
 
@@ -828,15 +887,12 @@ rule semibin_checkm_2:
 import os
 
 # Define the base directory for your data
-BASE_DIR = "/maps/projects/rasmussen/data/taxvamb_benchmarks/taxvamb_benchmarks/resubmission/data/data_ar"
-name = ""
-dataset = "data_ar"
-OUTDIR = OUTDIR/ "data_ar"
+BASE_DIR = "/maps/projects/rasmussen/data/taxvamb_benchmarks/taxvamb_benchmarks/data/PRJNA949880_aerosol_subset"
 
 # Get a list of all sample IDs from your fastq files
 # This assumes your fastq files are named like SRRXXXXXXX_1.fastq and SRRXXXXXXX_2.fastq
 SAMPLES = sorted(list(set([os.path.basename(f).split('_')[0] for f in os.listdir(BASE_DIR) if f.endswith('.fastq')])))
-print(SAMPLES)
+
 # Define a function to get the forward and reverse reads for a given sample
 # Modified to return a list of paths directly
 def get_fastq_reads(wildcards):
@@ -844,14 +900,12 @@ def get_fastq_reads(wildcards):
     rv_read = os.path.join(BASE_DIR, f"{wildcards.sample}_2.fastq")
     return [fw_read, rv_read] # Return a list of paths
 
-print("OUT", OUTDIR / "assembly_mapping_output/mapped/{sample}.bam")
 rule all_spades:
     input:
         # This rule ensures that Snakemake knows what to build.
         # It will create an output directory for each sample processed by spades.
-        # expand(os.path.join(OUTDIR, "spades_output", "{dataset}/{sample}"), sample=SAMPLES, dataset = dataset) # For running spades
+        # expand(os.path.join(OUTDIR, "spades_output", "{sample}"), sample=SAMPLES)
         bamfiles_before_out = expand(OUTDIR / "assembly_mapping_output/mapped/{sample}.bam", sample=SAMPLES)
-        # expand("data/sample_{sample}/reads_fastp/1.qc.fastq.gz", sample=SAMPLES) # For running QC
 
 # rulename = "spades"
 # rule qc:
@@ -859,26 +913,22 @@ rule all_spades:
 #         get_fastq_reads
 #     output:
 #         read_fw_after_fastp = "data/sample_{sample}/reads_fastp/1.qc.fastq.gz",
-#         read_rv_after_fastp =  "data/sample_{sample}/reads_fastp/2.qc.fastq.gz",
-#         report = "fastp_report/sample_{sample}.html",
+#         read_rv_after_fastp =  "data/sample_{sample}/reads_fastp/2.qc.fastq.gz"
 #     threads: threads_fn(rulename)
 #     resources: walltime = walltime_fn(rulename), mem_gb = mem_gb_fn(rulename), gpu=gpu_fn(rulename)
 #     conda: THIS_FILE_DIR / "envs/fastp.yaml"
 #     shell:
 #             'fastp -i {input[0]} -I {input[1]} '
 #             '-o {output.read_fw_after_fastp} -O {output.read_rv_after_fastp} --trim_tail1 1 --cut_tail --trim_poly_g --dedup --length_required 80 '
-#             '--thread {threads} -h {output.report}'
+#             '--thread {threads} '
 
 # rulename = "spades"
 # rule spades_2:
 #     input:
-#         get_fastq_reads,
-#         # "data/sample_{sample}/reads_fastp/1.qc.fastq.gz", # to force snakemake to run QC
-#         # read_fw_after_fastp = "data/sample_{sample}/reads_fastp/1.qc.fastq.gz",
-#         # read_rv_after_fastp =  "data/sample_{sample}/reads_fastp/2.qc.fastq.gz"
+#         read_fw_after_fastp = "data/sample_{sample}/reads_fastp/1.qc.fastq.gz",
+#         read_rv_after_fastp =  "data/sample_{sample}/reads_fastp/2.qc.fastq.gz"
 #     output:
-#         # outdir = directory(os.path.join(OUTDIR, "spades_output", "{sample}"))
-#         outdir = directory(os.path.join(OUTDIR, "spades_output", "{dataset}/{sample}"))
+#         outdir = directory(os.path.join(OUTDIR, "spades_output", "{sample}"))
 #     threads: threads_fn(rulename)
 #     resources: walltime = walltime_fn(rulename), mem_gb = mem_gb_fn(rulename), gpu=gpu_fn(rulename)
 #     conda: THIS_FILE_DIR / "envs/spades_env.yaml"
@@ -887,8 +937,8 @@ rule all_spades:
 #        "-t {threads} -k 21,33,55,77,99 "
 #         "-o {output.outdir} -1 {input[0]} -2 {input[1]} "
 #        "-t {threads} --memory {resources.mem_gb}" 
-#
-#
+
+
 INDEX_SIZE = "12G" # get_config("index_size", "12G", r"[1-9]\d*[GM]$")
 # Index resulting contig-file with minimap2
 rulename = "minimap"
@@ -901,8 +951,8 @@ read_rv_after_fastp =  "data/sample_{sample}/reads_fastp/2.qc.fastq.gz"
 # Cat the contigs together in one file to later map each pair of reads against all the contigs together
 rule cat_contigs_2:
     input: 
-        expand(os.path.join(OUTDIR.parent, "spades_output/data_ar", "{sample}", "contigs.fasta"), sample = SAMPLES),
-    output: OUTDIR / "spades_output"/ name / "contigs.flt.fna.gz"
+        expand(os.path.join(OUTDIR, "spades_output", "{sample}", "contigs.fasta"), sample = SAMPLES),
+    output: OUTDIR / "spades_output/contigs.flt.fna.gz"
     threads: threads_fn(rulename)
     params: script =  SRC_DIR / "concatenate.py"
     resources: walltime = walltime_fn(rulename), mem_gb = mem_gb_fn(rulename), gpu=gpu_fn(rulename)
@@ -913,9 +963,9 @@ rule cat_contigs_2:
 
 rule index:
     input:
-        contigs = OUTDIR / "spades_output" / name / "contigs.flt.fna.gz"    
+        contigs = OUTDIR / "spades_output/contigs.flt.fna.gz"    
     output:
-        mmi = os.path.join(OUTDIR, "spades_output", name, "contigs.flt.mmi")
+        mmi = os.path.join(OUTDIR, "spades_output", "contigs.flt.mmi")
     threads: threads_fn(rulename)
     resources: walltime = walltime_fn(rulename), mem_gb = mem_gb_fn(rulename), gpu=gpu_fn(rulename)
     conda: 
@@ -931,9 +981,9 @@ rule index:
 # rule.
 rule dict:
     input:
-        contigs = OUTDIR / "spades_output" / name /  "contigs.flt.fna.gz"    
+        contigs = OUTDIR / "spades_output/contigs.flt.fna.gz"    
     output:
-        dict = os.path.join(OUTDIR,"spades_output", name, "contigs.flt.dict")  
+        dict = os.path.join(OUTDIR,"spades_output", "contigs.flt.dict")  
     threads: threads_fn(rulename)
     resources: walltime = walltime_fn(rulename), mem_gb = mem_gb_fn(rulename), gpu=gpu_fn(rulename)
     conda:
@@ -945,11 +995,10 @@ bamfiles_before = OUTDIR / "assembly_mapping_output/mapped/{sample}.bam"
 # Generate bam files 
 rule minimap:
     input:
-        # fw = read_fw_after_fastp,
-        # rv = read_rv_after_fastp,
-        reads = get_fastq_reads,
-        mmi = os.path.join(OUTDIR, "spades_output",name,  "contigs.flt.mmi"),
-        dict = os.path.join(OUTDIR,"spades_output", name, "contigs.flt.dict"),
+        fw = read_fw_after_fastp,
+        rv = read_rv_after_fastp,
+        mmi = os.path.join(OUTDIR, "spades_output", "contigs.flt.mmi"),
+        dict = os.path.join(OUTDIR,"spades_output", "contigs.flt.dict"),
     output:
         bam = bamfiles_before, 
         # bam = temp(os.path.join(OUTDIR,"mapped/{sample}.bam"))
@@ -958,8 +1007,7 @@ rule minimap:
         THIS_FILE_DIR / "envs/minimap2.yaml"
     shell:
         # See comment over rule "dict" to understand what happens here
-        # "minimap2 -t {threads} -ax sr {input.mmi} {input.fw} {input.rv} -N 5"
-        "minimap2 -t {threads} -ax sr {input.mmi} {input.reads[0]} {input.reads[1]} -N 5"
+        "minimap2 -t {threads} -ax sr {input.mmi} {input.fw} {input.rv} -N 5"
         " | grep -v '^@'"
         " | cat {input.dict} - "
         " | samtools view -F 3584 -b - " # supplementary, duplicate read, fail QC check
