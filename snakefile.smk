@@ -94,6 +94,22 @@ rule sort:
 	samtools sort --threads {threads} {input} -o {output} 2> {log}
 	"""
 
+rule all:
+    input:
+        # checkm_semibin = expand(OUTDIR /  "{key}/checkm2/semibin", key=sample_id.keys()),
+        # checkm_comebin = expand(OUTDIR /  "{key}/checkm2/comebin", key=sample_id.keys()),
+        # checkm_metadecoder = expand(OUTDIR /  "{key}/checkm2/metadecoder", key=sample_id.keys()),
+        # checkm_metabat = expand(OUTDIR /  "{key}/checkm2/metabat", key=sample_id.keys()),
+        checkm_default_vamb = expand(OUTDIR /  "{key}/checkm2/default_vamb",key=sample_id.keys()),
+
+# rule all_with_recluster:
+#     input:
+#         checkm_semibin = expand(OUTDIR /  "{key}/checkm2/semibin", key=sample_id.keys()),
+#         checkm_comebin = expand(OUTDIR /  "{key}/checkm2/comebin", key=sample_id.keys()),
+#         checkm_metadecoder = expand(OUTDIR /  "{key}/checkm2/metadecoder", key=sample_id.keys()),
+#         checkm_default_vamb = expand(OUTDIR /  "{key}/checkm2/default_vamb",key=sample_id.keys()),
+#         checkm_metabat = expand(OUTDIR /  "{key}/checkm2/metabat", key=sample_id.keys()),
+
 ## Include the specific rules for each tool
 include: THIS_FILE_DIR / "snakemake_modules/vamb_default.smk"
 include: THIS_FILE_DIR / "snakemake_modules/metabat.smk"
@@ -122,15 +138,13 @@ all_bin_dirs_recluster = {
 }
 bin_dir_names_recluster = all_bin_dirs_recluster.keys()
 
-rule all:
-    input:
-        # checkm_semibin = expand(OUTDIR /  "{key}/checkm2/semibin", key=sample_id.keys()),
-        # checkm_comebin = expand(OUTDIR /  "{key}/checkm2/comebin", key=sample_id.keys()),
-        # checkm_metadecoder = expand(OUTDIR /  "{key}/checkm2/metadecoder", key=sample_id.keys()),
-        # checkm_default_vamb = expand(OUTDIR /  "{key}/checkm2/default_vamb",key=sample_id.keys()),
-        # checkm_metabat = expand(OUTDIR /  "{key}/checkm2/metabat", key=sample_id.keys()),
+
+
+
         # reclustering = expand(OUTDIR / "{key}/reclustering/{bins_recluster}/output",key=sample_id.keys(), bins_recluster=bin_dir_names_recluster), 
-        checkm2 = expand(OUTDIR /  "{key}/tmp/checkm.done",key=sample_id.keys()), 
+
+
+        # checkm2 = expand(OUTDIR /  "{key}/tmp/checkm.done",key=sample_id.keys()), 
 
 rule Checkm_reclustering:
     input:

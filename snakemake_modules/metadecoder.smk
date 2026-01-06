@@ -1,4 +1,4 @@
-# This older version of metadecoder used in the paper only takes in sam files..
+# Metadecoder only takes in sam files: convert the bam files to samfiles
 rule bam_to_sam:
     input:
         bamfile = OUTDIR / "{key}/assembly_mapping_output/mapped_sorted/{id}.sort.bam"
@@ -76,20 +76,11 @@ rule metadecoder:
     conda: THIS_FILE_DIR / "envs/meta_decoder_2.yaml"
     shell:
         """
-        # rm contigs.flt.fna.2500.metadecoder.dpgmm
-        # rm contigs.flt.fna.2500.metadecoder.kmers
-
-
-
-        # module load cuda/12.2
-        # which pip
-        # pip install cupy-cuda12x
         # Actually cluster 
         metadecoder cluster -f {input.contigs_decompressed} -c {input.coverage_file} -s {input.seed} -o {output.metadecoder}
         echo metadecoder cluster done
         mkdir -p {output.metadecoder}
         """
-
 
 rulename = "metadecoder_checkm"
 rule metadecoder_checkm:

@@ -16,34 +16,11 @@ rule run_vamb:
     conda: THIS_FILE_DIR / "envs/vamb.yaml"
     shell:
         """
-        # dont mind me
-        rm -rf {output.directory}
+        rm -rf {output.directory} # clean up dir eg. for failed runs
         vamb bin default --cuda --outdir {output.directory} --fasta {input.contigs} -p {threads} --bamfiles {input.bamfiles} &> {log}
         """
 
-# Run taxvamb 
-rulename = "format_bins_default_vamb"
-rule format_bins_default_vamb:
-    input:
-        contigs = OUTDIR /  "{key}/metadecoder/{key}_contigs.flt.fna",
-        directory = directory(os.path.join(OUTDIR,"{key}", 'vamb_default')),
-        bins = os.path.join(OUTDIR,"{key}",'vamb_default','vae_clusters_split.tsv'),
-    output:
-        directory = directory(os.path.join(OUTDIR,"{key}", 'vamb_default_bins')),
-    params:
-        create_fasta = SRC_DIR / "create_fasta.py"
-    threads: threads_fn(rulename)
-    resources: walltime = walltime_fn(rulename), mem_gb = mem_gb_fn(rulename), gpu=gpu_fn(rulename)
-    benchmark: config.get("benchmark", "benchmark/") + "{key}_" + rulename
-    log: config.get("log", f"{str(OUTDIR)}/log/") + "{key}_" + rulename
-    conda: THIS_FILE_DIR / "envs/vamb.yaml"
-    shell:
-        """
-            rm -rf {output.directory} # clean up dir eg. for failed runs
-            python {params.create_fasta} {input.contigs} {input.bins} 200000 {output.directory} 
-        """
-
-# Run taxvamb 
+# Format bins as fasta files as checkm require this. Filter out bins smaller than 200_000 bp
 rulename = "format_bins_default_vamb_filtered"
 rule format_bins_default_vamb_filtered:
     input:

@@ -1,5 +1,4 @@
 
-# https://github.com/BigDataBiology/SemiBin
 rulename = "comebin"
 rule comebin:
     input:
@@ -11,13 +10,11 @@ rule comebin:
         bins = directory(OUTDIR / "{key}/comebin/comebin_res/comebin_res_bins"),
     params:
         bamfiles_dir = "{key}/assembly_mapping_output/mapped_sorted",
-        # comebin = OUTDIR /  "{key}/come",
     threads: threads_fn(rulename)
     resources: walltime = walltime_fn(rulename), mem_gb = mem_gb_fn(rulename), gpu=gpu_fn(rulename)
     benchmark: config.get("benchmark", "benchmark/") + "{key}_" + rulename
     log: config.get("log", f"{str(OUTDIR)}/log/") + "{key}_" + rulename
-    # conda: THIS_FILE_DIR / "envs/comebin.yaml"
-    conda: "GPUcomebin"
+    conda: THIS_FILE_DIR / "envs/comebin.yaml"
     shell:
         """
         run_comebin.sh -a {input.contigs_decompressed} \

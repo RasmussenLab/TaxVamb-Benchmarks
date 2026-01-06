@@ -27,6 +27,9 @@ default_walltime: "20-00:00:00"
 default_threads: 64
 default_mem_gb: 250
 
+# semibin_use_gpu: False
+semibin_use_gpu: True
+
 ## Specific rule resources
 # Below is the specific resources defined for the various rules in the pipeline 
 # If no specific resources are defined for a rule, the default will be used instead.
@@ -44,18 +47,6 @@ bam_to_sam:
   walltime: "20-00:00:00"
   mem_gb: 30
   threads: 2
-
-run_geNomad:
-  walltime: "20-00:00:00"
-  mem_gb: 500
-  threads: 64
-  gpu: " --partition=gpuqueue --gres=gpu:1 "
-
-download_genomad_db:
-  walltime: "20-00:00:00"
-  mem_gb: 500
-  threads: 64
-  gpu: " --partition=gpuqueue --gres=gpu:1 "
 
 run_taxvamb_kraken:
   walltime: "20-00:00:00"

@@ -36,7 +36,6 @@ rule metabat:
         """
 
 
-# NOTE: moved files to metabat/ dir. Should be default when running the tool now: works with other files in bin dir as --extension filters out correctly
 rulename = "metabat_checkm"
 rule metabat_checkm:
     input: 

@@ -7,7 +7,7 @@ This is the code for the workflow for creating most of the benchmarks in the Tax
 Clone the repository and install the package using conda
 
 ```
-git clone https://github.com/RasmussenLab/PlasMAAG
+git clone https://github.com/las02/taxvamb_paper_benchmarks
 conda env create -n Benchmark_binners --file=taxvamb_paper_benchmarks/envs/benchmark_env.yaml
 ```
 To use the program activate the conda environment
@@ -19,14 +19,14 @@ Metabat is available as an docker image. To run it it is necessary to have singu
 See [documentation](https://docs.sylabs.io/guides/3.0/user-guide/installation.html) for how to install the software
 
 The workflows runs several taxonomy annotation tools and checkm, which all require databases.  
-These databases should be installed and their paths set in the config file at config/config.yaml,
+These databases should be installed and their paths set in the config file at config/config.yaml:
 
 | Tool | Database Version | Description / Notes |
 | :--- | :--- | :--- |
-| **Metabuli** | GTDB v214.1 + T2T-CHM13v2.0 | Default database; filtered for Complete Genome/Chromosome, CheckM completeness > 90%, and contamination < 5%. Install using `metabuli databases` option|
-| **MMseqs2** | GTDB | Installed using the `mmseqs databases` option |
-| **MMseqs2** | TrEMBL | Installed using the `mmseqs databases` option |
-| **MMseqs2** | Kalmari | Installed using the `mmseqs databases` option |
+| **Metabuli** | GTDB v214.1 + T2T-CHM13v2.0 |Default database: Complete Genome/Chromosome, CheckM completeness > 90 and contamination < 5 + A human genome (T2T-CHM13v2.0). Installed using `metabuli databases` option|
+| **MMseqs2** | GTDB v220 | Installed using the `mmseqs databases` option |
+| **MMseqs2** | TrEMBL Release 2025_01 | Installed using the `mmseqs databases` option |
+| **MMseqs2** | Kalmari (v3.7) | Installed using the `mmseqs databases` option |
 | **Centrifuge** | NCBI RefSeq Release 229 | See https://www.ccb.jhu.edu/software/centrifuge/manual.shtml under 'Database download and index building' |
 | **Kraken2** | Standard RefSeq (2024-12-28) | Pre-built index from [Langmead AWS](https://benlangmead.github.io/aws-indexes/k2). Includes archaea, bacteria, viral, plasmid, human, and UniVec_Core. |
 | **Checkm** | Diamond db | Install using `checkm2 database --download`|
@@ -37,7 +37,7 @@ These databases should be installed and their paths set in the config file at co
 
 To dryrun the pipeline run
 ```
-make benchmark_dryrun <bam_config_file>
+make benchmark_dryrun config=<bam_config_file>
 ```
 
 The <bam_contig_file> should look like:
@@ -55,9 +55,35 @@ The input files are the following
 2) BAM file(s) from mapping short reads to the concatenated contig file
 
 
+### Resources 
+The pipeline can be configurated in: ``` config/config.yaml ```
+
+Here, the resources for each rule can be configurated as follows
+```
+spades:
+  walltime: "15-00:00:00"
+  threads: 16
+  mem_gb: 60
+```
+if no resources are configurated for a rule the defaults will be used which are also defined in: ``` config/config.yaml ```  as
+```
+default_walltime: "48:00:00"
+default_threads: 16
+default_mem_gb: 50
+```
+If these exceed the resources available they will be scaled down to match the hardware available. 
+
+#### Using GPU
+##### Taxvamb and Vamb
+
+##### Semibin
+To use semibin with gpu in config/config.yaml set
+`semibin_use_gpu: False` to True
+Due to cuda problems we in this rule we use our HPC specific cuda modules: `module load cuda/12.2`. Therefore to get semibin to run on GPU you might need to play around with the 'semibinGPU' rule in snakemake_modules/semibin.smk
 
 
-
+#### For longread datasets
+For the longread benchmarks use semibin with the `--sequencing-type=long_read` flag.
 
 ---------------
 ### Running on a cluster with snakemake submiting jobs 
@@ -96,5 +122,3 @@ default_mem_gb: 50
 ```
 If these exceed the resources available they will be scaled down to match the hardware available. 
 
-#### Long read
-For longread change the semibin commands to use it's LR mode.
