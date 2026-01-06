@@ -2,7 +2,7 @@
 
 This is the code for creating the benchmarks for the taxvamb paper for the benchmarking the following binners:
 - Taxvamb with different classifiers and databases:
-  - Kalamari = GTDB
+  - Kalamari + GTDB
   - MMseqs + GTDB / TrEMBL/ Kalmari
   - Centrifuge + NCBI RefSEQ
   - Kraken2 + NCBI RefSEQ
@@ -12,6 +12,7 @@ This is the code for creating the benchmarks for the taxvamb paper for the bench
 - Metadecoder
 Additionally, each binner is assesed using checkm2 and GUNC - with all vamb derrived binners being assesed before and after reclustering.  
 
+The orginal workflow was ran on the ESRUM cluster: https://cbmr-data.github.io/esrum/overview.html
 
 ## Installation
 
@@ -107,4 +108,7 @@ Due to cuda problems we in this rule we use our HPC specific cuda modules: `modu
 
 #### For longread datasets
 For the longread benchmarks use semibin with the `--sequencing-type=long_read` flag.
+
+#### Running taxvamb/vamb without predictor
+For the taxvamb/vamb runs pass in the --no_predictor flag
 

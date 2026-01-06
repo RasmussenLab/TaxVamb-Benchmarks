@@ -74,7 +74,7 @@ rule run_taxvamb_kalmari:
         mmseqs2_out = OUTDIR /  "{key}/classifiers/mmseqs2/kalmari_lca.tsv",
     output:
         directory = directory(os.path.join(OUTDIR,"{key}", 'kalmari_taxvamb_default')),
-        bins = os.path.join(OUTDIR,"{key}",'kalmari_taxvamb_default','vaevae_clusters_split.tsv'),
+        bins = OUTDIR / "{key}/kalmari_taxvamb_default/vaevae_clusters_split.tsv",
         compo = os.path.join(OUTDIR, '{key}','kalmari_taxvamb_default/composition.npz'),
     threads: threads_fn(rulename)
     params: script =THIS_FILE_DIR / "files_used_in_snakemake_workflow/format_trembl_kalmari.py"
@@ -105,7 +105,7 @@ rule run_taxvamb_gtdb_w_unknown:
         mmseqs2_out = OUTDIR /  "{key}/classifiers/mmseqs2/gtdb_lca.tsv",
     output:
         directory = directory(os.path.join(OUTDIR,"{key}", 'gtdb_taxvamb_default_w_unknown')),
-        bins = os.path.join(OUTDIR,"{key}",'gtdb_taxvamb_default_w_unknown','vaevae_clusters_split.tsv'),
+        bins = OUTDIR / "{key}/gtdb_taxvamb_default_w_unknown/vaevae_clusters_split.tsv",
         compo = os.path.join(OUTDIR, '{key}','gtdb_taxvamb_default_w_unknown/composition.npz'),
     threads: threads_fn(rulename)
     resources: walltime = walltime_fn(rulename), mem_gb = mem_gb_fn(rulename), gpu=gpu_fn(rulename)
@@ -130,7 +130,7 @@ rule run_taxvamb_trembl:
         mmseqs2_out = OUTDIR /  "{key}/classifiers/mmseqs2/trembl_lca.tsv",
     output:
         directory = directory(os.path.join(OUTDIR,"{key}", 'trembl_taxvamb_default')),
-        bins = os.path.join(OUTDIR,"{key}",'trembl_taxvamb_default','vaevae_clusters_split.tsv'),
+        bins = OUTDIR / "{key}/trembl_taxvamb_default/vaevae_clusters_split.tsv",
         compo = os.path.join(OUTDIR, '{key}','trembl_taxvamb_default/composition.npz'),
     threads: threads_fn(rulename)
     resources: walltime = walltime_fn(rulename), mem_gb = mem_gb_fn(rulename), gpu=gpu_fn(rulename)

@@ -28,7 +28,7 @@ default_threads = config.get("default_threads", 16)
 default_mem_gb = config.get("default_mem_gb", 50)
 default_gpu = ""
 use_minimap = config.get("use_minimap", True)
-vamb_use_gpu = False
+vamb_use_gpu = config.get("vamb_use_gpu")
 vamb_extra_arg = ""
 if vamb_use_gpu:
     vamb_extra_arg = "--cuda"
@@ -98,13 +98,21 @@ rule sort:
 	samtools sort --threads {threads} {input} -o {output} 2> {log}
 	"""
 
+
+
+
 rule all:
     input:
+        checkm2 = expand(OUTDIR /  "{key}/tmp/checkm.done",key=sample_id.keys()), ## WHEN USING THIS MAKE SURE NOT TO RERUN ANYTHING
         # checkm_semibin = expand(OUTDIR /  "{key}/checkm2/semibin", key=sample_id.keys()),
         # checkm_comebin = expand(OUTDIR /  "{key}/checkm2/comebin", key=sample_id.keys()),
         # checkm_metadecoder = expand(OUTDIR /  "{key}/checkm2/metadecoder", key=sample_id.keys()),
         # checkm_metabat = expand(OUTDIR /  "{key}/checkm2/metabat", key=sample_id.keys()),
-        checkm_default_vamb = expand(OUTDIR /  "{key}/checkm2/default_vamb",key=sample_id.keys()),
+        # checkm_default_vamb = expand(OUTDIR /  "{key}/checkm2/default_vamb",key=sample_id.keys()),
+
+
+
+
 
 
 
@@ -115,8 +123,9 @@ include: THIS_FILE_DIR / "snakemake_modules/comebin.smk"
 include: THIS_FILE_DIR / "snakemake_modules/metadecoder.smk"
 include: THIS_FILE_DIR / "snakemake_modules/semibin.smk"
 include: THIS_FILE_DIR / "snakemake_modules/taxvamb_using_mmseqs_classifications.smk"
+include: THIS_FILE_DIR / "snakemake_modules/run_checkm_on_all_taxvamb.smk"
 include: THIS_FILE_DIR / "snakemake_modules/gunc.smk"
-include: THIS_FILE_DIR / "snakemake_modules/va_extra_taxonomy_classifiers.smk"
+# include: THIS_FILE_DIR / "snakemake_modules/va_extra_taxonomy_classifiers.smk"
 
 
 ## Collecting
