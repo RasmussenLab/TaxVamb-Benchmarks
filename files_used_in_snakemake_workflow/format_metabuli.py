@@ -1,3 +1,5 @@
+# Script to ensure that the format of the metabulti database outputs are consistent with the fomrat taxvamb expect
+
 from pathlib import Path
 
 import typer

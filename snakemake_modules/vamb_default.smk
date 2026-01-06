@@ -17,7 +17,7 @@ rule run_vamb:
     shell:
         """
         rm -rf {output.directory} # clean up dir eg. for failed runs
-        vamb bin default --cuda --outdir {output.directory} --fasta {input.contigs} -p {threads} --bamfiles {input.bamfiles} &> {log}
+        vamb bin default {vamb_extra_arg} --outdir {output.directory} --fasta {input.contigs} -p {threads} --bamfiles {input.bamfiles} &> {log}
         """
 
 # Format bins as fasta files as checkm require this. Filter out bins smaller than 200_000 bp

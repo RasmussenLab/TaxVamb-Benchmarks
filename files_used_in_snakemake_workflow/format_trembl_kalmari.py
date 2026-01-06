@@ -1,6 +1,4 @@
-# Before
-# cut -f1,5 kalmari_lca.tsv > cut.tsv
-# cut -f1,9 kalmari_lca.tsv > cut.tsv
+# Script to ensure that the format of the kalmari and trembl database outputs are consistent with the fomrat taxvamb expect
 
 import enum
 from pathlib import Path
@@ -136,93 +134,8 @@ def main(file: Path):
             print(f"{name}\t{tax}")
             # print(name)
 
-
-# # %%
-# levels = [
-#     "s",
-#     "g",
-#     "f",
-#     "o",
-#     "c",
-#     "p",
-#     "k",
-# ]
-#
-# # string = "-_cellular organisms;-_Bacteria;k_Pseudomonadati;p_Pseudomonadota;c_Alphaproteobacteria;o_Hyphomicrobiales;f_Rhizobiaceae;-_Sinorhizobium/Ensifer group;g_Sinorhizobium;-_Sinorhizobium fredii group;s_Sinorhizobium fredii"
-# # string = "-_cellular organisms;-_Bacteria;p_Pseudomonadota;c_Alphaproteobacteria;o_Hyphomicrobiales;f_Rhizobiaceae;-_Sinorhizobium/Ensifer group;g_Sinorhizobium;-_Sinorhizobium fredii group;s_Sinorhizobium fredii;hello_world"
-# string = "-_cellular organisms;-_Bacteria;k_Pseudomonadati;c_Alphaproteobacteria;o_Hyphomicrobiales;-_Sinorhizobium/Ensifer group;g_Sinorhizobium;-_Sinorhizobium fredii group;s_Sinorhizobium fredii"
-
-# %%
-
-
-# def fix_tax(string):
-#     formatted_tax = []
-#     last_tax = ""
-#     for i, tax in enumerate(string.split(";")):
-#         if (
-#             not tax.startswith(("-")) or i in [0, 1] or last_tax.startswith("s_")
-#         ):  # Filter out all taxnomy not all entries have. These start with -. But keep subspecies (which is last) and bacteria (which start with -)
-#             formatted_tax.append(tax)
-#         last_tax = tax
-#     print(formatted_tax)
-#     print(string)
-#     levels = [
-#         "s_",
-#         "g_",
-#         "f_",
-#         "o_",
-#         "c_",
-#         "p_",
-#         "k_",
-#     ]
-#     when_to_start = {
-#         "s_": -1,
-#         "g_": 0,
-#         "f_": 1,
-#         "o_": 2,
-#         "c_": 3,
-#         "p_": 4,
-#         "k_": 5,
-#     }
-#
-#     extra_tax_added = False
-#     tax_list = []
-#     prev = ""
-#     tocount = False
-#     when_to_start_set = False
-#     for tax in reversed(formatted_tax):
-#         start = tax[:2]
-#         if start in levels:
-#             tocount = True
-#             if not when_to_start_set:
-#                 count = when_to_start[start]
-#                 when_to_start_set = True
-#         if tocount:
-#             count += 1
-#             # print(levels[count], start, tax)
-#             breakpoint()
-#             if levels[count] == "k_":
-#                 tocount = False
-#             if levels[count] != start:
-#                 count += 1
-#                 tax_list.append("extra_tax_" + prev)
-#                 extra_tax_added = True
-#         tax_list.append(tax)
-#         # print(tax_list)
-#         prev = tax
-#         # print(tax, count)
-#     tax_list = list(reversed(tax_list))
-#     tax_list = ";".join(tax_list)
-#     return tax_list
-#     # if extra_tax_added:
-#     print(tax_list, "------", formatted_tax)
-
-
-# string = "-_cellularorganisms;-_Bacteria;k_Bacillati;p_Mycoplasmatota;o_Mycoplasmoidales;f_Mycoplasmoidaceae;g_Ureaplasma;s_Ureaplasmaparvum"
-# string = "-_cellular organisms;-_Eukaryota;p_Apicomplexa;c_Conoidasida"
 string = "-_cellular organisms;-_Bacteria;k_Pseudomonadati;p_Acidobacteriota;-_unclassified Acidobacteriota;s_Acidobacteriota bacterium"
 fix_tax(string)
-# %%
 
 if __name__ == "__main__":
     typer.run(main)

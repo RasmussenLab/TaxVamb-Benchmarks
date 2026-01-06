@@ -27,16 +27,12 @@ default_walltime: "20-00:00:00"
 default_threads: 64
 default_mem_gb: 250
 
-# semibin_use_gpu: False
 semibin_use_gpu: True
+vamb_use_gpu: True
 
 ## Specific rule resources
 # Below is the specific resources defined for the various rules in the pipeline 
 # If no specific resources are defined for a rule, the default will be used instead.
-minimap:
-  walltime: "20-00:00:00"
-  mem_gb: 250
-  threads: 34
 
 recluster:
   walltime: "20-00:00:00"
@@ -179,20 +175,18 @@ format_bins_class_filtered:
   walltime: "288:00:00"
   mem_gb: 50
   threads: 4
+
 metadecoder:
   walltime: "288:00:00"
   mem_gb: 1500
   threads: 127
   gpu: ""
+
 metadecoder_pre:
   walltime: "288:00:00"
   mem_gb: 1500
   threads: 127
 
-# gunc:
-#   walltime: "162:00:00"
-#   mem_gb: 100
-#   threads: 80
 metadecoder:
   walltime: "1088:00:00"
   mem_gb: 500
@@ -209,7 +203,7 @@ semibin:
   walltime: "288:00:00"
   mem_gb: 500
   threads: 127
-  # gpu: " --partition=gpuqueue --gres=gpu:1 "
+#
 semibinGPU:
   walltime: "1088:00:00"
   mem_gb: 500

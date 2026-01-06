@@ -1,47 +1,3 @@
-
-# rulename = "metabuli"
-# rule metabuli:
-#     input:
-#         contigs = contigs_all,
-#     output:
-#         metabuli= OUTDIR /  "{key}/classifiers/metabuli",
-#     params: 
-#         database = config.get("database")
-#     threads: threads_fn(rulename)
-#     resources: walltime = walltime_fn(rulename), mem_gb = mem_gb_fn(rulename)
-#     benchmark: config.get("benchmark", "benchmark/") + "{key}_" + rulename
-#     log: config.get("log", f"{str(OUTDIR)}/log/") + "{key}_" + rulename
-#     conda: THIS_FILE_DIR / "envs/metabuli.yaml"
-#     shell:
-#         """
-#         metabuli classify {input.contigs} {params.database} {output.metabuli} {wildcards.key} --seq-mode 1 --threads {threads}
-#         """
-# NOTE: does it work with gzipped fastafiles? 
-
-# metabuli classify <i:FASTA/Q> <i:DBDIR> <o:OUTDIR> <Job ID> [options]
-# - INPUT : FASTA/Q file of reads you want to classify. (gzip supported)
-# - DBDIR : The directory of reference DB. 
-# - OUTDIR : The directory where the result files will be generated.
-# - Job ID: It will be the prefix of result files.  
-#
-# # Paired-end
-# metabuli classify read_1.fna read_2.fna dbdir outdir jobid
-#
-# # Single-end
-# metabuli classify --seq-mode 1 read.fna dbdir outdir jobid
-#
-# # Long-read 
-# metabuli classify --seq-mode 3 read.fna dbdir outdir jobid
-#
-#   * Important parameters:
-#    --threads : The number of threads used (all by default)
-#    --max-ram : The maximum RAM usage. (128 GiB by default)
-#    --min-score : The minimum score to be classified 
-#    --min-sp-score : The minimum score to be classified at or below species rank. 
-#    --taxonomy-path: Directory where the taxonomy dump files are stored. (DBDIR/taxonomy by default)
-#    --accession-level : Set 1 to use accession level classification (0 by default). 
-#                        It is available when the DB is also built with accession level taxonomy.
-
 rulename = "mmseqs2_kalmari"
 rule mmseqs2_kalmari:
     input:
@@ -129,17 +85,14 @@ rule run_taxvamb_kalmari:
     shell:
         """
         pip install typer
-        # Format taxonomy file
-        # echo -e "contigs\tpredictions" > {input.mmseqs2_out}.formatted
-        # awk -F "\t" '{{print $1 "\t" $5 }}' {input.mmseqs2_out} >> {input.mmseqs2_out}.formatted
-        # sed 's/\t$/\tunknown/' {input.mmseqs2_out} |  awk -F "\t" '{{print $1 "\t" $5 }}' >> {input.mmseqs2_out}.formatted
 
+        # Make sure the taxonomy files produced by kalmari are in the format taxvamb expcts
         cut -f1,5 {input.mmseqs2_out} > {input.mmseqs2_out}.cut.tsv
         echo -e "contigs\tpredictions" > {input.mmseqs2_out}.formatted
         python {params.script} {input.mmseqs2_out}.cut.tsv >> {input.mmseqs2_out}.formatted
 
         rm -rf {output.directory}
-        vamb bin taxvamb --cuda --taxonomy {input.mmseqs2_out}.formatted --outdir {output.directory} --fasta {input.contigs} -p {threads} --bamfiles {input.bamfiles} # &> {log}
+        vamb bin taxvamb {vamb_extra_arg} --taxonomy {input.mmseqs2_out}.formatted --outdir {output.directory} --fasta {input.contigs} -p {threads} --bamfiles {input.bamfiles} # &> {log}
         """
 
 
@@ -165,33 +118,7 @@ rule run_taxvamb_gtdb_w_unknown:
         echo -e "contigs\tpredictions" > {input.mmseqs2_out}.formatted_w_unknown
         sed 's/\t$/\tunknown/' {input.mmseqs2_out} |  awk -F "\t" '{{print $1 "\t" $9 }}' >> {input.mmseqs2_out}.formatted_w_unknown
         rm -rf {output.directory}
-        vamb bin taxvamb --cuda --taxonomy {input.mmseqs2_out}.formatted_w_unknown --outdir {output.directory} --fasta {input.contigs} -p {threads} --bamfiles {input.bamfiles} # &> {log}
-        """
-
-# Run taxvamb 
-rulename = "run_taxvamb_gtdb"
-rule run_taxvamb_gtdb:
-    input:
-        contigs = contigs_all,
-        bamfiles = lambda wildcards: expand(OUTDIR / "{key}/assembly_mapping_output/mapped_sorted/{id}.sort.bam", key=wildcards.key, id=sample_id[wildcards.key]),
-        mmseqs2_out = OUTDIR /  "{key}/classifiers/mmseqs2/gtdb_lca.tsv",
-    output:
-        directory = directory(os.path.join(OUTDIR,"{key}", 'gtdb_taxvamb_default')),
-        bins = os.path.join(OUTDIR,"{key}",'gtdb_taxvamb_default','vaevae_clusters_split.tsv'),
-        compo = os.path.join(OUTDIR, '{key}','gtdb_taxvamb_default/composition.npz'),
-    threads: threads_fn(rulename)
-    resources: walltime = walltime_fn(rulename), mem_gb = mem_gb_fn(rulename), gpu=gpu_fn(rulename)
-    benchmark: config.get("benchmark", "benchmark/") + "{key}_" + rulename
-    log: config.get("log", f"{str(OUTDIR)}/log/") + "{key}_" + rulename
-    conda: THIS_FILE_DIR / "envs/vamb.yaml"
-    shell:
-        """
-        # Format taxonomy file
-        echo -e "contigs\tpredictions" > {input.mmseqs2_out}.formatted
-        # sed 's/\t$/\tunknown/' {input.mmseqs2_out} |  awk -F "\t" '{{print $1 "\t" $9 }}' >> {input.mmseqs2_out}.formatted
-        cat {input.mmseqs2_out} |  awk -F "\t" '{{print $1 "\t" $9 }}' >> {input.mmseqs2_out}.formatted
-        rm -rf {output.directory}
-        vamb bin taxvamb --cuda --taxonomy {input.mmseqs2_out}.formatted --outdir {output.directory} --fasta {input.contigs} -p {threads} --bamfiles {input.bamfiles} # &> {log}
+        vamb bin taxvamb {vamb_extra_arg} --taxonomy {input.mmseqs2_out}.formatted_w_unknown --outdir {output.directory} --fasta {input.contigs} -p {threads} --bamfiles {input.bamfiles} # &> {log}
         """
 
 # Run taxvamb 
@@ -213,18 +140,36 @@ rule run_taxvamb_trembl:
     conda: THIS_FILE_DIR / "envs/vamb.yaml"
     shell:
         """
-        # Format taxonomy file
-        # echo -e "contigs\tpredictions" > {input.mmseqs2_out}.formatted
-        # sed 's/\t$/\tunknown/' {input.mmseqs2_out} |  awk -F "\t" '{{print $1 "\t" $9 }}' >> {input.mmseqs2_out}.formatted
-        # awk -F "\t" '{{print $1 "\t" $9 }}' {input.mmseqs2_out} >> {input.mmseqs2_out}.formatted
-
         cut -f1,9 {input.mmseqs2_out} > {input.mmseqs2_out}.cut.tsv
         echo -e "contigs\tpredictions" > {input.mmseqs2_out}.formatted
         python {params.script} {input.mmseqs2_out}.cut.tsv >> {input.mmseqs2_out}.formatted
 
         rm -rf {output.directory}
-        vamb bin taxvamb --cuda --taxonomy {input.mmseqs2_out}.formatted --outdir {output.directory} --fasta {input.contigs} -p {threads} --bamfiles {input.bamfiles} # &> {log}
+        vamb bin taxvamb {vamb_extra_arg} --taxonomy {input.mmseqs2_out}.formatted --outdir {output.directory} --fasta {input.contigs} -p {threads} --bamfiles {input.bamfiles} # &> {log}
         """
+
+
+
+
+
+
+
+
+
+
+
+
+
+#####################################################################################
+
+
+
+
+
+
+
+
+
 
 # Run taxvamb 
 rulename = "format_bins_taxvamb_kalmari"
@@ -247,6 +192,10 @@ rule format_bins_taxvamb_kalmari:
             rm -rf {output.directory} # clean up dir eg. for failed runs
             python {params.create_fasta} {input.contigs} {input.bins} 200000 {output.directory} 
         """
+
+
+
+
 
 
 # Run taxvamb 
