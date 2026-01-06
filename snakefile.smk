@@ -48,6 +48,7 @@ sample_id_path= dict()
 sample_id_path_assembly = dict()
 sample_id_contig = collections.defaultdict()
 
+# Read in the input data
 if config.get("bam_contig") != None:
     df = pd.read_csv(config["bam_contig"], sep=r"\s+", comment="#")
     sample_id = collections.defaultdict(list)
@@ -75,6 +76,34 @@ threads_fn = lambda rulename: config.get(rulename, {"threads": default_threads})
 walltime_fn  = lambda rulename: config.get(rulename, {"walltime": default_walltime}).get("walltime", default_walltime) 
 mem_gb_fn  = lambda rulename: config.get(rulename, {"mem_gb": default_mem_gb}).get("mem_gb", default_mem_gb) 
 gpu_fn  = lambda rulename: config.get(rulename, {"gpu": default_gpu}).get("gpu", default_gpu) 
+
+# Sort the bam files 
+rulename="sort"
+rule sort:
+    input:
+        bamfiles,
+    output:
+        temp(OUTDIR / "{key}/assembly_mapping_output/mapped_sorted/{id}.sort.bam"),
+    threads: threads_fn(rulename)
+    resources: walltime = walltime_fn(rulename), mem_gb = mem_gb_fn(rulename)
+    benchmark: config.get("benchmark", "benchmark/") + "{key}_{id}_" + rulename
+    log: config.get("log", f"{str(OUTDIR)}/log/") + "{key}_{id}_" + rulename
+    conda: THIS_FILE_DIR / "envs/samtools.yaml"
+    shell:
+        """
+	samtools sort --threads {threads} {input} -o {output} 2> {log}
+	"""
+
+## Include the specific rules for each tool
+include: THIS_FILE_DIR / "snakemake_modules/vamb_default.smk"
+include: THIS_FILE_DIR / "snakemake_modules/metabat.smk"
+include: THIS_FILE_DIR / "snakemake_modules/comebin.smk"
+include: THIS_FILE_DIR / "snakemake_modules/metadecoder.smk"
+include: THIS_FILE_DIR / "snakemake_modules/semibin.smk"
+include: THIS_FILE_DIR / "snakemake_modules/taxonomy_classifiers.smk"
+include: THIS_FILE_DIR / "snakemake_modules/gunc.smk"
+include: THIS_FILE_DIR / "snakemake_modules/va_extra_taxonomy_classifiers.smk"
+
 
 ## Collecting
 all_bin_dirs_recluster = {
@@ -109,7 +138,6 @@ rule Checkm_reclustering:
         # directory = expand(OUTDIR / "{key}/checkm2/reclustering/{bins_recluster}",key=sample_id.keys(), bins_recluster=bin_dir_names_recluster), 
         checkm2 = expand(OUTDIR /  "{key}/tmp/checkm.done",key=sample_id.keys()), ## WHEN USING THIS MAKE SURE NOT TO RERUN ANYTHING
         # checkm_default_vamb = expand(OUTDIR /  "{key}/checkm2/default_vamb",key=sample_id.keys()),
-
 # Run taxvamb 
 rulename = "format_bins_class_recluster"
 rule rename_vamb:
@@ -134,7 +162,6 @@ rule recluster:
         directory = lambda wildcards: all_bin_dirs_recluster[wildcards.bins_recluster],
         bins = lambda wildcards: all_bin_dirs_recluster[wildcards.bins_recluster] / "vaevae_clusters_split.tsv",
         compo = lambda wildcards: all_bin_dirs_recluster[wildcards.bins_recluster] / "composition.npz",
-        # hmm_path = OUTDIR / "marker_data/{key}/markers.hmmout",
     output:
         directory = directory(OUTDIR / "{key}/reclustering/{bins_recluster}/output"),
         headers = OUTDIR / "{key}/reclustering/{bins_recluster}/headers.txt",
@@ -142,7 +169,7 @@ rule recluster:
     threads: threads_fn(rulename)
     resources: walltime = walltime_fn(rulename), mem_gb = mem_gb_fn(rulename), gpu=gpu_fn(rulename)
     params:
-        env = "/maps/projects/rasmussen/data/taxvamb_benchmarks/taxvamb_benchmarks/pixi_vamb/misc_scripts/reclustering"
+        env = THIS_FILE_DIR / "reclustering"
     shell:
         """
         grep -E "^>" {input.contigs_decompressed} | cut -c 2- > {output.headers}
@@ -191,32 +218,3 @@ rule checkm_class_recluster:
         """
         checkm2 predict --threads {threads} --input {input.bin_dir} --output-directory {output.outdir} --extension 'fna' --database_path {params.database}
         """
-
-# Sort the bam files 
-rulename="sort"
-rule sort:
-    input:
-        bamfiles,
-    output:
-        temp(OUTDIR / "{key}/assembly_mapping_output/mapped_sorted/{id}.sort.bam"),
-    threads: threads_fn(rulename)
-    resources: walltime = walltime_fn(rulename), mem_gb = mem_gb_fn(rulename)
-    benchmark: config.get("benchmark", "benchmark/") + "{key}_{id}_" + rulename
-    log: config.get("log", f"{str(OUTDIR)}/log/") + "{key}_{id}_" + rulename
-    conda: THIS_FILE_DIR / "envs/samtools.yaml"
-    shell:
-        """
-	samtools sort --threads {threads} {input} -o {output} 2> {log}
-	"""
-
-## Include the specific rules for each tool
-include: THIS_FILE_DIR / "snakemake_modules/vamb_default.smk"
-include: THIS_FILE_DIR / "snakemake_modules/metabat.smk"
-include: THIS_FILE_DIR / "snakemake_modules/comebin.smk"
-include: THIS_FILE_DIR / "snakemake_modules/metadecoder.smk"
-include: THIS_FILE_DIR / "snakemake_modules/semibin.smk"
-include: THIS_FILE_DIR / "snakemake_modules/taxonomy_classifiers.smk"
-include: THIS_FILE_DIR / "snakemake_modules/gunc.smk"
-include: THIS_FILE_DIR / "snakemake_modules/va_extra_taxonomy_classifiers.smk"
-
-

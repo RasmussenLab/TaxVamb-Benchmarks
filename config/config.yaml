@@ -1,28 +1,22 @@
 # Use cuda for the vamb part of the pipeline. Uncomment to use cuda
 # cuda: "True"
 
-## databases
-database: "/maps/projects/rasmussen/data/taxvamb_benchmarks/taxvamb_benchmarks/database_to_be_moved/data.ace.uq.edu.au/public/gtdb/data/releases/latest"
+## Databases used by the workflow
+gunc_database: "/maps/projects/rasmussen/data/taxvamb_benchmarks/taxvamb_benchmarks/gunc_db/gunc_database/gunc_db_progenomes2.1.dmnd"
+checkm2_database: "/maps/projects/rasmussen/data/taxvamb_benchmarks/taxvamb_benchmarks/checkm2_database/CheckM2_database/uniref100.KO.1.dmnd"
+kraken2_database: "/maps/projects/rasmussen/data/taxvamb_benchmarks/taxvamb_benchmarks/airways/kraken_database_download"
 
 metabuli_database: "/maps/projects/rasmussen/data/taxvamb_benchmarks/taxvamb_benchmarks/metabuli_db/gtdb"
-# metabuli_database: "/home/bxc755/rasmussen/data/taxvamb_benchmarks/taxvamb_benchmarks/metabuli_database_220/gtdb+virus+human"
 
 centrifuge_database_dir: "/maps/projects/rasmussen/data/taxvamb_benchmarks/taxvamb_benchmarks/centri"
 centrifuge_database_name: "abv"
-gunc_database: "/maps/projects/rasmussen/data/taxvamb_benchmarks/taxvamb_benchmarks/gunc_db/gunc_database/gunc_db_progenomes2.1.dmnd"
-
-checkm2_database: "/maps/projects/rasmussen/data/taxvamb_benchmarks/taxvamb_benchmarks/checkm2_database/CheckM2_database/uniref100.KO.1.dmnd"
-kraken2_database: "/maps/projects/rasmussen/data/taxvamb_benchmarks/taxvamb_benchmarks/airways/kraken_database_download"
 
 # mmseqs databases
 mmseqs_db_gtdb: "/maps/projects/rasmussen/data/taxvamb_benchmarks/taxvamb_benchmarks/download_gtdb/gtdb_mmseqs"
 mmseqs_db_trembl: "/maps/projects/rasmussen/data/taxvamb_benchmarks/taxvamb_benchmarks/download_trembl/trembl_mmseqs"
 mmseqs_db_kalmari: "/maps/projects/rasmussen/data/taxvamb_benchmarks/taxvamb_benchmarks/download_kalmari/kalmari_mmseqs"
 
-gunc_db: "/maps/projects/rasmussen/data/taxvamb_benchmarks/taxvamb_benchmarks/gunc_db/gunc_database/gunc_db_progenomes2.1.dmnd"
 
-# Use minimap - if False uses strobealign
-use_minimap: True
 
 ## Default resources
 # This is the default resources used by the different rules

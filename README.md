@@ -1,10 +1,11 @@
 # Benchmark taxvamb against other binning tools
 
-This is the reposityory for creating most of the benchmarks in the Taxvamb paper.
+This is the code for the workflow for creating most of the benchmarks in the Taxvamb paper.
 
 ## Installation
 
 Clone the repository and install the package using conda
+
 ```
 git clone https://github.com/RasmussenLab/PlasMAAG
 conda env create -n Benchmark_binners --file=taxvamb_paper_benchmarks/envs/benchmark_env.yaml
@@ -15,32 +16,50 @@ conda activate Benchmark_binners
 ```
 
 Metabat is available as an docker image. To run it it is necessary to have singularity installed.
-See [documentation](https://docs.sylabs.io/guides/3.0/user-guide/installation.html) for how to install 
+See [documentation](https://docs.sylabs.io/guides/3.0/user-guide/installation.html) for how to install the software
 
-### Running using snakemake CLI directly 
-For using snakemake refer to the snakemake documentation: <https://snakemake.readthedocs.io/en/stable/>
+The workflows runs several taxonomy annotation tools and checkm, which all require databases.  
+These databases should be installed and their paths set in the config file at config/config.yaml,
 
-#### Running from Reads using snakemake directly
-To run the entire pipeline pass in a whitespace separated file using to the config flag in the snakemake CLI:
+| Tool | Database Version | Description / Notes |
+| :--- | :--- | :--- |
+| **Metabuli** | GTDB v214.1 + T2T-CHM13v2.0 | Default database; filtered for Complete Genome/Chromosome, CheckM completeness > 90%, and contamination < 5%. Install using `metabuli databases` option|
+| **MMseqs2** | GTDB | Installed using the `mmseqs databases` option |
+| **MMseqs2** | TrEMBL | Installed using the `mmseqs databases` option |
+| **MMseqs2** | Kalmari | Installed using the `mmseqs databases` option |
+| **Centrifuge** | NCBI RefSeq Release 229 | See https://www.ccb.jhu.edu/software/centrifuge/manual.shtml under 'Database download and index building' |
+| **Kraken2** | Standard RefSeq (2024-12-28) | Pre-built index from [Langmead AWS](https://benlangmead.github.io/aws-indexes/k2). Includes archaea, bacteria, viral, plasmid, human, and UniVec_Core. |
+| **Checkm** | Diamond db | Install using `checkm2 database --download`|
 
+---
+
+### Running the workflow
+
+To dryrun the pipeline run
 ```
-snakemake --use-conda --cores <number_of_cores> --snakefile <path_to_snakefile> --config bam_contig=<bam_contig_file> 
+make benchmark_dryrun <bam_config_file>
 ```
 
-The <bam_contig_file> could look like:
+The <bam_contig_file> should look like:
 
 ``` 
 sample 				bamfile				           contig
 test                test_data/bam/sample_0.bam     test_data/contigs/contigs.fasta
 test                test_data/bam/sample_1.bam     test_data/contigs/contigs.fasta
 ```
-:heavy_exclamation_mark: Notice the header names are required to be: sample, bamfile and contig  
-:heavy_exclamation_mark: Furthermore the contig file should just be the same for each row.
+:heavy_exclamation_mark: The header names are required to be: sample, bamfile and contig  
+:heavy_exclamation_mark: The contig file should be the same for each row.
 
 The input files are the following
-1) A contig file, if using several samples this is all of them concatenated
-2) BAM file(s) from mapping short reads to concatenated contig
+1) A contig file of all contigs concatenated. If using several samples this is all of them concatenated.
+2) BAM file(s) from mapping short reads to the concatenated contig file
 
+
+
+
+
+
+---------------
 ### Running on a cluster with snakemake submiting jobs 
 For running PlasMAAG on a cluster with snakemake submiting jobs see the documentation for snakemake [here](https://snakemake.readthedocs.io/en/v7.19.1/executing/cluster.html)  
 An example is provided below for reference using slurm running PlasMAAG from reads:

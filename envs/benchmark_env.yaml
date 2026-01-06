@@ -6,8 +6,5 @@ channels:
 
 dependencies:
   - python==3.11.2
-  - pip
-  - pip:
-      - -e ..
   - snakemake==8.27.1
-  - samtools==1.18
+  - pixi
