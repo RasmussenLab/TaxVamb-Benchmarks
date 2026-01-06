@@ -49,7 +49,6 @@ rulename = "collect_checkm"
 rule collect_checkm:
     input:
         expand(OUTDIR /  "{{key}}/checkm2/{bins_clas}", bins_clas = bin_dir_names_clas)
-        # expand(OUTDIR / "{{key}}/gunc/{bin_dir}",  bin_dir = bin_dir_names)
     output: 
         OUTDIR / "{key}/tmp/checkm.done"
     threads: threads_fn(rulename)

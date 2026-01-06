@@ -103,9 +103,9 @@ rule sort:
 
 rule all:
     input:
-        checkm2 = expand(OUTDIR /  "{key}/tmp/checkm.done",key=sample_id.keys()), ## WHEN USING THIS MAKE SURE NOT TO RERUN ANYTHING
+        # checkm2 = expand(OUTDIR /  "{key}/tmp/checkm.done",key=sample_id.keys()), ## WHEN USING THIS MAKE SURE NOT TO RERUN ANYTHING
         # checkm_semibin = expand(OUTDIR /  "{key}/checkm2/semibin", key=sample_id.keys()),
-        # checkm_comebin = expand(OUTDIR /  "{key}/checkm2/comebin", key=sample_id.keys()),
+        checkm_comebin = expand(OUTDIR /  "{key}/checkm2/comebin", key=sample_id.keys()),
         # checkm_metadecoder = expand(OUTDIR /  "{key}/checkm2/metadecoder", key=sample_id.keys()),
         # checkm_metabat = expand(OUTDIR /  "{key}/checkm2/metabat", key=sample_id.keys()),
         # checkm_default_vamb = expand(OUTDIR /  "{key}/checkm2/default_vamb",key=sample_id.keys()),
