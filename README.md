@@ -94,12 +94,12 @@ For benchmarking for figure 3 in the paper the following 4 runs crashed internal
 
 #### Semibin
 Semibin(v.2.1.0) crashes in the Vaginal and the Salvia samples.
-- For the Vaginal sample Semibin does not find any bins in one of the samples which causes downstream steps to crash. Semibin version 2.2.0 fixes this issue (https://github.com/BigDataBiology/SemiBin/releases/tag/v2.2.0), but does not change performance of the tool (according to patchnotes). We therefore ran semibin version 2.2.0 on this dataset.
-- For the the Salvia dataset I get the following error described in: https://github.com/BigDataBiology/SemiBin/issues/211 and https://github.com/BigDataBiology/SemiBin/issues/201. There does not seem to be a fix for the issue, although the maintainer seems to be looking into it. 
+- For the Vaginal sample Semibin does not find any bins in one of the samples which causes downstream steps to crash. Semibin version 2.2.0 fixes this issue (https://github.com/BigDataBiology/SemiBin/releases/tag/v2.2.0), but does not change performance of the tool (according to patchnotes). We therefore ran semibin version 2.2.0 on this dataset. See `/log_files_for_crashed_runs/Vaginal_SemiBin.log` for logfiles
+- For the the Salvia dataset we get the following error described in: https://github.com/BigDataBiology/SemiBin/issues/211 and https://github.com/BigDataBiology/SemiBin/issues/201. There does not seem to be a fix for the issue, although the maintainer seems to be looking into it. See `/log_files_for_crashed_runs/Salvia_SemiBin.log` for logfiles
 
 #### Comebin
 Comebin (v1.0.3) crashes in the Human Gut (IBS) and Forest Soil samples.  
-In both datasets the error is described in the following Github issue: https://github.com/ziyewang/COMEBin/issues/17,
+In both datasets the error is described in the following Github issue: https://github.com/ziyewang/COMEBin/issues/17,  
 The logfiles for these runs can be found in: `/log_files_for_crashed_runs/Human_gut_IBS_ComeBin.log` and `/log_files_for_crashed_runs/Forest_soil_Comebin.log`  
 Here we instead ran comebin in single-sample mode. This is equivalent to in the pipeline in the `sample` column of the config files, assigning each read pair and their corresponding contig file to a different sample name.
 
