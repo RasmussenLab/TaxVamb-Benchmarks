@@ -1,6 +1,6 @@
 # Benchmark taxvamb against other binning tools
 
-This is the code for creating the benchmarks for the taxvamb paper for the benchmarking the following binners:
+This is the code for creating the benchmarks for the taxvamb paper for benchmarking the following binners:
 - Taxvamb with different classifiers and databases:
   - Kalamari + GTDB
   - MMseqs + GTDB / TrEMBL/ Kalmari
@@ -13,6 +13,7 @@ This is the code for creating the benchmarks for the taxvamb paper for the bench
 Additionally, each binner is assesed using checkm2 and GUNC - with all vamb derrived binners being assesed before and after reclustering.  
 
 The orginal workflow was ran on the ESRUM cluster: https://cbmr-data.github.io/esrum/overview.html
+
 
 ## Installation
 
@@ -72,7 +73,35 @@ The input files are the following
 2) BAM file(s) from mapping short reads to the concatenated contig file
 
 To generate the BAM file(s) and the contig files from assemblies and reads use the `map_snakefile.smk` pipeline.
+The snakefile can be run using:
 
+```
+make benchmark_dryrun config=<read_assembly_dir>     # Dry-running the workflow
+
+make benchmark_run_slurm config=<read_assembly_dir>  # Running the workflow on SLURM
+```
+
+Where read_assembly_dir should have the following structure:
+
+```
+sample	   read1                          read2                         contig                                           
+sample_1   im/a/path/to/sample_1/read1    im/a/path/to/sample_1/read2   path/sample_1/contig.fasta
+sample_2   im/a/path/to/sample_2/read1    im/a/path/to/sample_2/read2   path/sample_2/contig.fasta          
+```
+
+### Tools which crashed internally, and alternative ways of running them.
+For benchmarking for figure 3 in the paper the following 4 runs crashed internally.
+
+#### Semibin
+Semibin(v.2.1.0) crashes in the Vaginal and the Salvia samples.
+- For the Vaginal sample Semibin does not find any bins in one of the samples which causes downstream steps to crash. Semibin version 2.2.0 fixes this issue (https://github.com/BigDataBiology/SemiBin/releases/tag/v2.2.0), but does not change performance of the tool (according to patchnotes). We therefore ran semibin version 2.2.0 on this dataset.
+- For the the Salvia dataset I get the following error described in: https://github.com/BigDataBiology/SemiBin/issues/211 and https://github.com/BigDataBiology/SemiBin/issues/201. There does not seem to be a fix for the issue, although the maintainer seems to be looking into it. 
+
+#### Comebin
+Comebin (v1.0.3) crashes in the Human Gut (IBS) and Forest Soil samples.  
+In both datasets the error is described in the following Github issue: https://github.com/ziyewang/COMEBin/issues/17,
+The logfiles for these runs can be found in: `/log_files_for_crashed_runs/Human_gut_IBS_ComeBin.log` and `/log_files_for_crashed_runs/Forest_soil_Comebin.log`  
+Here we instead ran comebin in single-sample mode. This is equivalent to in the pipeline in the `sample` column of the config files, assigning each read pair and their corresponding contig file to a different sample name.
 
 
 ### Resources 
@@ -103,7 +132,7 @@ run_taxvamb_kraken:
   threads: 64
   gpu: " --partition=gpuqueue --gres=gpu:1 "
 ```
-Additionally set `vamb_use_gpu: True`
+Additionally set `vamb_use_gpu: True` in the conifg file
 
 ##### Semibin
 To use semibin with gpu in config/config.yaml set
@@ -116,5 +145,5 @@ Additionally, for reclustering the dbscan algorithm shoud be used instead of kme
 Lastly, for minimap `-ax map-hifi` should be used.
 
 #### Running taxvamb/vamb without predictor
-For the taxvamb/vamb runs pass in the --no_predictor flag
+For the taxvamb/vamb runs pass in the `--no_predictor` flag
 
