@@ -71,6 +71,10 @@ The input files are the following
 1) A contig file of all contigs concatenated. If using several samples this is all of them concatenated.
 2) BAM file(s) from mapping short reads to the concatenated contig file
 
+To generate the BAM file(s) and the contig files from assemblies and reads use the `map_snakefile.smk` pipeline.
+
+
+
 ### Resources 
 The pipeline can be configurated in: ``` config/config.yaml ```
 
@@ -107,7 +111,9 @@ To use semibin with gpu in config/config.yaml set
 Due to cuda problems we in this rule we use our HPC specific cuda modules: `module load cuda/12.2`. Therefore to get semibin to run on GPU you might need to play around with the 'semibinGPU' rule in snakemake_modules/semibin.smk. 
 
 #### For longread datasets
-For the longread benchmarks use semibin with the `--sequencing-type=long_read` flag.
+For the longread benchmarks use semibin with the `--sequencing-type=long_read` flag.  
+Additionally, for reclustering the dbscan algorithm shoud be used instead of kmeans.
+Lastly, for minimap `-ax map-hifi` should be used.
 
 #### Running taxvamb/vamb without predictor
 For the taxvamb/vamb runs pass in the --no_predictor flag
