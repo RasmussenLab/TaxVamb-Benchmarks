@@ -100,18 +100,15 @@ rule sort:
 	samtools sort --threads {threads} {input} -o {output} 2> {log}
 	"""
 
-
-
-
 rule all:
     input:
-        # checkm2 = expand(OUTDIR /  "{key}/tmp/checkm.done",key=sample_id.keys()), ## WHEN USING THIS MAKE SURE NOT TO RERUN ANYTHING
         checkm_semibin = expand(OUTDIR /  "{key}/checkm2/semibin", key=sample_id.keys()),
         checkm_comebin = expand(OUTDIR /  "{key}/checkm2/comebin", key=sample_id.keys()),
+        checkm_metadecoder = expand(OUTDIR /  "{key}/checkm2/metadecoder", key=sample_id.keys()),
+        checkm_metabat = expand(OUTDIR /  "{key}/checkm2/metabat", key=sample_id.keys()),
+        checkm_default_vamb = expand(OUTDIR /  "{key}/checkm2/default_vamb",key=sample_id.keys()),
+        checkm2_taxvamb = expand(OUTDIR /  "{key}/tmp/checkm.done",key=sample_id.keys()), 
         gunc = expand(OUTDIR / "{key}/tmp/gunc.done", key=sample_id.keys()),
-        # checkm_metadecoder = expand(OUTDIR /  "{key}/checkm2/metadecoder", key=sample_id.keys()),
-        # checkm_metabat = expand(OUTDIR /  "{key}/checkm2/metabat", key=sample_id.keys()),
-        # checkm_default_vamb = expand(OUTDIR /  "{key}/checkm2/default_vamb",key=sample_id.keys()),
 
 rule all_gunc:
     input:
@@ -120,35 +117,13 @@ rule all_gunc:
 
 rule comebin_only:
     input:
-        # checkm2 = expand(OUTDIR /  "{key}/tmp/checkm.done",key=sample_id.keys()), ## WHEN USING THIS MAKE SURE NOT TO RERUN ANYTHING
-        # checkm_semibin = expand(OUTDIR /  "{key}/checkm2/semibin", key=sample_id.keys()),
+        checkm_semibin = expand(OUTDIR /  "{key}/checkm2/semibin", key=sample_id.keys()),
         checkm_comebin = expand(OUTDIR /  "{key}/checkm2/comebin", key=sample_id.keys()),
+        checkm_metadecoder = expand(OUTDIR /  "{key}/checkm2/metadecoder", key=sample_id.keys()),
+        checkm_metabat = expand(OUTDIR /  "{key}/checkm2/metabat", key=sample_id.keys()),
+        checkm_default_vamb = expand(OUTDIR /  "{key}/checkm2/default_vamb",key=sample_id.keys()),
+        checkm2 = expand(OUTDIR /  "{key}/tmp/checkm.done",key=sample_id.keys()),
         gunc = expand(OUTDIR / "{key}/tmp/gunc.done", key=sample_id.keys()),
-        # checkm_metadecoder = expand(OUTDIR /  "{key}/checkm2/metadecoder", key=sample_id.keys()),
-        # checkm_metabat = expand(OUTDIR /  "{key}/checkm2/metabat", key=sample_id.keys()),
-        # checkm_default_vamb = expand(OUTDIR /  "{key}/checkm2/default_vamb",key=sample_id.keys()),
-
-# TODO: remove me
-rulename = "comebin_checkm"
-rule all_comebin_checkm:
-    input: 
-        # bin_dir =  "/maps/projects/rasmussen/data/taxvamb_benchmarks/split_up_gut/sample_split_up_files",
-        bin_dir =  "/maps/projects/rasmussen/data/taxvamb_benchmarks/rerun_semibin_results/human_saliva_oral_PRJDB16210/semibin/bins",
-    output:
-        outdir = directory("/maps/projects/rasmussen/data/taxvamb_benchmarks/rerun_semibin_results/human_saliva_oral_PRJDB16210/checkm/semibin"),
-    threads: 100
-    params:
-        database = config.get("checkm2_database")
-    resources: walltime = walltime_fn(rulename), mem_gb = mem_gb_fn(rulename), gpu=gpu_fn(rulename)
-    conda: THIS_FILE_DIR / "envs/checkm2.yaml"
-    shell:
-        """
-        # checkm2 predict --threads {threads} --input {input.bin_dir} --output-directory {output.outdir} --extension 'fa' --database_path {params.database}
-        checkm2 predict --threads {threads} --input {input.bin_dir} --output-directory {output.outdir} --extension 'gz' --database_path {params.database}
-        """
-
-
-
 
 ## Include the specific rules for each tool
 include: THIS_FILE_DIR / "snakemake_modules/vamb_default.smk"
@@ -178,9 +153,6 @@ all_bin_dirs_recluster = {
     # "trembl_taxvamb_default": OUTDIR / "{key}/trembl_taxvamb_default",
 }
 bin_dir_names_recluster = all_bin_dirs_recluster.keys()
-
-
-
 
         # reclustering = expand(OUTDIR / "{key}/reclustering/{bins_recluster}/output",key=sample_id.keys(), bins_recluster=bin_dir_names_recluster), 
 
