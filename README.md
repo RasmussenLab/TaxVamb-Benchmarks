@@ -48,12 +48,12 @@ conda activate Benchmark_binners
 
 ### Database Requirements
 
-The pipeline requires several databases. Install them and configure their paths in `config/config.yaml` (Notice all databases are ~1TB:
+The pipeline requires several databases. Install them and configure their paths in `config/config.yaml` (Notice: install all databases takes around ~1TB of storage):
 
 | Tool           | Database Version            | Description / Notes |
 |:---------------|:----------------------------| :--- |
-| **Metabuli **  | GTDB v214.1 + T2T-CHM13v2.0 | Default database: Complete Genome/Chromosome, CheckM completeness > 90 and contamination < 5 + human genome (T2T-CHM13v2.0). Install using `metabuli databases` |
-| **MMseqs2 **   | GTDB v220                   | Install using `mmseqs databases` |
+| **Metabuli**  | GTDB v214.1 + T2T-CHM13v2.0 | Default database: Complete Genome/Chromosome, CheckM completeness > 90 and contamination < 5 + human genome (T2T-CHM13v2.0). Install using `metabuli databases` |
+| **MMseqs2**   | GTDB v220                   | Install using `mmseqs databases` |
 | **MMseqs2**    | TrEMBL Release 2025_01      | Install using `mmseqs databases` |
 | **MMseqs2**    | Kalamari (v3.7)             | Install using `mmseqs databases` |
 | **Centrifuge** | NCBI RefSeq Release 229     | See [Centrifuge manual](https://www.ccb.jhu.edu/software/centrifuge/manual.shtml) under "Database download and index building" |
