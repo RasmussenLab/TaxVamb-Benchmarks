@@ -34,8 +34,8 @@ rule format_bins_class:
 
 rulename = "checkm_class"
 rule checkm_class:
-    input: 
-        bin_dir = directory(OUTDIR / "{key}/formatted_vamb_bins_filtered/{bins_clas}"),
+    input:
+        bin_dir = OUTDIR / "{key}/formatted_vamb_bins_filtered/{bins_clas}",
     output:
         outdir = directory(OUTDIR /  "{key}/checkm2/{bins_clas}"),
     threads: threads_fn(rulename)

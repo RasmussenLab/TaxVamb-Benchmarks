@@ -101,18 +101,13 @@ rule sort:
 
 ## Collecting
 all_bin_dirs_recluster = {
-    # "kraken_taxvamb_default": OUTDIR / "{key}/kraken_taxvamb_default",
-    # "run_taxvamb_centrifuge": OUTDIR / "{key}/centrifuge_taxvamb",
-    # "run_taxvamb_gtdb": OUTDIR / "{key}/gtdb_taxvamb_default",
+    "default_vamb": OUTDIR / "{key}/vamb_default",
+    "kraken_taxvamb_default": OUTDIR / "{key}/kraken_taxvamb_default",
+    "run_taxvamb_centrifuge": OUTDIR / "{key}/centrifuge_taxvamb",
     "run_taxvamb_gtdb_w_unknown": OUTDIR / "{key}/gtdb_taxvamb_default_w_unknown",
-    # "metabuli_taxvamb_default": OUTDIR / "{key}/metabuli_taxvamb_default",
-    # "kraken_taxvamb_no_predictor": OUTDIR / "{key}/kraken_taxvamb_no_predictor",
-    # "centrifuge_taxvamb_no_predictor": OUTDIR / "{key}/centrifuge_taxvamb_no_predictor",
-    # "run_taxvamb_gtdb_no_predictor": OUTDIR / "{key}/gtdb_taxvamb_default_no_predictor",
-    # "metabuli_taxvamb_no_predictor": OUTDIR / "{key}/metabuli_taxvamb_no_predictor",
-    # "default_vamb": OUTDIR / "{key}/vamb_default",
-    # "kalmari_taxvamb_default": OUTDIR / "{key}/kalmari_taxvamb_default",
-    # "trembl_taxvamb_default": OUTDIR / "{key}/trembl_taxvamb_default",
+    "metabuli_taxvamb_default": OUTDIR / "{key}/metabuli_taxvamb_default",
+    "kalmari_taxvamb_default": OUTDIR / "{key}/kalmari_taxvamb_default",
+    "trembl_taxvamb_default": OUTDIR / "{key}/trembl_taxvamb_default",
 }
 bin_dir_names_recluster = all_bin_dirs_recluster.keys()
 
@@ -242,8 +237,8 @@ rule format_bins_class_recluster:
 
 rulename = "checkm_class_recluster"
 rule checkm_class_recluster:
-    input: 
-        bin_dir = directory(OUTDIR / "{key}/reclustering/formatted_vamb_bins/{bins_recluster}"),
+    input:
+        bin_dir = OUTDIR / "{key}/reclustering/formatted_vamb_bins/{bins_recluster}",
     output:
         outdir = directory(OUTDIR /  "{key}/checkm2/reclustering/{bins_recluster}"),
     threads: threads_fn(rulename)

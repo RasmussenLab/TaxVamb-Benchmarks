@@ -49,6 +49,7 @@ rule run_taxvamb_metabuli:
         directory = directory(OUTDIR / "{key}/metabuli_taxvamb_default"),
         bins = OUTDIR / "{key}/metabuli_taxvamb_default/vaevae_clusters_split.tsv",
         compo = OUTDIR / "{key}/metabuli_taxvamb_default/composition.npz",
+        latent = OUTDIR / "{key}/metabuli_taxvamb_default/vaevae_latent.npz",
     threads: threads_fn(rulename)
     resources: walltime = walltime_fn(rulename), mem_gb = mem_gb_fn(rulename), gpu=gpu_fn(rulename)
     benchmark: config.get("benchmark", "benchmark/") + "{key}_" + rulename
@@ -107,6 +108,7 @@ rule run_taxvamb_kraken:
         directory = directory(OUTDIR / "{key}/kraken_taxvamb_default"),
         bins = OUTDIR / "{key}/kraken_taxvamb_default/vaevae_clusters_split.tsv",
         compo = OUTDIR / "{key}/kraken_taxvamb_default/composition.npz",
+        latent = OUTDIR / "{key}/kraken_taxvamb_default/vaevae_latent.npz",
     threads: threads_fn(rulename)
     resources: walltime = walltime_fn(rulename), mem_gb = mem_gb_fn(rulename), gpu=gpu_fn(rulename)
     benchmark: config.get("benchmark", "benchmark/") + "{key}_" + rulename
@@ -117,6 +119,7 @@ rule run_taxvamb_kraken:
         rm -rf {output.directory}
         # sed 's/\t$/\tunknown/' {input.taxonomy}  > {input.taxonomy}.fmt  # Taxonomy levels not classified should output 'unknown' instaed of an empty string ('')
         vamb bin taxvamb {vamb_extra_arg} --taxonomy {input.taxonomy} --outdir {output.directory} --fasta {input.contigs} -p {threads} --bamfiles {input.bamfiles} # &> {log}
+        cp {output.directory}/latent.npz {output.latent}
         """
 
 ########### CENTRIFUGE ####################
@@ -167,6 +170,7 @@ rule run_taxvamb_centrifuge:
         directory = directory(OUTDIR / "{key}/centrifuge_taxvamb"),
         bins = OUTDIR / "{key}/centrifuge_taxvamb/vaevae_clusters_split.tsv",
         compo = OUTDIR / "{key}/centrifuge_taxvamb/composition.npz",
+        latent = OUTDIR / "{key}/centrifuge_taxvamb/vaevae_latent.npz",
     threads: threads_fn(rulename)
     resources: walltime = walltime_fn(rulename), mem_gb = mem_gb_fn(rulename), gpu=gpu_fn(rulename)
     benchmark: config.get("benchmark", "benchmark/") + "{key}_" + rulename
@@ -177,5 +181,6 @@ rule run_taxvamb_centrifuge:
         rm -rf {output.directory}
         # sed 's/\t$/\tunknown/' {input.taxonomy}  > {input.taxonomy}.fmt        # Taxonomy levels not classified should output 'unknown' instaed of an empty string ('')
         vamb bin taxvamb {vamb_extra_arg}  --taxonomy {input.taxonomy} --outdir {output.directory} --fasta {input.contigs} -p {threads} --bamfiles {input.bamfiles} # &> {log}
+        cp {output.directory}/latent.npz {output.latent}
         """
 

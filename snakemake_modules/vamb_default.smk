@@ -1,14 +1,14 @@
-# Run vamb 
+# Run vamb
 rulename = "run_vamb"
 rule run_vamb:
     input:
         contigs = contigs_all,
         bamfiles = lambda wildcards: expand(OUTDIR / "{key}/assembly_mapping_output/mapped_sorted/{id}.sort.bam", key=wildcards.key, id=sample_id[wildcards.key]),
     output:
-        directory = directory(os.path.join(OUTDIR,"{key}", 'vamb_default')),
-        bins = os.path.join(OUTDIR,"{key}",'vamb_default','vae_clusters_split.tsv'),
-        compo = os.path.join(OUTDIR, '{key}','vamb_default/composition.npz'),
-        latent = os.path.join(OUTDIR, '{key}','vamb_default/latent.npz'),
+        directory = directory(OUTDIR / "{key}/vamb_default"),
+        bins = OUTDIR / "{key}/vamb_default/vae_clusters_split.tsv",
+        compo = OUTDIR / "{key}/vamb_default/composition.npz",
+        latent = OUTDIR / "{key}/vamb_default/latent.npz",
     threads: threads_fn(rulename)
     resources: walltime = walltime_fn(rulename), mem_gb = mem_gb_fn(rulename), gpu=gpu_fn(rulename)
     benchmark: config.get("benchmark", "benchmark/") + "{key}_" + rulename
@@ -25,8 +25,7 @@ rulename = "format_bins_default_vamb_filtered"
 rule format_bins_default_vamb_filtered:
     input:
         contigs = OUTDIR /  "{key}/metadecoder/{key}_contigs.flt.fna",
-        directory = directory(os.path.join(OUTDIR,"{key}", 'vamb_default')),
-        bins = os.path.join(OUTDIR,"{key}",'vamb_default','vae_clusters_split.tsv'),
+        bins = OUTDIR / "{key}/vamb_default/vae_clusters_split.tsv",
     output:
         directory = directory(OUTDIR / "{key}/vamb_default_bins_filtered"),
     params:
@@ -39,13 +38,13 @@ rule format_bins_default_vamb_filtered:
     shell:
         """
             rm -rf {output.directory} # clean up dir eg. for failed runs
-            python {params.create_fasta} {input.contigs} {input.bins} 200000 {output.directory} 
+            python {params.create_fasta} {input.contigs} {input.bins} 200000 {output.directory}
         """
 
 rulename = "default_vamb_checkm"
 rule default_vamb_checkm:
-    input: 
-        bin_dir = directory(os.path.join(OUTDIR,"{key}", 'vamb_default_bins_filtered')),
+    input:
+        bin_dir = OUTDIR / "{key}/vamb_default_bins_filtered",
     output:
         outdir = directory(OUTDIR /  "{key}/checkm2/default_vamb"),
         file = OUTDIR /  "{key}/checkm2/default_vamb/quality_report.tsv",

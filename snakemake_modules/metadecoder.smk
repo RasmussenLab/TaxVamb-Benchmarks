@@ -92,8 +92,8 @@ rule metadecoder:
 
 rulename = "metadecoder_checkm"
 rule metadecoder_checkm:
-    input: 
-        bin_dir = directory(OUTDIR /  "{key}/metadecoder/clusters"),
+    input:
+        bin_dir = OUTDIR /  "{key}/metadecoder/clusters",
         coverage_file = OUTDIR /  "{key}/metadecoder/coverage_file.coverage", # to make sure the rule above is done
     output:
         outdir = directory(OUTDIR /  "{key}/checkm2/metadecoder"),

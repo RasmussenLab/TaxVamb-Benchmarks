@@ -17,7 +17,7 @@ rule tmp_copy:
 rulename = "metabat"
 rule metabat:
     input:
-        contigs = temp("{key}/contigs.fasta.gz"),
+        contigs = "{key}/contigs.fasta.gz",
         bamfiles = lambda wildcards: expand(OUTDIR / "{key}/assembly_mapping_output/mapped_sorted/{id}.sort.bam", key=wildcards.key, id=sample_id[wildcards.key]),
     output: 
         depht = OUTDIR /  "{key}/metabat/depht.txt",
@@ -38,8 +38,8 @@ rule metabat:
 
 rulename = "metabat_checkm"
 rule metabat_checkm:
-    input: 
-        bin_dir = directory(OUTDIR /  "{key}/metabat/metabat"),
+    input:
+        bin_dir = OUTDIR /  "{key}/metabat/metabat",
     output:
         outdir = directory(OUTDIR /  "{key}/checkm2/metabat"),
     threads: threads_fn(rulename)
