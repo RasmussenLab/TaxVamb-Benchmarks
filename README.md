@@ -146,6 +146,20 @@ all_bin_dirs_clas = {
 }
 ```
 
+To only run reclustering for specific binners, you can use the `all_reclustering` target and modify the `all_bin_dirs_recluster` variable in `snakefile.smk`. For example, to run reclustering on all datasets:
+```
+snakemake --snakefile snakefile.smk -c 100 --config bam_contig=<bam_contig_file> all_reclustering
+```
+To only recluster specific binners (e.g., only GTDB taxvamb and default vamb), modify `all_bin_dirs_recluster` in `snakefile.smk`:
+```
+all_bin_dirs_recluster = {
+    "default_vamb": OUTDIR / "{key}/vamb_default",
+    "run_taxvamb_gtdb_w_unknown": OUTDIR / "{key}/gtdb_taxvamb_default_w_unknown",
+    ##  Rest commented out ...
+    ##  ...
+}
+```
+
 ### Resources 
 The pipeline can be configurated in: ``` config/config.yaml ```
 
