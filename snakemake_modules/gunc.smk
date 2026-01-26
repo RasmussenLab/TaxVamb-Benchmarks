@@ -3,7 +3,7 @@
 all_bin_dirs = {
             # Vamb
             "default_vamb": [OUTDIR / "{key}/vamb_default_bins_filtered", ".fna"],
-            "reclustering_default_vamb": [OUTDIR / "{key}/reclustering/formatted_vamb_bins/default_vamb", ".fna"],
+            # "reclustering_default_vamb": [OUTDIR / "{key}/reclustering/formatted_vamb_bins/default_vamb", ".fna"],
             #
             # Taxvamb w/o reclustering
             "kraken_taxvamb_default": [OUTDIR / "{key}/formatted_vamb_bins_filtered/kraken_taxvamb_default", ".fna"],
@@ -13,14 +13,14 @@ all_bin_dirs = {
             "kalmari_taxvamb_default": [OUTDIR / "{key}/formatted_vamb_bins_filtered/kalmari_taxvamb_default", ".fna"],
             "trembl_taxvamb_default": [OUTDIR / "{key}/formatted_vamb_bins_filtered/trembl_taxvamb_default", ".fna"],
             #
-            # Taxvamb with reclustering
-            "reclustering_kraken_taxvamb_default": [OUTDIR / "{key}/reclustering/formatted_vamb_bins/kraken_taxvamb_default", ".fna"],
-            "reclustering_metabuli_taxvamb_default": [OUTDIR / "{key}/reclustering/formatted_vamb_bins/metabuli_taxvamb_default", ".fna"],
-            "reclustering_run_taxvamb_centrifuge": [OUTDIR / "{key}/reclustering/formatted_vamb_bins/run_taxvamb_centrifuge", ".fna"],
-            "reclustering_run_taxvamb_gtdb_w_unknown": [OUTDIR / "{key}/reclustering/formatted_vamb_bins/run_taxvamb_gtdb_w_unknown", ".fna"],
-            "kalmari_taxvamb_default_reclustering": [OUTDIR / "{key}/reclustering/formatted_vamb_bins/kalmari_taxvamb_default", ".fna"],
-            "trembl_taxvamb_default_reclustering": [OUTDIR / "{key}/reclustering/formatted_vamb_bins/trembl_taxvamb_default", ".fna"],
-            # 
+            # Taxvamb with reclustering - only keep the one that's active in snakefile.smk
+            # "reclustering_kraken_taxvamb_default": [OUTDIR / "{key}/reclustering/formatted_vamb_bins/kraken_taxvamb_default", ".fna"],
+            # "reclustering_metabuli_taxvamb_default": [OUTDIR / "{key}/reclustering/formatted_vamb_bins/metabuli_taxvamb_default", ".fna"],
+            # "reclustering_run_taxvamb_centrifuge": [OUTDIR / "{key}/reclustering/formatted_vamb_bins/run_taxvamb_centrifuge", ".fna"],
+            # "reclustering_run_taxvamb_gtdb_w_unknown": [OUTDIR / "{key}/reclustering/formatted_vamb_bins/run_taxvamb_gtdb_w_unknown", ".fna"],
+            # "kalmari_taxvamb_default_reclustering": [OUTDIR / "{key}/reclustering/formatted_vamb_bins/kalmari_taxvamb_default", ".fna"],
+            # "trembl_taxvamb_default_reclustering": [OUTDIR / "{key}/reclustering/formatted_vamb_bins/trembl_taxvamb_default", ".fna"],
+            #
             # Metabat, metadecoder, comebin & sembin
             "metabat": [OUTDIR / "{key}/metabat/metabat", ".fa"],
             "metadecoder": [OUTDIR / "{key}/metadecoder/clusters", ".fasta"],

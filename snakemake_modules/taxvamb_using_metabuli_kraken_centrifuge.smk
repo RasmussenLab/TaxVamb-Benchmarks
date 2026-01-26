@@ -5,11 +5,11 @@ rule metabuli:
     input:
         contigs = contigs_all,
     output:
-        metabuli= directory(OUTDIR /  "{key}/classifiers/metabuli"),
         metabuli_classification= OUTDIR /  "{key}/classifiers/metabuli/{key}.metabuli_classifications.tsv",
         metabuli_report= OUTDIR /  "{key}/classifiers/metabuli/{key}.metabuli_report.tsv",
-    params: 
-        database = config.get("metabuli_database")
+    params:
+        database = config.get("metabuli_database"),
+        outdir = lambda wildcards: OUTDIR / f"{wildcards.key}/classifiers/metabuli"
     threads: threads_fn(rulename)
     resources: walltime = walltime_fn(rulename), mem_gb = mem_gb_fn(rulename), gpu=gpu_fn(rulename)
     benchmark: config.get("benchmark", "benchmark/") + "{key}_" + rulename
@@ -17,13 +17,12 @@ rule metabuli:
     conda: THIS_FILE_DIR / "envs/metabuli.yaml"
     shell:
         """
-        metabuli classify {input.contigs} {params.database} {output.metabuli} {wildcards.key}.metabuli --seq-mode 1 --threads {threads}
+        metabuli classify {input.contigs} {params.database} {params.outdir} {wildcards.key}.metabuli --seq-mode 1 --threads {threads}
         """
 
 rulename = "metabuli_taxconv"
 rule metabuli_taxconv:
    input:
-       metabuli= directory(OUTDIR /  "{key}/classifiers/metabuli"),
        metabuli_classification= OUTDIR /  "{key}/classifiers/metabuli/{key}.metabuli_classifications.tsv",
        metabuli_report= OUTDIR /  "{key}/classifiers/metabuli/{key}.metabuli_report.tsv",
    output:
