@@ -99,6 +99,23 @@ rule sort:
 	samtools sort --threads {threads} {input} -o {output} 2> {log}
 	"""
 
+## Collecting
+all_bin_dirs_recluster = {
+    # "kraken_taxvamb_default": OUTDIR / "{key}/kraken_taxvamb_default",
+    # "run_taxvamb_centrifuge": OUTDIR / "{key}/centrifuge_taxvamb",
+    # "run_taxvamb_gtdb": OUTDIR / "{key}/gtdb_taxvamb_default",
+    "run_taxvamb_gtdb_w_unknown": OUTDIR / "{key}/gtdb_taxvamb_default_w_unknown",
+    # "metabuli_taxvamb_default": OUTDIR / "{key}/metabuli_taxvamb_default",
+    # "kraken_taxvamb_no_predictor": OUTDIR / "{key}/kraken_taxvamb_no_predictor",
+    # "centrifuge_taxvamb_no_predictor": OUTDIR / "{key}/centrifuge_taxvamb_no_predictor",
+    # "run_taxvamb_gtdb_no_predictor": OUTDIR / "{key}/gtdb_taxvamb_default_no_predictor",
+    # "metabuli_taxvamb_no_predictor": OUTDIR / "{key}/metabuli_taxvamb_no_predictor",
+    # "default_vamb": OUTDIR / "{key}/vamb_default",
+    # "kalmari_taxvamb_default": OUTDIR / "{key}/kalmari_taxvamb_default",
+    # "trembl_taxvamb_default": OUTDIR / "{key}/trembl_taxvamb_default",
+}
+bin_dir_names_recluster = all_bin_dirs_recluster.keys()
+
 rule all:
     input:
         # checkm_semibin = expand(OUTDIR /  "{key}/checkm2/semibin", key=sample_id.keys()),
@@ -108,6 +125,7 @@ rule all:
         # checkm_default_vamb = expand(OUTDIR /  "{key}/checkm2/default_vamb",key=sample_id.keys()),
         # checkm2_taxvamb = expand(OUTDIR /  "{key}/tmp/checkm.done",key=sample_id.keys()), 
         # gunc = expand(OUTDIR / "{key}/tmp/gunc.done", key=sample_id.keys()),
+        directory = expand(OUTDIR / "{key}/checkm2/reclustering/{bins_recluster}",key=sample_id.keys(), bins_recluster=bin_dir_names_recluster), 
 
 rule all_gunc:
     input:
@@ -153,83 +171,83 @@ include: THIS_FILE_DIR / "snakemake_modules/taxvamb_using_metabuli_kraken_centri
 #         checkm2 = expand(OUTDIR /  "{key}/tmp/checkm.done",key=sample_id.keys()), ## WHEN USING THIS MAKE SURE NOT TO RERUN ANYTHING
 #         # checkm_default_vamb = expand(OUTDIR /  "{key}/checkm2/default_vamb",key=sample_id.keys()),
 #
-# # Run taxvamb 
-# rulename = "format_bins_class_recluster"
-# rule rename_vamb:
-#     input:
-#         bins = os.path.join(OUTDIR,"{key}",'vamb_default','vae_clusters_split.tsv'),
-#         latent = os.path.join(OUTDIR, '{key}','vamb_default/latent.npz'),
-#     output:
-#         bins = os.path.join(OUTDIR,"{key}",'vamb_default','vaevae_clusters_split.tsv'),
-#         latent = os.path.join(OUTDIR, '{key}','vamb_default/vaevae_latent.npz'),
-#     threads: threads_fn(rulename)
-#     resources: walltime = walltime_fn(rulename), mem_gb = mem_gb_fn(rulename), gpu=gpu_fn(rulename)
-#     shell:
-#         """
-#             cp {input.bins} {output.bins}
-#             cp {input.latent} {output.latent}
-#         """
-#
-# rulename = "recluster"
-# rule recluster:
-#     input: 
-#         contigs_decompressed = OUTDIR /  "{key}/metadecoder/{key}_contigs.flt.fna",
-#         directory = lambda wildcards: all_bin_dirs_recluster[wildcards.bins_recluster],
-#         bins = lambda wildcards: all_bin_dirs_recluster[wildcards.bins_recluster] / "vaevae_clusters_split.tsv",
-#         compo = lambda wildcards: all_bin_dirs_recluster[wildcards.bins_recluster] / "composition.npz",
-#     output:
-#         directory = directory(OUTDIR / "{key}/reclustering/{bins_recluster}/output"),
-#         headers = OUTDIR / "{key}/reclustering/{bins_recluster}/headers.txt",
-#         bins = OUTDIR / "{key}/reclustering/{bins_recluster}/output/clusters_reclustered.tsv",
-#     threads: threads_fn(rulename)
-#     resources: walltime = walltime_fn(rulename), mem_gb = mem_gb_fn(rulename), gpu=gpu_fn(rulename)
-#     params:
-#         env = THIS_FILE_DIR / "reclustering"
-#     shell:
-#         """
-#         grep -E "^>" {input.contigs_decompressed} | cut -c 2- > {output.headers}
-#         rm -rf {output.directory}
-#         mkdir -p {output.directory}
-#         pixi run --manifest-path {params.env} start --num_process {threads} \
-#         {input.bins} {input.directory}/vaevae_latent.npz \
-#         {input.contigs_decompressed} \
-#         {output.headers} \
-#         {output.directory} \
-#         kmeans \
-#         """
-#
-# # Run taxvamb 
-# rulename = "format_bins_class_recluster"
-# rule format_bins_class_recluster:
-#     input:
-#         contigs = OUTDIR /  "{key}/metadecoder/{key}_contigs.flt.fna",
-#         bins = OUTDIR / "{key}/reclustering/{bins_recluster}/output/clusters_reclustered.tsv",
-#     output:
-#         directory = directory(OUTDIR / "{key}/reclustering/formatted_vamb_bins/{bins_recluster}"),
-#     params:
-#         create_fasta = SRC_DIR / "create_fasta.py"
-#     threads: threads_fn(rulename)
-#     resources: walltime = walltime_fn(rulename), mem_gb = mem_gb_fn(rulename), gpu=gpu_fn(rulename)
-#     conda: THIS_FILE_DIR / "envs/vamb.yaml"
-#     shell:
-#         """
-#             rm -rf {output.directory} # clean up dir eg. for failed runs
-#             python {params.create_fasta} {input.contigs} {input.bins} 200000 {output.directory} 
-#         """
-#
-#
-# rulename = "checkm_class_recluster"
-# rule checkm_class_recluster:
-#     input: 
-#         bin_dir = directory(OUTDIR / "{key}/reclustering/formatted_vamb_bins/{bins_recluster}"),
-#     output:
-#         outdir = directory(OUTDIR /  "{key}/checkm2/reclustering/{bins_recluster}"),
-#     threads: threads_fn(rulename)
-#     params:
-#         database = config.get("checkm2_database")
-#     resources: walltime = walltime_fn(rulename), mem_gb = mem_gb_fn(rulename), gpu=gpu_fn(rulename)
-#     conda: THIS_FILE_DIR / "envs/checkm2.yaml"
-#     shell:
-#         """
-#         checkm2 predict --threads {threads} --input {input.bin_dir} --output-directory {output.outdir} --extension 'fna' --database_path {params.database}
-#         """
+# Run taxvamb 
+rulename = "format_bins_class_recluster"
+rule rename_vamb:
+    input:
+        bins = os.path.join(OUTDIR,"{key}",'vamb_default','vae_clusters_split.tsv'),
+        latent = os.path.join(OUTDIR, '{key}','vamb_default/latent.npz'),
+    output:
+        bins = os.path.join(OUTDIR,"{key}",'vamb_default','vaevae_clusters_split.tsv'),
+        latent = os.path.join(OUTDIR, '{key}','vamb_default/vaevae_latent.npz'),
+    threads: threads_fn(rulename)
+    resources: walltime = walltime_fn(rulename), mem_gb = mem_gb_fn(rulename), gpu=gpu_fn(rulename)
+    shell:
+        """
+            cp {input.bins} {output.bins}
+            cp {input.latent} {output.latent}
+        """
+
+rulename = "recluster"
+rule recluster:
+    input: 
+        contigs_decompressed = OUTDIR /  "{key}/metadecoder/{key}_contigs.flt.fna",
+        directory = lambda wildcards: all_bin_dirs_recluster[wildcards.bins_recluster],
+        bins = lambda wildcards: all_bin_dirs_recluster[wildcards.bins_recluster] / "vaevae_clusters_split.tsv",
+        compo = lambda wildcards: all_bin_dirs_recluster[wildcards.bins_recluster] / "composition.npz",
+    output:
+        directory = directory(OUTDIR / "{key}/reclustering/{bins_recluster}/output"),
+        headers = OUTDIR / "{key}/reclustering/{bins_recluster}/headers.txt",
+        bins = OUTDIR / "{key}/reclustering/{bins_recluster}/output/clusters_reclustered.tsv",
+    threads: threads_fn(rulename)
+    resources: walltime = walltime_fn(rulename), mem_gb = mem_gb_fn(rulename), gpu=gpu_fn(rulename)
+    params:
+        env = THIS_FILE_DIR / "reclustering"
+    shell:
+        """
+        grep -E "^>" {input.contigs_decompressed} | cut -c 2- > {output.headers}
+        rm -rf {output.directory}
+        mkdir -p {output.directory}
+        pixi run --manifest-path {params.env} start --num_process {threads} \
+        {input.bins} {input.directory}/vaevae_latent.npz \
+        {input.contigs_decompressed} \
+        {output.headers} \
+        {output.directory} \
+        kmeans \
+        """
+
+# Run taxvamb 
+rulename = "format_bins_class_recluster"
+rule format_bins_class_recluster:
+    input:
+        contigs = OUTDIR /  "{key}/metadecoder/{key}_contigs.flt.fna",
+        bins = OUTDIR / "{key}/reclustering/{bins_recluster}/output/clusters_reclustered.tsv",
+    output:
+        directory = directory(OUTDIR / "{key}/reclustering/formatted_vamb_bins/{bins_recluster}"),
+    params:
+        create_fasta = SRC_DIR / "create_fasta.py"
+    threads: threads_fn(rulename)
+    resources: walltime = walltime_fn(rulename), mem_gb = mem_gb_fn(rulename), gpu=gpu_fn(rulename)
+    conda: THIS_FILE_DIR / "envs/vamb.yaml"
+    shell:
+        """
+            rm -rf {output.directory} # clean up dir eg. for failed runs
+            python {params.create_fasta} {input.contigs} {input.bins} 200000 {output.directory} 
+        """
+
+
+rulename = "checkm_class_recluster"
+rule checkm_class_recluster:
+    input: 
+        bin_dir = directory(OUTDIR / "{key}/reclustering/formatted_vamb_bins/{bins_recluster}"),
+    output:
+        outdir = directory(OUTDIR /  "{key}/checkm2/reclustering/{bins_recluster}"),
+    threads: threads_fn(rulename)
+    params:
+        database = config.get("checkm2_database")
+    resources: walltime = walltime_fn(rulename), mem_gb = mem_gb_fn(rulename), gpu=gpu_fn(rulename)
+    conda: THIS_FILE_DIR / "envs/checkm2.yaml"
+    shell:
+        """
+        checkm2 predict --threads {threads} --input {input.bin_dir} --output-directory {output.outdir} --extension 'fna' --database_path {params.database}
+        """
