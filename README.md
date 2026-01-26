@@ -33,6 +33,7 @@ See [documentation](https://docs.sylabs.io/guides/3.0/user-guide/installation.ht
 
 Taxconverter should be installed to a conda environemnt, see documentation for installation [taxconverter](https://github.com/RasmussenLab/taxconverter/tree/fix_taxonomy_assignment_for_unclassified_vs_no_rank)
 
+
 The workflows runs several taxonomy annotation tools and checkm, which all require databases.  
 These databases should be installed and their paths set in the config file at config/config.yaml:
 
@@ -49,6 +50,8 @@ These databases should be installed and their paths set in the config file at co
 
 
 ---
+
+Lastly Taxconverter should then be installed in a conda environment called taxconv, see the documentation for installation [Taxconverter documentation](https://github.com/RasmussenLab/taxconverter/tree/fix_taxonomy_assignment_for_unclassified_vs_no_rank). 
 
 ### Running the workflow
 
