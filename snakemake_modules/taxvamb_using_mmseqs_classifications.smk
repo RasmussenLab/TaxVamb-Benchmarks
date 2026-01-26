@@ -86,7 +86,7 @@ rule run_taxvamb_kalmari:
         """
         pip install typer
 
-        # Make sure the taxonomy files produced by kalmari are in the format taxvamb expcts
+        # Make sure the taxonomy files produced by kalmari are in the format taxvamb expects
         cut -f1,5 {input.mmseqs2_out} > {input.mmseqs2_out}.cut.tsv
         echo -e "contigs\tpredictions" > {input.mmseqs2_out}.formatted
         python {params.script} {input.mmseqs2_out}.cut.tsv >> {input.mmseqs2_out}.formatted
