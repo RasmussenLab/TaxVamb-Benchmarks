@@ -29,9 +29,17 @@ rule decompress_fastafile:
     benchmark: config.get("benchmark", "benchmark/") + "{key}" + rulename
     shell:
         """
-        # Decompress fastafile 
-        gzip --decompress -c {input.contigs} > {output.contigs_decompressed}
-        echo decompression done
+        # # Decompress fastafile 
+        # gzip --decompress -c {input.contigs} > {output.contigs_decompressed}
+        # echo decompression done
+
+        if [[ "{input.contigs}" == *.gz ]]; then
+            echo "Decompressing {input.contigs}..."
+            gzip --decompress -c {input.contigs} > {output.contigs_decompressed}
+        else
+            echo "{input.contigs} is not compressed. Copying..."
+            cp {input.contigs} {output.contigs_decompressed}
+        fi
         """
 
 rulename = "metadecoder_pre"

@@ -1,5 +1,6 @@
 Semibin_use_GPU = config.get("semibin_use_gpu")
 
+# TODO: Remove --sequencing-type=long_read
 if Semibin_use_GPU:
     rulename = "semibinGPU"
     rule semibinGPU:
@@ -10,7 +11,7 @@ if Semibin_use_GPU:
             semibin = directory(OUTDIR /  "{key}/semibin"),
             semibin_bins = directory(OUTDIR /  "{key}/semibin/bins"),
         threads: threads_fn(rulename)
-        resources: walltime = walltime_fn(rulename), mem_gb = mem_gb_fn(rulename), gpu=gpu_fn(rulename)
+        resources: walltime = walltime_fn(rulename), mem_gb = mem_gb_fn(rulename), gpu=gpu_fn(rulename), load=1
         benchmark: config.get("benchmark", "benchmark/") + "{key}_" + rulename
         log: config.get("log", f"{str(OUTDIR)}/log/") + "{key}_" + rulename
         params:
@@ -20,8 +21,9 @@ if Semibin_use_GPU:
             rm -rf {output.semibin}
             module load cuda/12.2
             CONDA_OVERRIDE_CUDA="12.2" pixi run --manifest-path {params.env} SemiBin2 \
-            multi_easy_bin -i {input.contigs} -b {input.bamfiles} -o {output.semibin} \
-            --separator C -t {threads} --engine gpu --write-pre-reclustering-bins --self-supervised # &> {log}
+            multi_easy_bin --sequencing-type=long_read -i {input.contigs} -b {input.bamfiles} -o {output.semibin} \
+            --separator C -t {threads} --engine gpu --self-supervised # &> {log}
+            # --separator C -t {threads} --engine gpu --write-pre-reclustering-bins --self-supervised # &> {log}
             """
 else: 
     rulename = "semibin"

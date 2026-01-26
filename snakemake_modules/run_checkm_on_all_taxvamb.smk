@@ -9,7 +9,6 @@ all_bin_dirs_clas = {
 }
 bin_dir_names_clas = all_bin_dirs_clas.keys()
 
-# Run taxvamb 
 rulename = "format_bins_class"
 rule format_bins_class:
     input:

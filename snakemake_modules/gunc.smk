@@ -1,41 +1,8 @@
-# Decompress semibin bins, as they are gzipped, and GUNC needs fasta format# Decompress semibin bins, as they are gzipped, and GUNC needs fasta format
-rulename = "gzip_semibins"
-rule gzip_semibins:
-    input:
-        semibin_bins = OUTDIR /  "{key}/semibin/bins",
-    output: 
-        touch_me = OUTDIR / "{key}/tmp/semibin_decompressed.done"
-    threads: threads_fn(rulename)
-    resources: walltime = walltime_fn(rulename), mem_gb = mem_gb_fn(rulename), gpu=gpu_fn(rulename)
-    conda: THIS_FILE_DIR / "envs/gunc.yaml"
-    shell:
-        """
-        gzip -dk {input.semibin_bins}/*.gz
-        touch {output.touch_me}
-        """
 
-# # name: [filepath, bin suffix]
-# all_bin_dirs = {
-#             # Binners
-#             "semibin": ["{key}/semibin/bins", "fa"],
-#             "vamb": [os.path.join(OUTDIR,"{key}", 'vamb_default_bins_filtered'), ".fna"],
-#             "metabat": ["{key}/metabat/metabat", "fa"],
-#             "metadecoder": ["{key}/metadecoder/clusters", "fasta"],
-#             # Main classifiers
-#             "taxvamb_gtdb_mmseqs": [OUTDIR / "{key}/gtdb_taxvamb_default_bins_filtered", "fna"],
-#             # metabuli
-#             # centrifuge
-#             # Main classifiers with --no predictor
-#             # metabuli, centrifuge, gtdb
-#
-#             # Extra test classifiers
-#             "taxvamb_kalmari_mmseqs": [OUTDIR / "{key}/kalmari_taxvamb_default_bins_filtered", "fna"],
-#             "taxvamb_trembl_mmseqs": [OUTDIR / "{key}/trembl_taxvamb_default_bins_filtered", "fna"],
-#                 }
 
 # name: [filepath, bin suffix]
 all_bin_dirs = {
-            "reclustering_default_vamb": [OUTDIR / "{key}/reclustering/formatted_vamb_bins/default_vamb", ".fna"],
+            # "reclustering_default_vamb": [OUTDIR / "{key}/reclustering/formatted_vamb_bins/default_vamb", ".fna"],
             # Binners
             # "centrifuge_taxvamb_no_predictor": [OUTDIR / "{key}/formatted_vamb_bins_filtered/centrifuge_taxvamb_no_predictor", ".fna"],
             # "kraken_taxvamb_default": [OUTDIR / "{key}/formatted_vamb_bins_filtered/kraken_taxvamb_default", ".fna"],
@@ -53,11 +20,11 @@ all_bin_dirs = {
             # "reclustering_metabuli_taxvamb_no_predictor": [OUTDIR / "{key}/reclustering/formatted_vamb_bins/metabuli_taxvamb_no_predictor", ".fna"],
             # "reclustering_run_taxvamb_centrifuge": [OUTDIR / "{key}/reclustering/formatted_vamb_bins/run_taxvamb_centrifuge", ".fna"],
             # "reclustering_run_taxvamb_gtdb_no_predictor": [OUTDIR / "{key}/reclustering/formatted_vamb_bins/run_taxvamb_gtdb_no_predictor", ".fna"],
-            "reclustering_run_taxvamb_gtdb_w_unknown": [OUTDIR / "{key}/reclustering/formatted_vamb_bins/run_taxvamb_gtdb_w_unknown", ".fna"],
+            # "reclustering_run_taxvamb_gtdb_w_unknown": [OUTDIR / "{key}/reclustering/formatted_vamb_bins/run_taxvamb_gtdb_w_unknown", ".fna"],
             # "metabat": [OUTDIR / "{key}/metabat/metabat", ".fa"],
             # "metadecoder": [OUTDIR / "{key}/metadecoder/clusters", ".fasta"],
-            # "comebin": [OUTDIR / "{key}/comebin/comebin_res/comebin_res_bins", ".fa"],
-            # "semibin": [OUTDIR / "{key}/semibin/bins", ".fa"],
+            "comebin": [OUTDIR / "{key}/comebin/comebin_res/comebin_res_bins", ".fa"],
+            "semibin": [OUTDIR / "{key}/semibin/bins", ".fa"],
             # "kalmari_taxvamb_default": [OUTDIR / "{key}/formatted_vamb_bins_filtered/kalmari_taxvamb_default", ".fna"],
             # "trembl_taxvamb_default": [OUTDIR / "{key}/formatted_vamb_bins_filtered/trembl_taxvamb_default", ".fna"],
             # "trembl_taxvamb_default_reclustering": [OUTDIR / "{key}/reclustering/formatted_vamb_bins/trembl_taxvamb_default", ".fna"],
@@ -85,6 +52,11 @@ rule gunc:
         # Input dir should contain files in fasta format -- need to gzip for some
         rm -rf {output.dir}
         mkdir -p {output.dir}
+
+        if [ "{wildcards.bin_dir}" == "semibin" ]; then
+            gzip -dk {input.bin_dir}/*.gz 
+        fi
+
         gunc run --input_dir {input.bin_dir} --file_suffix {params.suffix} --db_file {params.database} --threads {threads} --out_dir {output.dir} 
         """
 

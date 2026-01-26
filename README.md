@@ -31,6 +31,7 @@ conda activate Benchmark_binners
 Metabat is available as an docker image. To run it it is necessary to have singularity installed.
 See [documentation](https://docs.sylabs.io/guides/3.0/user-guide/installation.html) for how to install the software
 
+Taxconverter should be installed to a conda environemnt, see documentation for installation [taxconverter](https://github.com/RasmussenLab/taxconverter/tree/fix_taxonomy_assignment_for_unclassified_vs_no_rank)
 
 The workflows runs several taxonomy annotation tools and checkm, which all require databases.  
 These databases should be installed and their paths set in the config file at config/config.yaml:
@@ -44,6 +45,8 @@ These databases should be installed and their paths set in the config file at co
 | **Centrifuge** | NCBI RefSeq Release 229 | See https://www.ccb.jhu.edu/software/centrifuge/manual.shtml under 'Database download and index building' |
 | **Kraken2** | RefSeq (2024-12-28) | Pre-built index from [Langmead AWS](https://benlangmead.github.io/aws-indexes/k2). Includes archaea, bacteria, viral, plasmid, human, and UniVec_Core. |
 | **Checkm** | Diamond db | Install using `checkm2 database --download`|
+
+
 
 ---
 
@@ -94,7 +97,7 @@ For benchmarking for figure 3 in the paper the following 4 runs crashed internal
 
 #### Semibin
 Semibin(v.2.1.0) crashes in the Vaginal and the Salvia samples.
-- For the Vaginal sample Semibin does not find any bins in one of the samples which causes downstream steps to crash (`/log_files_for_crashed_runs/Vaginal_SemiBin_v2.1.0.log` ). Semibin version 2.2.0 should fix this issue (https://github.com/BigDataBiology/SemiBin/releases/tag/v2.2.0), but does not change performance of the tool (according to patchnotes). We therefore ran semibin version 2.2.0 on this dataset, but we still got the same error (`/log_files_for_crashed_runs/Vaginal_SemiBin_v2.2.0.log`). This is due to another bug with no bins found using the `--write-pre-reclustering-bins` flag , removing this flag (as we don't need the pre-reclustering bins for this sample) and upgrading to the newest version of semibin fixes the issue.
+- For the Vaginal sample Semibin does not find any bins in one of the samples which causes downstream steps to crash (`/log_files_for_crashed_runs/Vaginal_SemiBin_v2.1.0.log` ). Semibin version 2.2.0 should fix this issue (https://github.com/BigDataBiology/SemiBin/releases/tag/v2.2.0), but does not change performance of the tool (according to patchnotes). We therefore ran semibin version 2.2.0 on this dataset, but we still got the same error (`/log_files_for_crashed_runs/Vaginal_SemiBin_v2.2.0.log`). This is due to another bug with no bins found using the `--write-pre-reclustering-bins` flag , removing this flag (as we don't need the pre-reclustering bins for this sample) and upgrading to the newest version of semibin fixes the issue. 
 - For the the Salvia dataset we get the following error described in: https://github.com/BigDataBiology/SemiBin/issues/211 and https://github.com/BigDataBiology/SemiBin/issues/201. There does not seem to be a fix for the issue, although the maintainer seems to be looking into it. See `/log_files_for_crashed_runs/Salvia_SemiBin.log` for logfiles
 
 #### Comebin

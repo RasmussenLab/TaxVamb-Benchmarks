@@ -34,6 +34,15 @@ default_mem_gb: 250
 # Below is the specific resources defined for the various rules in the pipeline 
 # If no specific resources are defined for a rule, the default will be used instead.
 
+comebin_checkm:
+  walltime: "20-00:00:00"
+  mem_gb: 120
+  threads: 30
+minimap:
+  walltime: "20-00:00:00"
+  mem_gb: 120
+  threads: 30
+
 recluster:
   walltime: "20-00:00:00"
   mem_gb: 750
@@ -197,7 +206,7 @@ comebin:
   walltime: "1088:00:00"
   mem_gb: 500
   threads: 64
-  gpu: " --partition=gpuqueue --gres=gpu:1 "
+# gpu: " --partition=gpuqueue --gres=gpu:1 "
 
 semibin:
   walltime: "288:00:00"
@@ -257,6 +266,6 @@ Strobealign_bam_default:
   mem_gb: 245
 
 sort:
-  threads: 8
+  threads: 34
   mem_gb: 120
 

@@ -54,7 +54,7 @@ sample_id = collections.defaultdict(list)
 sample_id_path = collections.defaultdict(dict)
 sample_id_path_assembly = collections.defaultdict(dict)
 for id, (sample, read1, read2, contig) in enumerate(zip( df["sample"], df.read1, df.read2, df.contig)):
-    id = f"sample{str(id)}"
+    id = f"{Path(read1).stem.split("_")[0]}" # TODO: Change to be more robust
     sample_id[sample].append(id)
     sample_id_path[sample][id] = [read1, read2]
     sample_id_path_assembly[sample][id] = [contig]
@@ -65,7 +65,7 @@ contigs =  lambda wildcards: Path(sample_id_path_assembly[wildcards.key][wildcar
 read_fw = lambda wildcards: sample_id_path[wildcards.key][wildcards.id][0]
 read_rv =  lambda wildcards: sample_id_path[wildcards.key][wildcards.id][1]
 
-bamfiles_before =  "{key}/assembly_mapping_output/mapped/{id}.bam"
+bamfiles_before =  str(OUTDIR) +  "/{key}/assembly_mapping_output/mapped/{id}.bam"
 
 INDEX_SIZE = "12G"
 MIN_CONTIG_LEN = 2000
@@ -76,6 +76,7 @@ rule all:
         [OUTDIR / bamfiles_before.format(key=k, id=i) for k, v in sample_id.items() for i in v]
         # expand(bamfiles_before, key=sample_id.keys(), id=sample_id.values())
         # expand(OUTDIR / "{key}/assembly_mapping_output/contigs.flt.fna.gz", key=sample_id.keys())
+
 
 # Rename the contigs to keep sample information for later use 
 rulename = "rename_contigs"
@@ -90,7 +91,11 @@ rule rename_contigs:
     log: config.get("log", f"{str(OUTDIR)}/log/") + "{key}_{id}_" + rulename
     shell:
         """
-        sed 's/^>/>S{wildcards.id}C/' {input} > {output} 2> {log}
+        if [[ "{input}" == *.gz ]]; then
+            zcat {input} | sed 's/^>/>S{wildcards.id}C/' > {output} 2> {log}
+        else
+            sed 's/^>/>S{wildcards.id}C/' {input} > {output} 2> {log}
+        fi
         """
 
 rulename = "cat_contigs"
@@ -168,4 +173,5 @@ rule minimap:
         " | cat {input.dict} - "
         " | samtools view -F 3584 -b - " # supplementary, duplicate read, fail QC check
         " > {output.bam} 2> {log}"
+
 
