@@ -16,6 +16,7 @@ if CONFIG_PATH.exists():
 # Define the src directory for the files used in the snakemake workflow
 SRC_DIR = THIS_FILE_DIR / "files_used_in_snakemake_workflow"  
 
+
 # Get the output_directory defined by the user or fallback to current directory, which is the default way snakemake handles output directories
 OUTDIR = Path("") if config.get("output_directory") is None else Path(config.get("output_directory"))
 
@@ -87,9 +88,7 @@ rule sort:
     input:
         bamfiles,
     output:
-        # TODO: go back to temp
-        OUTDIR / "{key}/assembly_mapping_output/mapped_sorted/{id}.sort.bam",
-        # temp(OUTDIR / "{key}/assembly_mapping_output/mapped_sorted/{id}.sort.bam"),
+        temp(OUTDIR / "{key}/assembly_mapping_output/mapped_sorted/{id}.sort.bam"),
     threads: threads_fn(rulename)
     resources: walltime = walltime_fn(rulename), mem_gb = mem_gb_fn(rulename), gpu=gpu_fn(rulename)
     benchmark: config.get("benchmark", "benchmark/") + "{key}_{id}_" + rulename
@@ -102,28 +101,17 @@ rule sort:
 
 rule all:
     input:
-        checkm_semibin = expand(OUTDIR /  "{key}/checkm2/semibin", key=sample_id.keys()),
-        checkm_comebin = expand(OUTDIR /  "{key}/checkm2/comebin", key=sample_id.keys()),
-        checkm_metadecoder = expand(OUTDIR /  "{key}/checkm2/metadecoder", key=sample_id.keys()),
-        checkm_metabat = expand(OUTDIR /  "{key}/checkm2/metabat", key=sample_id.keys()),
-        checkm_default_vamb = expand(OUTDIR /  "{key}/checkm2/default_vamb",key=sample_id.keys()),
-        checkm2_taxvamb = expand(OUTDIR /  "{key}/tmp/checkm.done",key=sample_id.keys()), 
+        # checkm_semibin = expand(OUTDIR /  "{key}/checkm2/semibin", key=sample_id.keys()),
+        # checkm_comebin = expand(OUTDIR /  "{key}/checkm2/comebin", key=sample_id.keys()),
+        # checkm_metadecoder = expand(OUTDIR /  "{key}/checkm2/metadecoder", key=sample_id.keys()),
+        # checkm_metabat = expand(OUTDIR /  "{key}/checkm2/metabat", key=sample_id.keys()),
+        # checkm_default_vamb = expand(OUTDIR /  "{key}/checkm2/default_vamb",key=sample_id.keys()),
+        # checkm2_taxvamb = expand(OUTDIR /  "{key}/tmp/checkm.done",key=sample_id.keys()), 
         gunc = expand(OUTDIR / "{key}/tmp/gunc.done", key=sample_id.keys()),
 
 rule all_gunc:
     input:
         expand(OUTDIR / "{key}/tmp/gunc.done", key=sample_id.keys()),
-
-
-rule comebin_only:
-    input:
-        checkm_semibin = expand(OUTDIR /  "{key}/checkm2/semibin", key=sample_id.keys()),
-        checkm_comebin = expand(OUTDIR /  "{key}/checkm2/comebin", key=sample_id.keys()),
-        checkm_metadecoder = expand(OUTDIR /  "{key}/checkm2/metadecoder", key=sample_id.keys()),
-        checkm_metabat = expand(OUTDIR /  "{key}/checkm2/metabat", key=sample_id.keys()),
-        checkm_default_vamb = expand(OUTDIR /  "{key}/checkm2/default_vamb",key=sample_id.keys()),
-        checkm2 = expand(OUTDIR /  "{key}/tmp/checkm.done",key=sample_id.keys()),
-        gunc = expand(OUTDIR / "{key}/tmp/gunc.done", key=sample_id.keys()),
 
 ## Include the specific rules for each tool
 include: THIS_FILE_DIR / "snakemake_modules/vamb_default.smk"
@@ -134,8 +122,7 @@ include: THIS_FILE_DIR / "snakemake_modules/semibin.smk"
 include: THIS_FILE_DIR / "snakemake_modules/taxvamb_using_mmseqs_classifications.smk"
 include: THIS_FILE_DIR / "snakemake_modules/run_checkm_on_all_taxvamb.smk"
 include: THIS_FILE_DIR / "snakemake_modules/gunc.smk"
-# include: THIS_FILE_DIR / "snakemake_modules/va_extra_taxonomy_classifiers.smk"
-
+include: THIS_FILE_DIR / "snakemake_modules/taxvamb_using_metabuli_kraken_centrifuge.smk"
 
 ## Collecting
 all_bin_dirs_recluster = {

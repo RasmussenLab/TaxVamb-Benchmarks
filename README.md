@@ -137,7 +137,14 @@ all_bin_dirs = {
 	    ##  ...
                 }
 ```
-
+The same applies if you only want to run some of the taxvamb version (ie. with a specific database), here you should have the following target file `test/tmp/checkm.done` and in `snakemake_modules/run_checkm_on_all_taxvamb.smk`, select the target files, ie. in the example only run taxvamb with the gtdb database:
+```
+all_bin_dirs_clas = {
+    "run_taxvamb_gtdb_w_unknown": OUTDIR / "{key}/gtdb_taxvamb_default_w_unknown/vaevae_clusters_split.tsv",
+    ##  Rest commented out ...
+    ##  ...
+}
+```
 
 ### Resources 
 The pipeline can be configurated in: ``` config/config.yaml ```

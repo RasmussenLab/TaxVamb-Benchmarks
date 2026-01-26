@@ -28,7 +28,7 @@ rule format_bins_default_vamb_filtered:
         directory = directory(os.path.join(OUTDIR,"{key}", 'vamb_default')),
         bins = os.path.join(OUTDIR,"{key}",'vamb_default','vae_clusters_split.tsv'),
     output:
-        directory = directory(os.path.join(OUTDIR,"{key}", 'vamb_default_bins_filtered')),
+        directory = directory(OUTDIR / "{key}/vamb_default_bins_filtered"),
     params:
         create_fasta = SRC_DIR / "create_fasta.py"
     threads: threads_fn(rulename)

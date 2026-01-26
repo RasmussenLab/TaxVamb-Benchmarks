@@ -1,5 +1,6 @@
 # Define the default config file path
-config ?= bam_contig=all_samples_data_config/all_BIODATA.py
+# config ?= data_configs/CAMI_Airways.tsv
+config ?= data_configs/example.tsv
 
 benchmark_dryrun: 
 	snakemake -n -p --keep-going --snakefile snakefile.smk -c 100 --nolock --rerun-triggers mtime --keep-going --software-deployment-method apptainer --use-conda --rerun-incomplete --config bam_contig=$(config) --keep-incomplete all
