@@ -116,6 +116,10 @@ all_bin_dirs_recluster = {
 }
 bin_dir_names_recluster = all_bin_dirs_recluster.keys()
 
+# Prevent bins_recluster wildcard from matching paths with slashes
+wildcard_constraints:
+    bins_recluster="[^/]+"
+
 rule all:
     input:
         # checkm_semibin = expand(OUTDIR /  "{key}/checkm2/semibin", key=sample_id.keys()),
@@ -171,15 +175,15 @@ include: THIS_FILE_DIR / "snakemake_modules/taxvamb_using_metabuli_kraken_centri
 #         checkm2 = expand(OUTDIR /  "{key}/tmp/checkm.done",key=sample_id.keys()), ## WHEN USING THIS MAKE SURE NOT TO RERUN ANYTHING
 #         # checkm_default_vamb = expand(OUTDIR /  "{key}/checkm2/default_vamb",key=sample_id.keys()),
 #
-# Run taxvamb 
+# Run taxvamb
 rulename = "format_bins_class_recluster"
 rule rename_vamb:
     input:
-        bins = os.path.join(OUTDIR,"{key}",'vamb_default','vae_clusters_split.tsv'),
-        latent = os.path.join(OUTDIR, '{key}','vamb_default/latent.npz'),
+        bins = OUTDIR / "{key}/vamb_default/vae_clusters_split.tsv",
+        latent = OUTDIR / "{key}/vamb_default/latent.npz",
     output:
-        bins = os.path.join(OUTDIR,"{key}",'vamb_default','vaevae_clusters_split.tsv'),
-        latent = os.path.join(OUTDIR, '{key}','vamb_default/vaevae_latent.npz'),
+        bins = OUTDIR / "{key}/vamb_default/vaevae_clusters_split.tsv",
+        latent = OUTDIR / "{key}/vamb_default/vaevae_latent.npz",
     threads: threads_fn(rulename)
     resources: walltime = walltime_fn(rulename), mem_gb = mem_gb_fn(rulename), gpu=gpu_fn(rulename)
     shell:

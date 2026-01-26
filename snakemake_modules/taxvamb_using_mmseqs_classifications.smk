@@ -65,7 +65,7 @@ rule mmseqs2_trembl:
         mkdir -p {output.mmseqs2}
         """
 
-# Run taxvamb 
+# Run taxvamb
 rulename = "run_taxvamb_kalmari"
 rule run_taxvamb_kalmari:
     input:
@@ -73,9 +73,9 @@ rule run_taxvamb_kalmari:
         bamfiles = lambda wildcards: expand(OUTDIR / "{key}/assembly_mapping_output/mapped_sorted/{id}.sort.bam", key=wildcards.key, id=sample_id[wildcards.key]),
         mmseqs2_out = OUTDIR /  "{key}/classifiers/mmseqs2/kalmari_lca.tsv",
     output:
-        directory = directory(os.path.join(OUTDIR,"{key}", 'kalmari_taxvamb_default')),
+        directory = directory(OUTDIR / "{key}/kalmari_taxvamb_default"),
         bins = OUTDIR / "{key}/kalmari_taxvamb_default/vaevae_clusters_split.tsv",
-        compo = os.path.join(OUTDIR, '{key}','kalmari_taxvamb_default/composition.npz'),
+        compo = OUTDIR / "{key}/kalmari_taxvamb_default/composition.npz",
     threads: threads_fn(rulename)
     params: script =THIS_FILE_DIR / "files_used_in_snakemake_workflow/format_trembl_kalmari.py"
     resources: walltime = walltime_fn(rulename), mem_gb = mem_gb_fn(rulename), gpu=gpu_fn(rulename)
@@ -96,7 +96,7 @@ rule run_taxvamb_kalmari:
         """
 
 
-# Run taxvamb 
+# Run taxvamb
 rulename = "run_taxvamb_gtdb"
 rule run_taxvamb_gtdb_w_unknown:
     input:
@@ -104,9 +104,9 @@ rule run_taxvamb_gtdb_w_unknown:
         bamfiles = lambda wildcards: expand(OUTDIR / "{key}/assembly_mapping_output/mapped_sorted/{id}.sort.bam", key=wildcards.key, id=sample_id[wildcards.key]),
         mmseqs2_out = OUTDIR /  "{key}/classifiers/mmseqs2/gtdb_lca.tsv",
     output:
-        directory = directory(os.path.join(OUTDIR,"{key}", 'gtdb_taxvamb_default_w_unknown')),
+        directory = directory(OUTDIR / "{key}/gtdb_taxvamb_default_w_unknown"),
         bins = OUTDIR / "{key}/gtdb_taxvamb_default_w_unknown/vaevae_clusters_split.tsv",
-        compo = os.path.join(OUTDIR, '{key}','gtdb_taxvamb_default_w_unknown/composition.npz'),
+        compo = OUTDIR / "{key}/gtdb_taxvamb_default_w_unknown/composition.npz",
     threads: threads_fn(rulename)
     resources: walltime = walltime_fn(rulename), mem_gb = mem_gb_fn(rulename), gpu=gpu_fn(rulename)
     benchmark: config.get("benchmark", "benchmark/") + "{key}_" + rulename
@@ -121,7 +121,7 @@ rule run_taxvamb_gtdb_w_unknown:
         vamb bin taxvamb {vamb_extra_arg} --taxonomy {input.mmseqs2_out}.formatted_w_unknown --outdir {output.directory} --fasta {input.contigs} -p {threads} --bamfiles {input.bamfiles} # &> {log}
         """
 
-# Run taxvamb 
+# Run taxvamb
 rulename = "run_taxvamb_trembl"
 rule run_taxvamb_trembl:
     input:
@@ -129,9 +129,9 @@ rule run_taxvamb_trembl:
         bamfiles = lambda wildcards: expand(OUTDIR / "{key}/assembly_mapping_output/mapped_sorted/{id}.sort.bam", key=wildcards.key, id=sample_id[wildcards.key]),
         mmseqs2_out = OUTDIR /  "{key}/classifiers/mmseqs2/trembl_lca.tsv",
     output:
-        directory = directory(os.path.join(OUTDIR,"{key}", 'trembl_taxvamb_default')),
+        directory = directory(OUTDIR / "{key}/trembl_taxvamb_default"),
         bins = OUTDIR / "{key}/trembl_taxvamb_default/vaevae_clusters_split.tsv",
-        compo = os.path.join(OUTDIR, '{key}','trembl_taxvamb_default/composition.npz'),
+        compo = OUTDIR / "{key}/trembl_taxvamb_default/composition.npz",
     threads: threads_fn(rulename)
     resources: walltime = walltime_fn(rulename), mem_gb = mem_gb_fn(rulename), gpu=gpu_fn(rulename)
     benchmark: config.get("benchmark", "benchmark/") + "{key}_" + rulename

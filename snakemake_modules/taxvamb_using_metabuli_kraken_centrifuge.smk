@@ -38,7 +38,7 @@ rule metabuli_taxconv:
        taxconverter metabuli -c {input.metabuli_classification} -r {input.metabuli_report} -o {output.metabuli_classification}
        """
 
-# Run taxvamb 
+# Run taxvamb
 rulename = "run_taxvamb_metabuli"
 rule run_taxvamb_metabuli:
     input:
@@ -46,9 +46,9 @@ rule run_taxvamb_metabuli:
         bamfiles = lambda wildcards: expand(OUTDIR / "{key}/assembly_mapping_output/mapped_sorted/{id}.sort.bam", key=wildcards.key, id=sample_id[wildcards.key]),
         taxonomy= OUTDIR /  "{key}/classifiers/metabuli/taxvamb_formatted_classifications.tsv",
     output:
-        directory = directory(os.path.join(OUTDIR,"{key}", 'metabuli_taxvamb_default')),
+        directory = directory(OUTDIR / "{key}/metabuli_taxvamb_default"),
         bins = OUTDIR / "{key}/metabuli_taxvamb_default/vaevae_clusters_split.tsv",
-        compo = os.path.join(OUTDIR, '{key}','metabuli_taxvamb_default/composition.npz'),
+        compo = OUTDIR / "{key}/metabuli_taxvamb_default/composition.npz",
     threads: threads_fn(rulename)
     resources: walltime = walltime_fn(rulename), mem_gb = mem_gb_fn(rulename), gpu=gpu_fn(rulename)
     benchmark: config.get("benchmark", "benchmark/") + "{key}_" + rulename
@@ -96,7 +96,7 @@ rule kraken_taxconv:
         taxconverter kraken2 -i {input.kraken2} -o {output.kraken2}
         """
 
-# Run taxvamb 
+# Run taxvamb
 rulename = "run_taxvamb_kraken"
 rule run_taxvamb_kraken:
     input:
@@ -104,9 +104,9 @@ rule run_taxvamb_kraken:
         bamfiles = lambda wildcards: expand(OUTDIR / "{key}/assembly_mapping_output/mapped_sorted/{id}.sort.bam", key=wildcards.key, id=sample_id[wildcards.key]),
         taxonomy = OUTDIR /  "{key}/classifiers/kraken2/taxvamb_formatted_classifications",
     output:
-        directory = directory(os.path.join(OUTDIR,"{key}", 'kraken_taxvamb_default')),
+        directory = directory(OUTDIR / "{key}/kraken_taxvamb_default"),
         bins = OUTDIR / "{key}/kraken_taxvamb_default/vaevae_clusters_split.tsv",
-        compo = os.path.join(OUTDIR, '{key}','kraken_taxvamb_default/composition.npz'),
+        compo = OUTDIR / "{key}/kraken_taxvamb_default/composition.npz",
     threads: threads_fn(rulename)
     resources: walltime = walltime_fn(rulename), mem_gb = mem_gb_fn(rulename), gpu=gpu_fn(rulename)
     benchmark: config.get("benchmark", "benchmark/") + "{key}_" + rulename
@@ -164,9 +164,9 @@ rule run_taxvamb_centrifuge:
         bamfiles = lambda wildcards: expand(OUTDIR / "{key}/assembly_mapping_output/mapped_sorted/{id}.sort.bam", key=wildcards.key, id=sample_id[wildcards.key]),
         taxonomy = OUTDIR /  "{key}/classifiers/centrifuge/taxvamb_formatted_classifications.tsv",
     output:
-        directory = directory(os.path.join(OUTDIR,"{key}", 'centrifuge_taxvamb')),
+        directory = directory(OUTDIR / "{key}/centrifuge_taxvamb"),
         bins = OUTDIR / "{key}/centrifuge_taxvamb/vaevae_clusters_split.tsv",
-        compo = os.path.join(OUTDIR, '{key}','centrifuge_taxvamb/composition.npz'),
+        compo = OUTDIR / "{key}/centrifuge_taxvamb/composition.npz",
     threads: threads_fn(rulename)
     resources: walltime = walltime_fn(rulename), mem_gb = mem_gb_fn(rulename), gpu=gpu_fn(rulename)
     benchmark: config.get("benchmark", "benchmark/") + "{key}_" + rulename

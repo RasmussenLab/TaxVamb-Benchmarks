@@ -9,6 +9,10 @@ all_bin_dirs_clas = {
 }
 bin_dir_names_clas = all_bin_dirs_clas.keys()
 
+# Prevent bins_clas wildcard from matching paths with slashes to avoid conflicts with reclustering outputs
+wildcard_constraints:
+    bins_clas="[^/]+"
+
 rulename = "format_bins_class"
 rule format_bins_class:
     input:

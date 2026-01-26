@@ -29,6 +29,10 @@ all_bin_dirs = {
                 }
 bin_dir_names = all_bin_dirs.keys()
 
+# Prevent bin_dir wildcard from matching paths with slashes
+wildcard_constraints:
+    bin_dir="[^/]+"
+
 rulename = "gunc"
 rule gunc:
     input:
