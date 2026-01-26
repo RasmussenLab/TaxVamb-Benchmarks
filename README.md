@@ -35,7 +35,7 @@ Taxconverter should be installed to a conda environemnt, see documentation for i
 
 
 The workflows runs several taxonomy annotation tools and checkm, which all require databases.  
-These databases should be installed and their paths set in the config file at config/config.yaml:
+These databases should be installed and their paths set in the config file at `config/config.yaml`:
 
 | Tool | Database Version | Description / Notes |
 | :--- | :--- | :--- |
@@ -47,13 +47,13 @@ These databases should be installed and their paths set in the config file at co
 | **Kraken2** | RefSeq (2024-12-28) | Pre-built index from [Langmead AWS](https://benlangmead.github.io/aws-indexes/k2). Includes archaea, bacteria, viral, plasmid, human, and UniVec_Core. |
 | **Checkm** | Diamond db | Install using `checkm2 database --download`|
 
-
-
 ---
 
 Lastly Taxconverter should then be installed in a conda environment called taxconv, see the documentation for installation [Taxconverter documentation](https://github.com/RasmussenLab/taxconverter/tree/fix_taxonomy_assignment_for_unclassified_vs_no_rank). 
 
 ### Running the workflow
+
+#### Running the entire workflow
 
 To dry the workflow there is several options
 ```
@@ -95,19 +95,47 @@ sample_1   im/a/path/to/sample_1/read1    im/a/path/to/sample_1/read2   path/sam
 sample_2   im/a/path/to/sample_2/read1    im/a/path/to/sample_2/read2   path/sample_2/contig.fasta          
 ```
 
-### Tools which crashed internally, and alternative ways of running them.
-For benchmarking for figure 3 in the paper the following 4 runs crashed internally.
+#### Running specific tools only
 
-#### Semibin
-Semibin(v.2.1.0) crashes in the Vaginal and the Salvia samples.
-- For the Vaginal sample Semibin does not find any bins in one of the samples which causes downstream steps to crash (`/log_files_for_crashed_runs/Vaginal_SemiBin_v2.1.0.log` ). Semibin version 2.2.0 should fix this issue (https://github.com/BigDataBiology/SemiBin/releases/tag/v2.2.0), but does not change performance of the tool (according to patchnotes). We therefore ran semibin version 2.2.0 on this dataset, but we still got the same error (`/log_files_for_crashed_runs/Vaginal_SemiBin_v2.2.0.log`). This is due to another bug with no bins found using the `--write-pre-reclustering-bins` flag , removing this flag (as we don't need the pre-reclustering bins for this sample) and upgrading to the newest version of semibin fixes the issue. 
-- For the the Salvia dataset we get the following error described in: https://github.com/BigDataBiology/SemiBin/issues/211 and https://github.com/BigDataBiology/SemiBin/issues/201. There does not seem to be a fix for the issue, although the maintainer seems to be looking into it. See `/log_files_for_crashed_runs/Salvia_SemiBin.log` for logfiles
+For running a specific tool snakemake can be called alone with a target output file eg.  
 
-#### Comebin
-Comebin (v1.0.3) crashes in the Human Gut (IBS) and Forest Soil samples.  
-In both datasets the error is described in the following Github issue: https://github.com/ziyewang/COMEBin/issues/17,  
-The logfiles for these runs can be found in: `/log_files_for_crashed_runs/Human_gut_IBS_ComeBin.log` and `/log_files_for_crashed_runs/Forest_soil_Comebin.log`  
-Here we instead ran comebin in single-sample mode. This is equivalent to in the pipeline in the `sample` column of the config files, assigning each read pair and their corresponding contig file to a different sample name.
+```
+  snakemake --snakefile snakefile.smk -c 100 --software-deployment-method apptainer --use-conda  --config bam_contig=<bam_contig_file> <target_output_files> 
+```
+For more information see the [snakemake documentation](https://snakemake.readthedocs.io/en/stable/).  
+To figure out which files, need to be written refer to the target rule (all) in the `snakemake.smk`.  
+For now it looks like:  
+
+```
+rule all:
+    input:
+      checkm_semibin = expand(OUTDIR /  "{key}/checkm2/semibin", key=sample_id.keys()),
+      checkm_comebin = expand(OUTDIR /  "{key}/checkm2/comebin", key=sample_id.keys()),
+      checkm_metadecoder = expand(OUTDIR /  "{key}/checkm2/metadecoder", key=sample_id.keys()),
+      checkm_metabat = expand(OUTDIR /  "{key}/checkm2/metabat", key=sample_id.keys()),
+      checkm_default_vamb = expand(OUTDIR /  "{key}/checkm2/default_vamb",key=sample_id.keys()),
+      gunc = expand(OUTDIR / "{key}/tmp/gunc.done", key=sample_id.keys()),
+```
+So to run semibin and checkm for a <bam_contig_file> which look like:  
+``` 
+sample 				bamfile				           contig
+test                test_data/bam/sample_0.bam     test_data/contigs/contigs.fasta
+test                test_data/bam/sample_1.bam     test_data/contigs/contigs.fasta
+```
+you would set the target file as `test/checkm2/semibin`  
+
+To only run gunc for some tools, it is a few more steps. Here you need to  
+- 1) set the target rule (for the above example) as `test/tmp/gunc.done`
+- 2) in the `snakemake_modules/gunc.smk` files `all_bin_dirs` variable comment out the output files you are not interested in.  
+For example for only running comebin and semibin this variable would look like:
+```
+all_bin_dirs = {
+            "comebin": [OUTDIR / "{key}/comebin/comebin_res/comebin_res_bins", ".fa"],
+            "semibin": [OUTDIR / "{key}/semibin/bins", ".fa"],
+	    ##  Rest commented out ...
+	    ##  ...
+                }
+```
 
 
 ### Resources 
@@ -152,4 +180,18 @@ Lastly, for minimap `-ax map-hifi` should be used.
 
 #### Running taxvamb/vamb without predictor
 For the taxvamb/vamb runs pass in the `--no_predictor` flag
+
+### Tools which crashed internally, and alternative ways of running them - along with the resourses used for running the tools.
+For benchmarking for figure 3 in the paper the following 4 runs crashed internally.
+
+#### Semibin
+Semibin(v.2.1.0) crashes in the Vaginal and the Salvia samples.
+- For the Vaginal sample Semibin does not find any bins in one of the samples which causes downstream steps to crash (`/log_files_for_crashed_runs/Vaginal_SemiBin_v2.1.0.log` ). Semibin version 2.2.0 should fix this issue (https://github.com/BigDataBiology/SemiBin/releases/tag/v2.2.0), but does not change performance of the tool (according to patchnotes). We therefore ran semibin version 2.2.0 on this dataset, but we still got the same error (`/log_files_for_crashed_runs/Vaginal_SemiBin_v2.2.0.log`). This is due to another bug with no bins found using the `--write-pre-reclustering-bins` flag , removing this flag (as we don't need the pre-reclustering bins for this sample) and upgrading to the newest version of semibin fixes the issue. 
+- For the the Salvia dataset we get the following error described in: https://github.com/BigDataBiology/SemiBin/issues/211 and https://github.com/BigDataBiology/SemiBin/issues/201. There does not seem to be a fix for the issue, although the maintainer seems to be looking into it. See `/log_files_for_crashed_runs/Salvia_SemiBin.log` for logfiles
+
+#### Comebin
+Comebin (v1.0.3) crashes in the Human Gut (IBS) and Forest Soil samples.  
+In both datasets the error is described in the following Github issue: https://github.com/ziyewang/COMEBin/issues/17,  
+The logfiles for these runs can be found in: `/log_files_for_crashed_runs/Human_gut_IBS_ComeBin.log` and `/log_files_for_crashed_runs/Forest_soil_Comebin.log`  
+Here we instead ran comebin in single-sample mode. This is equivalent to in the pipeline in the `sample` column of the config files, assigning each read pair and their corresponding contig file to a different sample name.
 
