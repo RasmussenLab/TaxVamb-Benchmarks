@@ -6,8 +6,8 @@ rule bam_to_sam:
         samfile = temp(OUTDIR / "{key}/assembly_mapping_output/mapped_sorted/{id}.sam.sort"),
     threads: 2
     resources: walltime = walltime_fn(rulename), mem_gb = mem_gb_fn(rulename), gpu=gpu_fn(rulename)
-    benchmark: config.get("benchmark", "benchmark/") + "{key}_{id}" + rulename
-    log: config.get("log", f"{str(OUTDIR)}/log/") + "{key}_{id}" + rulename
+    benchmark: BENCHMARK_DIR + "{key}_{id}" + rulename
+    log: LOG_DIR + "{key}_{id}" + rulename
     conda: THIS_FILE_DIR / "envs/samtools.yaml"
     shell: 
         """
@@ -26,7 +26,7 @@ rule decompress_fastafile:
         contigs_decompressed = OUTDIR /  "{key}/metadecoder/{key}_contigs.flt.fna",
     threads: threads_fn(rulename)
     resources: walltime = walltime_fn(rulename), mem_gb = mem_gb_fn(rulename), gpu=gpu_fn(rulename)
-    benchmark: config.get("benchmark", "benchmark/") + "{key}" + rulename
+    benchmark: BENCHMARK_DIR + "{key}" + rulename
     shell:
         """
         # # Decompress fastafile 
@@ -52,8 +52,8 @@ rule metadecoder_pre:
         seed = OUTDIR /  "{key}/metadecoder/seed.seed",
     threads: threads_fn(rulename)
     resources: walltime = walltime_fn(rulename), mem_gb = mem_gb_fn(rulename), gpu=gpu_fn(rulename)
-    benchmark: config.get("benchmark", "benchmark/") + "{key}_" + rulename
-    log: config.get("log", f"{str(OUTDIR)}/log/") + "{key}_" + rulename
+    benchmark: BENCHMARK_DIR + "{key}_" + rulename
+    log: LOG_DIR + "{key}_" + rulename
     conda: THIS_FILE_DIR / "envs/meta_decoder.yaml"
     shell:
         """
@@ -79,8 +79,8 @@ rule metadecoder:
         metadecoder_bin_dir = directory(OUTDIR /  "{key}/metadecoder/clusters"),
     threads: 64
     resources: walltime = walltime_fn(rulename), mem_gb = "1000", gpu=""
-    benchmark: config.get("benchmark", "benchmark/") + "{key}_" + rulename
-    log: config.get("log", f"{str(OUTDIR)}/log/") + "{key}_" + rulename
+    benchmark: BENCHMARK_DIR + "{key}_" + rulename
+    log: LOG_DIR + "{key}_" + rulename
     conda: THIS_FILE_DIR / "envs/meta_decoder_2.yaml"
     shell:
         """
@@ -101,8 +101,8 @@ rule metadecoder_checkm:
     params:
         database = config.get("checkm2_database")
     resources: walltime = walltime_fn(rulename), mem_gb = mem_gb_fn(rulename), gpu=gpu_fn(rulename)
-    benchmark: config.get("benchmark", "benchmark/") + "{key}_" + rulename
-    log: config.get("log", f"{str(OUTDIR)}/log/") + "{key}_" + rulename
+    benchmark: BENCHMARK_DIR + "{key}_" + rulename
+    log: LOG_DIR + "{key}_" + rulename
     conda: THIS_FILE_DIR / "envs/checkm2.yaml"
     shell:
         """

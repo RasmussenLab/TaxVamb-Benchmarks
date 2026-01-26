@@ -10,8 +10,8 @@ rule mmseqs2_kalmari:
     params:
         db = config.get("mmseqs_db_kalmari"),
     resources: walltime = walltime_fn(rulename), mem_gb = mem_gb_fn(rulename), gpu=gpu_fn(rulename)
-    benchmark: config.get("benchmark", "benchmark/") + "{key}_" + rulename
-    log: config.get("log", f"{str(OUTDIR)}/log/") + "{key}_" + rulename
+    benchmark: BENCHMARK_DIR + "{key}_" + rulename
+    log: LOG_DIR + "{key}_" + rulename
     conda: THIS_FILE_DIR / "envs/mmseqs2.yaml"
     shell:
         """
@@ -32,8 +32,8 @@ rule mmseqs2_gtdb:
     params:
         db = config.get("mmseqs_db_gtdb"),
     resources: walltime = walltime_fn(rulename), mem_gb = mem_gb_fn(rulename), gpu=gpu_fn(rulename)
-    benchmark: config.get("benchmark", "benchmark/") + "{key}_" + rulename
-    log: config.get("log", f"{str(OUTDIR)}/log/") + "{key}_" + rulename
+    benchmark: BENCHMARK_DIR + "{key}_" + rulename
+    log: LOG_DIR + "{key}_" + rulename
     conda: THIS_FILE_DIR / "envs/mmseqs2.yaml"
     shell:
         """
@@ -55,8 +55,8 @@ rule mmseqs2_trembl:
     params:
         db = config.get("mmseqs_db_trembl"),
     resources: walltime = walltime_fn(rulename), mem_gb = mem_gb_fn(rulename), gpu=gpu_fn(rulename)
-    benchmark: config.get("benchmark", "benchmark/") + "{key}_" + rulename
-    log: config.get("log", f"{str(OUTDIR)}/log/") + "{key}_" + rulename
+    benchmark: BENCHMARK_DIR + "{key}_" + rulename
+    log: LOG_DIR + "{key}_" + rulename
     conda: THIS_FILE_DIR / "envs/mmseqs2.yaml"
     shell:
         """
@@ -80,8 +80,8 @@ rule run_taxvamb_kalmari:
     threads: threads_fn(rulename)
     params: script =THIS_FILE_DIR / "files_used_in_snakemake_workflow/format_trembl_kalmari.py"
     resources: walltime = walltime_fn(rulename), mem_gb = mem_gb_fn(rulename), gpu=gpu_fn(rulename)
-    benchmark: config.get("benchmark", "benchmark/") + "{key}_" + rulename
-    log: config.get("log", f"{str(OUTDIR)}/log/") + "{key}_" + rulename
+    benchmark: BENCHMARK_DIR + "{key}_" + rulename
+    log: LOG_DIR + "{key}_" + rulename
     conda: THIS_FILE_DIR / "envs/vamb.yaml"
     shell:
         """
@@ -111,8 +111,8 @@ rule run_taxvamb_gtdb_w_unknown:
         latent = OUTDIR / "{key}/gtdb_taxvamb_default_w_unknown/vaevae_latent.npz",
     threads: threads_fn(rulename)
     resources: walltime = walltime_fn(rulename), mem_gb = mem_gb_fn(rulename), gpu=gpu_fn(rulename)
-    benchmark: config.get("benchmark", "benchmark/") + "{key}_" + rulename
-    log: config.get("log", f"{str(OUTDIR)}/log/") + "{key}_" + rulename
+    benchmark: BENCHMARK_DIR + "{key}_" + rulename
+    log: LOG_DIR + "{key}_" + rulename
     conda: THIS_FILE_DIR / "envs/vamb.yaml"
     shell:
         """
@@ -137,9 +137,9 @@ rule run_taxvamb_trembl:
         latent = OUTDIR / "{key}/trembl_taxvamb_default/vaevae_latent.npz",
     threads: threads_fn(rulename)
     resources: walltime = walltime_fn(rulename), mem_gb = mem_gb_fn(rulename), gpu=gpu_fn(rulename)
-    benchmark: config.get("benchmark", "benchmark/") + "{key}_" + rulename
+    benchmark: BENCHMARK_DIR + "{key}_" + rulename
     params: script =THIS_FILE_DIR / "files_used_in_snakemake_workflow/format_trembl_kalmari.py"
-    log: config.get("log", f"{str(OUTDIR)}/log/") + "{key}_" + rulename
+    log: LOG_DIR + "{key}_" + rulename
     conda: THIS_FILE_DIR / "envs/vamb.yaml"
     shell:
         """

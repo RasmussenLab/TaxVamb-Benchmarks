@@ -11,8 +11,8 @@ rule comebin:
         bamfiles_dir = str(OUTDIR) + "/{key}/assembly_mapping_output/mapped_sorted",
     threads: threads_fn(rulename)
     resources: walltime = walltime_fn(rulename), mem_gb = mem_gb_fn(rulename), gpu=gpu_fn(rulename), load=1
-    benchmark: config.get("benchmark", "benchmark/") + "{key}_" + rulename
-    log: config.get("log", f"{str(OUTDIR)}/log/") + "{key}_" + rulename
+    benchmark: BENCHMARK_DIR + "{key}_" + rulename
+    log: LOG_DIR + "{key}_" + rulename
     conda: THIS_FILE_DIR / "envs/comebin.yaml"
     #conda: "GPUcomebin"
     shell:
@@ -34,8 +34,8 @@ rule comebin_checkm:
     params:
         database = config.get("checkm2_database")
     resources: walltime = walltime_fn(rulename), mem_gb = mem_gb_fn(rulename), gpu=gpu_fn(rulename)
-    benchmark: config.get("benchmark", "benchmark/") + "{key}_" + rulename
-    log: config.get("log", f"{str(OUTDIR)}/log/") + "{key}_" + rulename
+    benchmark: BENCHMARK_DIR + "{key}_" + rulename
+    log: LOG_DIR + "{key}_" + rulename
     conda: THIS_FILE_DIR / "envs/checkm2.yaml"
     shell:
         """

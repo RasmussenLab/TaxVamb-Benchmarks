@@ -12,8 +12,8 @@ if Semibin_use_GPU:
             semibin_bins = directory(OUTDIR /  "{key}/semibin/bins"),
         threads: threads_fn(rulename)
         resources: walltime = walltime_fn(rulename), mem_gb = mem_gb_fn(rulename), gpu=gpu_fn(rulename), load=1
-        benchmark: config.get("benchmark", "benchmark/") + "{key}_" + rulename
-        log: config.get("log", f"{str(OUTDIR)}/log/") + "{key}_" + rulename
+        benchmark: BENCHMARK_DIR + "{key}_" + rulename
+        log: LOG_DIR + "{key}_" + rulename
         params:
             env = THIS_FILE_DIR / "semibin_pixi"
         shell:
@@ -36,8 +36,8 @@ else:
             semibin_bins = directory(OUTDIR /  "{key}/semibin/bins"),
         threads: threads_fn(rulename)
         resources: walltime = walltime_fn(rulename), mem_gb = mem_gb_fn(rulename), gpu=gpu_fn(rulename)
-        benchmark: config.get("benchmark", "benchmark/") + "{key}_" + rulename
-        log: config.get("log", f"{str(OUTDIR)}/log/") + "{key}_" + rulename
+        benchmark: BENCHMARK_DIR + "{key}_" + rulename
+        log: LOG_DIR + "{key}_" + rulename
         conda: THIS_FILE_DIR / "envs/semibin.yaml"
         shell:
             """
@@ -56,8 +56,8 @@ rule semibin_checkm:
     params:
         database = config.get("checkm2_database")
     resources: walltime = walltime_fn(rulename), mem_gb = mem_gb_fn(rulename), gpu=gpu_fn(rulename)
-    benchmark: config.get("benchmark", "benchmark/") + "{key}_" + rulename
-    log: config.get("log", f"{str(OUTDIR)}/log/") + "{key}_" + rulename
+    benchmark: BENCHMARK_DIR + "{key}_" + rulename
+    log: LOG_DIR + "{key}_" + rulename
     conda: THIS_FILE_DIR / "envs/checkm2.yaml"
     shell:
         """

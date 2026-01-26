@@ -20,6 +20,24 @@ SRC_DIR = THIS_FILE_DIR / "files_used_in_snakemake_workflow"
 # Get the output_directory defined by the user or fallback to current directory, which is the default way snakemake handles output directories
 OUTDIR = Path("") if config.get("output_directory") is None else Path(config.get("output_directory"))
 
+# Helper function to create log/benchmark paths without ./ prefix
+def get_log_dir():
+    log_config = config.get("log")
+    if log_config:
+        return log_config
+    # When OUTDIR is empty, use "log/" instead of "./log/"
+    return "log/" if OUTDIR == Path("") else str(OUTDIR / "log") + "/"
+
+def get_benchmark_dir():
+    benchmark_config = config.get("benchmark")
+    if benchmark_config:
+        return benchmark_config
+    # When OUTDIR is empty, use "benchmark/" instead of "./benchmark/"
+    return "benchmark/" if OUTDIR == Path("") else str(OUTDIR / "benchmark") + "/"
+
+LOG_DIR = get_log_dir()
+BENCHMARK_DIR = get_benchmark_dir()
+
 #### Setting parameters from the config file ####
 ##  For a more throughout description of what the different config options mean see the /config/config.yaml file
 
@@ -91,8 +109,8 @@ rule sort:
         temp(OUTDIR / "{key}/assembly_mapping_output/mapped_sorted/{id}.sort.bam"),
     threads: threads_fn(rulename)
     resources: walltime = walltime_fn(rulename), mem_gb = mem_gb_fn(rulename), gpu=gpu_fn(rulename)
-    benchmark: config.get("benchmark", "benchmark/") + "{key}_{id}_" + rulename
-    log: config.get("log", f"{str(OUTDIR)}/log/") + "{key}_{id}_" + rulename
+    benchmark: BENCHMARK_DIR + "{key}_{id}_" + rulename
+    log: LOG_DIR + "{key}_{id}_" + rulename
     conda: THIS_FILE_DIR / "envs/samtools.yaml"
     shell:
         """

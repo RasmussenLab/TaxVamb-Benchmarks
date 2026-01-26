@@ -68,8 +68,8 @@ rule collect_gunc:
         OUTDIR / "{key}/tmp/gunc.done"
     threads: threads_fn(rulename)
     resources: walltime = walltime_fn(rulename), mem_gb = mem_gb_fn(rulename), gpu=gpu_fn(rulename)
-    benchmark: config.get("benchmark", "benchmark/") + "{key}_" + rulename
-    log: config.get("log", f"{str(OUTDIR)}/log/") + "{key}_" + rulename
+    benchmark: BENCHMARK_DIR + "{key}_" + rulename
+    log: LOG_DIR + "{key}_" + rulename
     conda: THIS_FILE_DIR / "envs/gunc.yaml"
     shell:
         """

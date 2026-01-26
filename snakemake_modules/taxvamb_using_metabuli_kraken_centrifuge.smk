@@ -12,8 +12,8 @@ rule metabuli:
         outdir = lambda wildcards: OUTDIR / f"{wildcards.key}/classifiers/metabuli"
     threads: threads_fn(rulename)
     resources: walltime = walltime_fn(rulename), mem_gb = mem_gb_fn(rulename), gpu=gpu_fn(rulename)
-    benchmark: config.get("benchmark", "benchmark/") + "{key}_" + rulename
-    log: config.get("log", f"{str(OUTDIR)}/log/") + "{key}_" + rulename
+    benchmark: BENCHMARK_DIR + "{key}_" + rulename
+    log: LOG_DIR + "{key}_" + rulename
     conda: THIS_FILE_DIR / "envs/metabuli.yaml"
     shell:
         """
@@ -30,8 +30,8 @@ rule metabuli_taxconv:
    threads: threads_fn(rulename)
    params: script =THIS_FILE_DIR / "files_used_in_snakemake_workflow/format_metabuli.py"
    resources: walltime = walltime_fn(rulename), mem_gb = mem_gb_fn(rulename), gpu=gpu_fn(rulename)
-   benchmark: config.get("benchmark", "benchmark/") + "{key}_" + rulename
-   log: config.get("log", f"{str(OUTDIR)}/log/") + "{key}_" + rulename
+   benchmark: BENCHMARK_DIR + "{key}_" + rulename
+   log: LOG_DIR + "{key}_" + rulename
    conda: "taxconv"
    shell:
        """
@@ -52,8 +52,8 @@ rule run_taxvamb_metabuli:
         latent = OUTDIR / "{key}/metabuli_taxvamb_default/vaevae_latent.npz",
     threads: threads_fn(rulename)
     resources: walltime = walltime_fn(rulename), mem_gb = mem_gb_fn(rulename), gpu=gpu_fn(rulename)
-    benchmark: config.get("benchmark", "benchmark/") + "{key}_" + rulename
-    log: config.get("log", f"{str(OUTDIR)}/log/") + "{key}_" + rulename
+    benchmark: BENCHMARK_DIR + "{key}_" + rulename
+    log: LOG_DIR + "{key}_" + rulename
     conda: THIS_FILE_DIR / "envs/vamb.yaml"
     shell:
         """
@@ -73,8 +73,8 @@ rule kraken2:
         database = config.get("kraken2_database")
     threads: threads_fn(rulename)
     resources: walltime = walltime_fn(rulename), mem_gb = mem_gb_fn(rulename), gpu=gpu_fn(rulename)
-    benchmark: config.get("benchmark", "benchmark/") + "{key}_" + rulename
-    log: config.get("log", f"{str(OUTDIR)}/log/") + "{key}_" + rulename
+    benchmark: BENCHMARK_DIR + "{key}_" + rulename
+    log: LOG_DIR + "{key}_" + rulename
     conda: THIS_FILE_DIR / "envs/kraken2.yaml"  
     shell:
         """
@@ -89,8 +89,8 @@ rule kraken_taxconv:
         kraken2 = OUTDIR /  "{key}/classifiers/kraken2/taxvamb_formatted_classifications",
     threads: threads_fn(rulename)
     resources: walltime = walltime_fn(rulename), mem_gb = mem_gb_fn(rulename), gpu=gpu_fn(rulename)
-    benchmark: config.get("benchmark", "benchmark/") + "{key}_" + rulename
-    log: config.get("log", f"{str(OUTDIR)}/log/") + "{key}_" + rulename
+    benchmark: BENCHMARK_DIR + "{key}_" + rulename
+    log: LOG_DIR + "{key}_" + rulename
     conda: "taxconv"
     shell:
         """
@@ -111,15 +111,14 @@ rule run_taxvamb_kraken:
         latent = OUTDIR / "{key}/kraken_taxvamb_default/vaevae_latent.npz",
     threads: threads_fn(rulename)
     resources: walltime = walltime_fn(rulename), mem_gb = mem_gb_fn(rulename), gpu=gpu_fn(rulename)
-    benchmark: config.get("benchmark", "benchmark/") + "{key}_" + rulename
-    log: config.get("log", f"{str(OUTDIR)}/log/") + "{key}_" + rulename
+    benchmark: BENCHMARK_DIR + "{key}_" + rulename
+    log: LOG_DIR + "{key}_" + rulename
     conda: THIS_FILE_DIR / "envs/vamb.yaml"
     shell:
         """
         rm -rf {output.directory}
         # sed 's/\t$/\tunknown/' {input.taxonomy}  > {input.taxonomy}.fmt  # Taxonomy levels not classified should output 'unknown' instaed of an empty string ('')
         vamb bin taxvamb {vamb_extra_arg} --taxonomy {input.taxonomy} --outdir {output.directory} --fasta {input.contigs} -p {threads} --bamfiles {input.bamfiles} # &> {log}
-        cp {output.directory}/latent.npz {output.latent}
         """
 
 ########### CENTRIFUGE ####################
@@ -135,8 +134,8 @@ rule centrifuge:
         database_name = config.get("centrifuge_database_name")
     threads: threads_fn(rulename)
     resources: walltime = walltime_fn(rulename), mem_gb = mem_gb_fn(rulename), gpu=gpu_fn(rulename)
-    benchmark: config.get("benchmark", "benchmark/") + "{key}_" + rulename
-    log: config.get("log", f"{str(OUTDIR)}/log/") + "{key}_" + rulename
+    benchmark: BENCHMARK_DIR + "{key}_" + rulename
+    log: LOG_DIR + "{key}_" + rulename
     conda: THIS_FILE_DIR / "envs/centrifuge.yaml"
     shell:
         """
@@ -151,8 +150,8 @@ rule centri_taxconv:
         centrifuge = OUTDIR /  "{key}/classifiers/centrifuge/taxvamb_formatted_classifications.tsv",
     threads: threads_fn(rulename)
     resources: walltime = walltime_fn(rulename), mem_gb = mem_gb_fn(rulename), gpu=gpu_fn(rulename)
-    benchmark: config.get("benchmark", "benchmark/") + "{key}_" + rulename
-    log: config.get("log", f"{str(OUTDIR)}/log/") + "{key}_" + rulename
+    benchmark: BENCHMARK_DIR + "{key}_" + rulename
+    log: LOG_DIR + "{key}_" + rulename
     conda: "taxconv"
     shell:
         """
@@ -173,14 +172,13 @@ rule run_taxvamb_centrifuge:
         latent = OUTDIR / "{key}/centrifuge_taxvamb/vaevae_latent.npz",
     threads: threads_fn(rulename)
     resources: walltime = walltime_fn(rulename), mem_gb = mem_gb_fn(rulename), gpu=gpu_fn(rulename)
-    benchmark: config.get("benchmark", "benchmark/") + "{key}_" + rulename
-    log: config.get("log", f"{str(OUTDIR)}/log/") + "{key}_" + rulename
+    benchmark: BENCHMARK_DIR + "{key}_" + rulename
+    log: LOG_DIR + "{key}_" + rulename
     conda: THIS_FILE_DIR / "envs/vamb.yaml"
     shell:
         """
         rm -rf {output.directory}
         # sed 's/\t$/\tunknown/' {input.taxonomy}  > {input.taxonomy}.fmt        # Taxonomy levels not classified should output 'unknown' instaed of an empty string ('')
         vamb bin taxvamb {vamb_extra_arg}  --taxonomy {input.taxonomy} --outdir {output.directory} --fasta {input.contigs} -p {threads} --bamfiles {input.bamfiles} # &> {log}
-        cp {output.directory}/latent.npz {output.latent}
         """
 
