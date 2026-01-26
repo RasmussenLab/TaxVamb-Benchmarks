@@ -191,8 +191,53 @@ Semibin(v.2.1.0) crashes in the Vaginal and the Salvia samples.
 - For the the Salvia dataset we get the following error described in: https://github.com/BigDataBiology/SemiBin/issues/211 and https://github.com/BigDataBiology/SemiBin/issues/201. There does not seem to be a fix for the issue, although the maintainer seems to be looking into it. See `/log_files_for_crashed_runs/Salvia_SemiBin.log` for logfiles
 
 #### Comebin
-Comebin (v1.0.3) crashes in the Human Gut (IBS) and Forest Soil samples.  
-In both datasets the error is described in the following Github issue: https://github.com/ziyewang/COMEBin/issues/17,  
-The logfiles for these runs can be found in: `/log_files_for_crashed_runs/Human_gut_IBS_ComeBin.log` and `/log_files_for_crashed_runs/Forest_soil_Comebin.log`  
+Comebin (v1.0.3) crashes in the Human Gut (IBS) and Forest Soil samples.
+In both datasets the error is described in the following Github issue: https://github.com/ziyewang/COMEBin/issues/17,
+The logfiles for these runs can be found in: `/log_files_for_crashed_runs/Human_gut_IBS_ComeBin.log` and `/log_files_for_crashed_runs/Forest_soil_Comebin.log`
 Here we instead ran comebin in single-sample mode. This is equivalent to in the pipeline in the `sample` column of the config files, assigning each read pair and their corresponding contig file to a different sample name.
+
+---
+
+## Taxonomy Formatting Scripts
+
+The pipeline includes two Python scripts that convert taxonomy classifier outputs to a standardized format compatible with Taxvamb:
+
+### format_metabuli.py
+
+**Purpose**: Converts Metabuli taxonomy classification output to Taxvamb-compatible format.
+
+**What it does**:
+- Parses the Metabuli report file to build a hierarchical taxonomy structure mapping tax IDs to full lineages
+- Converts the Metabuli classification file (contig → taxID) to use full taxonomy lineage strings
+- Outputs tab-separated format: `contigs\tpredictions`
+
+**Pipeline usage**: Called in Metabuli-based Taxvamb runs (see `snakemake_modules/taxvamb_using_mmseqs_classifications.smk`)
+
+**Example**:
+```bash
+python format_metabuli.py <classification_file> <report_file> > formatted_taxonomy.tsv
+```
+
+### format_trembl_kalmari.py
+
+**Purpose**: Standardizes and validates MMseqs2 taxonomy output from TrEMBL or Kalmari databases for Taxvamb.
+
+**What it does**:
+- **Fixes missing taxonomic levels**: Ensures all 7 standard ranks (k,p,c,o,f,g,s) are present by filling gaps with placeholder names derived from the nearest known parent taxon (e.g., `LEVEL_4_ADDED_FROM_g_Escherichia` for a missing family)
+- **Filters non-standard entries**: Removes intermediate taxonomy entries prefixed with `-_` while preserving domain-level classifications and subspecies annotations
+- **Validates output**: Confirms the formatted taxonomy has the correct number of levels for the deepest rank present
+
+**Pipeline usage**: Called in two rules in `snakemake_modules/taxvamb_using_mmseqs_classifications.smk`:
+- `run_taxvamb_kalmari`: Processes MMseqs2 output from Kalmari database (column 5)
+- `run_taxvamb_trembl`: Processes MMseqs2 output from TrEMBL database (column 9)
+
+**Example**:
+```bash
+cut -f1,5 mmseqs_output.tsv > cut.tsv
+echo -e "contigs\tpredictions" > formatted.tsv
+python format_trembl_kalmari.py cut.tsv >> formatted.tsv
+```
+
+**Why these scripts are needed**: Different taxonomy classifiers (Metabuli, MMseqs2 with TrEMBL/Kalmari) produce outputs in varying formats with inconsistent taxonomic hierarchies. These scripts standardize the outputs to ensure Taxvamb receives taxonomy data in a consistent, validated format regardless of the upstream classifier used.
+The utilities for these conversions for the metabuli annotations can be found in the taxconverter tool, although the taxconverter tool does not support the conversions from teh trembl and kalmari database as these are not the recommened databases - but are added in this pipeline to assess the difference annotations make wrt. to the performance of taxvamb.
 
