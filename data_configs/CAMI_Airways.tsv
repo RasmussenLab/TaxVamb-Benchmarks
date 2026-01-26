@@ -1,0 +1,13 @@
+sample 				bamfile				contig
+# This document is read using pandas and can therefore contain comments with # 
+# # Airways
+Airways	/maps/projects/rasmussen/scratch/ptracker/Benchmark_vamb_cli/data/vambnew/Airways/bam/10.bam	/maps/projects/rasmussen/scratch/ptracker/Benchmark_vamb_cli/data/vambnew/Airways/tmp_contigs_2kbp.fna.gz
+Airways	/maps/projects/rasmussen/scratch/ptracker/Benchmark_vamb_cli/data/vambnew/Airways/bam/11.bam	/maps/projects/rasmussen/scratch/ptracker/Benchmark_vamb_cli/data/vambnew/Airways/tmp_contigs_2kbp.fna.gz
+Airways	/maps/projects/rasmussen/scratch/ptracker/Benchmark_vamb_cli/data/vambnew/Airways/bam/12.bam	/maps/projects/rasmussen/scratch/ptracker/Benchmark_vamb_cli/data/vambnew/Airways/tmp_contigs_2kbp.fna.gz
+Airways	/maps/projects/rasmussen/scratch/ptracker/Benchmark_vamb_cli/data/vambnew/Airways/bam/23.bam	/maps/projects/rasmussen/scratch/ptracker/Benchmark_vamb_cli/data/vambnew/Airways/tmp_contigs_2kbp.fna.gz
+Airways	/maps/projects/rasmussen/scratch/ptracker/Benchmark_vamb_cli/data/vambnew/Airways/bam/26.bam	/maps/projects/rasmussen/scratch/ptracker/Benchmark_vamb_cli/data/vambnew/Airways/tmp_contigs_2kbp.fna.gz
+Airways	/maps/projects/rasmussen/scratch/ptracker/Benchmark_vamb_cli/data/vambnew/Airways/bam/27.bam	/maps/projects/rasmussen/scratch/ptracker/Benchmark_vamb_cli/data/vambnew/Airways/tmp_contigs_2kbp.fna.gz
+Airways	/maps/projects/rasmussen/scratch/ptracker/Benchmark_vamb_cli/data/vambnew/Airways/bam/4.bam 	/maps/projects/rasmussen/scratch/ptracker/Benchmark_vamb_cli/data/vambnew/Airways/tmp_contigs_2kbp.fna.gz
+Airways	/maps/projects/rasmussen/scratch/ptracker/Benchmark_vamb_cli/data/vambnew/Airways/bam/7.bam 	/maps/projects/rasmussen/scratch/ptracker/Benchmark_vamb_cli/data/vambnew/Airways/tmp_contigs_2kbp.fna.gz
+Airways	/maps/projects/rasmussen/scratch/ptracker/Benchmark_vamb_cli/data/vambnew/Airways/bam/8.bam 	/maps/projects/rasmussen/scratch/ptracker/Benchmark_vamb_cli/data/vambnew/Airways/tmp_contigs_2kbp.fna.gz
+Airways	/maps/projects/rasmussen/scratch/ptracker/Benchmark_vamb_cli/data/vambnew/Airways/bam/9.bam 	/maps/projects/rasmussen/scratch/ptracker/Benchmark_vamb_cli/data/vambnew/Airways/tmp_contigs_2kbp.fna.gz
