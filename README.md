@@ -37,7 +37,7 @@ All binners are assessed using CheckM2 and GUNC. Vamb and TaxVamb are evaluated 
 Clone the repository and create the conda environment:
 
 ```bash
-git clone github.com/RasmussenLab/TaxVamb-Benchmarks
+git clone https://github.com/RasmussenLab/TaxVamb-Benchmarks
 conda env create -n Benchmark_binners --file=taxvamb_paper_benchmarks/envs/benchmark_env.yaml
 conda activate Benchmark_binners
 ```
