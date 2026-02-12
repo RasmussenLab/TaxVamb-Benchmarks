@@ -281,22 +281,6 @@ Some tools (SemiBin, COMEBin, GUNC) crashed internally on certain datasets. See 
 
 The pipeline includes Python scripts to convert taxonomy classifier outputs to a standardized Taxvamb-compatible format.
 
-### format_metabuli.py
-
-Converts Metabuli classification output to Taxvamb format.
-
-**Functionality:**
-- Parses the Metabuli report file to build a hierarchical taxonomy structure (taxID → full lineage)
-- Converts classification file (contig → taxID) to full taxonomy lineage strings
-- Outputs tab-separated format: `contigs\tpredictions`
-
-**Usage:**
-```bash
-python format_metabuli.py <classification_file> <report_file> > formatted_taxonomy.tsv
-```
-
-**Pipeline integration:** Called in Metabuli-based Taxvamb runs (see `snakemake_modules/taxvamb_using_mmseqs_classifications.smk`)
-
 ### format_trembl_kalmari.py
 
 Standardizes MMseqs2 taxonomy output from TrEMBL or Kalamari databases.
