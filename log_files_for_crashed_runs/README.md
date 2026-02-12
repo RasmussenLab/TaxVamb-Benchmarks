@@ -19,7 +19,7 @@ Since multi-sample COMEBin crashed on these datasets, they were run in single-sa
 
 ## COMEBin (single-sample)
 COMEBin (single-sample) crashes on some of the samples in the Bee Hives (11 samples), Human Gut Antibiotics (1 sample), Human Gut IBS (2 samples), and Vaginal (7 samples) datasets.
-COMEBin's internal `markerCmd` (`test_getmarker_2quarter.pl`) fails, causing the k-means clustering to produce no bins. COMEBin's internal CheckM then fails, and `comebin_res_bins` is never produced. This only happens to some samples in the single-sample mode. 
+COMEBin's internal `markerCmd` (`test_getmarker_2quarter.pl`) fails, This only happens to some samples in the single-sample mode. 
 - **Resources**: mem_gb=500, walltime=1088:00:00, 64 threads, no GPU.
 - **Log files**: `comebin_singlesample/bee_hives/`, `comebin_singlesample/human_gut_antibiotics/`, `comebin_singlesample/human_gut_ibs/`, `comebin_singlesample/vaginal/`.
 
