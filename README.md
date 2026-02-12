@@ -38,7 +38,7 @@ Clone the repository and create the conda environment:
 
 ```bash
 git clone https://github.com/RasmussenLab/TaxVamb-Benchmarks
-conda env create -n Benchmark_binners --file=taxvamb_paper_benchmarks/envs/benchmark_env.yaml
+conda env create -n Benchmark_binners --file=TaxVamb-Benchmarks/envs/benchmark_env.yaml
 conda activate Benchmark_binners
 ```
 
