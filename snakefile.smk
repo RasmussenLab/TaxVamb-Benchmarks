@@ -140,9 +140,9 @@ rule all:
         checkm_metadecoder = expand(OUTDIR /  "{key}/checkm2/metadecoder", key=sample_id.keys()),
         checkm_metabat = expand(OUTDIR /  "{key}/checkm2/metabat", key=sample_id.keys()),
         checkm_default_vamb = expand(OUTDIR /  "{key}/checkm2/default_vamb",key=sample_id.keys()),
-        checkm2_taxvamb = expand(OUTDIR /  "{key}/tmp/checkm.done",key=sample_id.keys()), 
-        gunc = expand(OUTDIR / "{key}/tmp/gunc.done", key=sample_id.keys()),
-        directory = expand(OUTDIR / "{key}/checkm2/reclustering/{bins_recluster}",key=sample_id.keys(), bins_recluster=bin_dir_names_recluster), 
+        # checkm2_taxvamb = expand(OUTDIR /  "{key}/tmp/checkm.done",key=sample_id.keys()), 
+        # gunc = expand(OUTDIR / "{key}/tmp/gunc.done", key=sample_id.keys()),
+        # directory = expand(OUTDIR / "{key}/checkm2/reclustering/{bins_recluster}",key=sample_id.keys(), bins_recluster=bin_dir_names_recluster), 
 
 rule all_reclustering:
     input:

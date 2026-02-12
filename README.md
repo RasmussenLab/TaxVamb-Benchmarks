@@ -257,37 +257,9 @@ For Taxvamb/Vamb runs without the predictor, add the `--no_predictor` flag.
 
 ---
 
-## Tools which crashed internally, and alternative ways of running them - along with the resources used for running the tools.
+## Crashed runs
 
-For benchmarking for figure 3 in the paper the following runs crashed internally.
-
-**Note on Snakemake resource fields:** In the log files, the relevant resources used by this pipeline are `mem_gb` and `walltime`. The other fields (`mem_mb`, `mem_mib`, `disk_mb`, `disk_mib`) are Snakemake defaults and are not used by this pipeline.
-
-### SemiBin
-SemiBin crashes in the Vaginal and Salvia datasets.
-- **Vaginal**: SemiBin crashes because one sample produces no bins, causing the `--write-pre-reclustering-bins` flag to fail with `FileNotFoundError: output_recluster_bins`. Version 2.2.0 (https://github.com/BigDataBiology/SemiBin/releases/tag/v2.2.0) is required as it includes a fix for "Do not fail if no bins are produced" (#170 & #173), but this fix alone does not solve the crash when `--write-pre-reclustering-bins` is also passed. Removing the `--write-pre-reclustering-bins` flag fixes the issue. See `/log_files_for_crashed_runs/Vaginal_SemiBin_v2.2.0.log` for the log file.
-- **Salvia**: SemiBin crashes with `ValueError: Input X contains NaN` in sklearn's NearestNeighbors. See https://github.com/BigDataBiology/SemiBin/issues/211 and https://github.com/BigDataBiology/SemiBin/issues/201. Upgrading SemiBin fixed this issue. See `/log_files_for_crashed_runs/Salvia_SemiBin.log` for the log file.
-- **Resources**: mem_gb=500, walltime=288:00:00 (v2.1.0 Vaginal, Salvia) / walltime=1088:00:00 (v2.2.0 Vaginal), GPU=1, 64 threads.
-
-### COMEBin (multi-sample)
-COMEBin (v1.0.3) crashes in the Human Gut (IBS) and Forest Soil datasets.
-In both datasets the error is described in the following GitHub issue: https://github.com/ziyewang/COMEBin/issues/17.
-The log files for these runs can be found in: `/log_files_for_crashed_runs/Human_gut_IBS_ComeBin.log` and `/log_files_for_crashed_runs/Forest_soil_Comebin.log`.
-Since multi-sample COMEBin crashed on these datasets, they were run in single-sample mode instead. This is equivalent to assigning each read pair and their corresponding contig file to a different sample name in the `sample` column of the config files. Additionally, for completeness, single-sample COMEBin was also run as an additional benchmark.
-- **Resources**: Human Gut IBS: mem_gb=500, walltime=1088:00:00, GPU=1. Forest Soil: mem_gb=250, walltime=288:00:00, no GPU.
-
-### COMEBin (single-sample)
-COMEBin (single-sample) crashes on the Bee (11 samples), DATAR (1 sample), ERDA (2 samples), and Vaginal (7 samples) datasets.
-COMEBin's internal `markerCmd` (`test_getmarker_2quarter.pl`) fails, causing the k-means clustering to produce no bins. COMEBin's internal CheckM then fails, and `comebin_res_bins` is never produced. This is the same issue as https://github.com/ziyewang/COMEBin/issues/17.
-- **Resources**: mem_gb=500, walltime=1088:00:00, 64 threads, no GPU.
-- **Log files**: `/log_files_for_crashed_runs/BEE/`, `/log_files_for_crashed_runs/DATAR/`, `/log_files_for_crashed_runs/ERDA/`, `/log_files_for_crashed_runs/VAG/`.
-
-### GUNC
-GUNC crashes on Bee COMEBin bins (multi-sample + 6 single-samples) and Bee SemiBin bins.
-GUNC's Diamond step finds no genes mapped to the reference database, producing no output files ("No diamond output files").
-This was resolved by implementing the fix described in https://github.com/grp-bork/gunc/issues/42.
-- **Resources**: mem_gb=250, walltime=20-00:00:00, 64 threads.
-- **Log files**: `/log_files_for_crashed_runs/BEE_comebin_gunc/`, `/log_files_for_crashed_runs/GUNC/`, `/log_files_for_crashed_runs/Semibin_Gunc_Bee.log`.
+Some tools (SemiBin, COMEBin, GUNC) crashed internally on certain datasets. See `/log_files_for_crashed_runs/README.md` for details on root causes, workarounds, resources used, and log files.
 
 ---
 
