@@ -17,8 +17,8 @@ mmseqs_db_trembl: "/maps/projects/rasmussen/data/taxvamb_benchmarks/taxvamb_benc
 mmseqs_db_kalmari: "/maps/projects/rasmussen/data/taxvamb_benchmarks/taxvamb_benchmarks/download_kalmari/kalmari_mmseqs"
 
 
-semibin_use_gpu: True
-vamb_use_gpu: True
+semibin_use_gpu: False
+vamb_use_gpu: False
 
 
 ## Default resources
