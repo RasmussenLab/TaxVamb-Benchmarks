@@ -13,7 +13,7 @@ SemiBin crashes in the Vaginal and Salvia datasets orginally. These errors were 
 ## COMEBin (multi-sample)
 COMEBin (v1.0.3) crashes in the Human Gut (IBS) and Forest Soil datasets.
 In both datasets the error is described in the following GitHub issue: https://github.com/ziyewang/COMEBin/issues/17.
-The log files for these runs can be found in: `comebin_multisample_human_gut_ibs.log` and `comebin_multisample_forest_soil.log`. Upgrading comebin to version v.1.0.3 did not fix the issue (newest version as of Feb 12, 2026)
+The log files for these runs can be found in: `comebin_multisample_human_gut_ibs.log` and `comebin_multisample_forest_soil.log`. Upgrading comebin to version v.1.0.4 did not fix the issue (newest version as of Feb 12, 2026)
 Since multi-sample COMEBin crashed on these datasets, they were run in single-sample mode instead. This is equivalent to assigning each read pair and their corresponding contig file to a different sample name in the `sample` column of the config files for our benchmarking pipeline. Additionally, for completeness, single-sample COMEBin was also run as an additional benchmark.
 - **Resources**: Human Gut IBS: mem_gb=500, walltime=1088:00:00, GPU=1. Forest Soil: mem_gb=250, walltime=288:00:00, no GPU.
 
