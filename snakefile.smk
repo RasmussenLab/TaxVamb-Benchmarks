@@ -131,6 +131,7 @@ bin_dir_names_recluster = all_bin_dirs_recluster.keys()
 
 # Prevent bins_recluster wildcard from matching paths with slashes
 wildcard_constraints:
+    key="[^/]+",
     bins_recluster="[^/]+"
 
 rule all:
