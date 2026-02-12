@@ -1,0 +1,187 @@
+Config file /maps/projects/rasmussen/data/taxvamb_benchmarks/refactor_paper_benchmarks/config/config.yaml is extended by additional config specified via the command line.
+The flag 'directory' used in rule format_bins_default_vamb_filtered is only valid for outputs, not inputs.
+The flag 'directory' used in rule default_vamb_checkm is only valid for outputs, not inputs.
+The flag 'temp' used in rule metabat is only valid for outputs, not inputs.
+The flag 'directory' used in rule metabat_checkm is only valid for outputs, not inputs.
+The flag 'directory' used in rule metadecoder_checkm is only valid for outputs, not inputs.
+The flag 'directory' used in rule format_bins_taxvamb_kalmari is only valid for outputs, not inputs.
+The flag 'directory' used in rule format_bins_taxvamb_filtered_kalmari is only valid for outputs, not inputs.
+The flag 'directory' used in rule format_bins_taxvamb_gtdb is only valid for outputs, not inputs.
+The flag 'directory' used in rule format_bins_taxvamb_filtered_gtdb is only valid for outputs, not inputs.
+The flag 'directory' used in rule format_bins_taxvamb_trembl is only valid for outputs, not inputs.
+The flag 'directory' used in rule format_bins_taxvamb_filtered_trembl is only valid for outputs, not inputs.
+The flag 'directory' used in rule trembl_checkm is only valid for outputs, not inputs.
+The flag 'directory' used in rule kalmari_checkm is only valid for outputs, not inputs.
+The flag 'directory' used in rule gtdb_checkm is only valid for outputs, not inputs.
+The flag 'directory' used in rule checkm_class is only valid for outputs, not inputs.
+The flag 'directory' used in rule checkm_class_recluster is only valid for outputs, not inputs.
+host: esrumgpun01fl.unicph.domain
+Building DAG of jobs...
+Relative file path './log/vag_infert_PRJNA1078345_semibinGPU' starts with './'. This is redundant and strongly discouraged. It can also lead to inconsistent results of the file-matching approach used by Snakemake. You can simply omit the './' for relative file paths.
+Relative file path './log/vag_infert_PRJNA1078345_semibinGPU' starts with './'. This is redundant and strongly discouraged. It can also lead to inconsistent results of the file-matching approach used by Snakemake. You can simply omit the './' for relative file paths.
+Using shell: /usr/bin/bash
+Provided cores: 96
+Rules claiming more threads will be scaled down.
+Provided resources: mem_gb=500
+Select jobs to execute...
+Execute 1 jobs...
+
+[Thu Jan  8 15:36:31 2026]
+localrule semibinGPU:
+    input: /maps/projects/rasmussen/data/taxvamb_benchmarks/taxvamb_benchmarks/airways/spades_output/vag/contigs.flt.fna.gz, vag_infert_PRJNA1078345/assembly_mapping_output/mapped_sorted/sample15.sort.bam, vag_infert_PRJNA1078345/assembly_mapping_output/mapped_sorted/sample16.sort.bam, vag_infert_PRJNA1078345/assembly_mapping_output/mapped_sorted/sample17.sort.bam, vag_infert_PRJNA1078345/assembly_mapping_output/mapped_sorted/sample18.sort.bam, vag_infert_PRJNA1078345/assembly_mapping_output/mapped_sorted/sample19.sort.bam, vag_infert_PRJNA1078345/assembly_mapping_output/mapped_sorted/sample20.sort.bam, vag_infert_PRJNA1078345/assembly_mapping_output/mapped_sorted/sample21.sort.bam, vag_infert_PRJNA1078345/assembly_mapping_output/mapped_sorted/sample22.sort.bam, vag_infert_PRJNA1078345/assembly_mapping_output/mapped_sorted/sample23.sort.bam, vag_infert_PRJNA1078345/assembly_mapping_output/mapped_sorted/sample24.sort.bam
+    output: vag_infert_PRJNA1078345/semibin, vag_infert_PRJNA1078345/semibin/bins
+    log: ./log/vag_infert_PRJNA1078345_semibinGPU
+    jobid: 0
+    benchmark: benchmark/vag_infert_PRJNA1078345_semibinGPU
+    reason: Forced execution
+    wildcards: key=vag_infert_PRJNA1078345
+    threads: 64
+    resources: mem_mb=8000, mem_mib=7630, disk_mb=56637, disk_mib=54014, tmpdir=/scratch/tmp, walltime=1088:00:00, mem_gb=500, gpu= --partition=gpuqueue --gres=gpu:1 
+
+
+            rm -rf vag_infert_PRJNA1078345/semibin
+            module load cuda/12.2
+            CONDA_OVERRIDE_CUDA="12.2" pixi run --manifest-path /maps/projects/rasmussen/data/taxvamb_benchmarks/refactor_paper_benchmarks/semibin_pixi SemiBin2             multi_easy_bin -i /maps/projects/rasmussen/data/taxvamb_benchmarks/taxvamb_benchmarks/airways/spades_output/vag/contigs.flt.fna.gz -b vag_infert_PRJNA1078345/assembly_mapping_output/mapped_sorted/sample15.sort.bam vag_infert_PRJNA1078345/assembly_mapping_output/mapped_sorted/sample16.sort.bam vag_infert_PRJNA1078345/assembly_mapping_output/mapped_sorted/sample17.sort.bam vag_infert_PRJNA1078345/assembly_mapping_output/mapped_sorted/sample18.sort.bam vag_infert_PRJNA1078345/assembly_mapping_output/mapped_sorted/sample19.sort.bam vag_infert_PRJNA1078345/assembly_mapping_output/mapped_sorted/sample20.sort.bam vag_infert_PRJNA1078345/assembly_mapping_output/mapped_sorted/sample21.sort.bam vag_infert_PRJNA1078345/assembly_mapping_output/mapped_sorted/sample22.sort.bam vag_infert_PRJNA1078345/assembly_mapping_output/mapped_sorted/sample23.sort.bam vag_infert_PRJNA1078345/assembly_mapping_output/mapped_sorted/sample24.sort.bam -o vag_infert_PRJNA1078345/semibin             --separator C -t 64 --engine gpu --write-pre-reclustering-bins --self-supervised # &> ./log/vag_infert_PRJNA1078345_semibinGPU
+            
+2026-01-08 15:41:15 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Running SemiBin2 version 2.2.0
+2026-01-08 15:41:15 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Binning for short_read
+2026-01-08 15:41:34 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Running with GPU.
+2026-01-08 15:41:34 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Performing multi-sample binning
+2026-01-08 15:41:34 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Generating training data...
+2026-01-08 15:41:41 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Calculating coverage for every sample.
+2026-01-08 15:42:34 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Processed: vag_infert_PRJNA1078345/assembly_mapping_output/mapped_sorted/sample15.sort.bam
+2026-01-08 15:42:43 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Processed: vag_infert_PRJNA1078345/assembly_mapping_output/mapped_sorted/sample16.sort.bam
+2026-01-08 15:42:49 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Processed: vag_infert_PRJNA1078345/assembly_mapping_output/mapped_sorted/sample17.sort.bam
+2026-01-08 15:44:09 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Processed: vag_infert_PRJNA1078345/assembly_mapping_output/mapped_sorted/sample18.sort.bam
+2026-01-08 15:44:10 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Processed: vag_infert_PRJNA1078345/assembly_mapping_output/mapped_sorted/sample19.sort.bam
+2026-01-08 15:44:10 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Processed: vag_infert_PRJNA1078345/assembly_mapping_output/mapped_sorted/sample20.sort.bam
+2026-01-08 15:44:10 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Processed: vag_infert_PRJNA1078345/assembly_mapping_output/mapped_sorted/sample21.sort.bam
+2026-01-08 15:44:10 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Processed: vag_infert_PRJNA1078345/assembly_mapping_output/mapped_sorted/sample22.sort.bam
+2026-01-08 15:44:10 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Processed: vag_infert_PRJNA1078345/assembly_mapping_output/mapped_sorted/sample23.sort.bam
+2026-01-08 15:44:10 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Processed: vag_infert_PRJNA1078345/assembly_mapping_output/mapped_sorted/sample24.sort.bam
+2026-01-08 15:44:27 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Training model and clustering for sample "S1"
+2026-01-08 15:44:27 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Start training from a single sample.
+2026-01-08 15:44:27 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Training model...
+  0%|          | 0/15 [00:00<?, ?it/s]  7%|▋         | 1/15 [00:10<02:31, 10.84s/it] 13%|█▎        | 2/15 [00:12<01:09,  5.31s/it] 20%|██        | 3/15 [00:13<00:40,  3.39s/it] 27%|██▋       | 4/15 [00:14<00:27,  2.51s/it] 33%|███▎      | 5/15 [00:15<00:20,  2.08s/it] 40%|████      | 6/15 [00:17<00:15,  1.76s/it] 47%|████▋     | 7/15 [00:18<00:12,  1.62s/it] 53%|█████▎    | 8/15 [00:19<00:10,  1.47s/it] 60%|██████    | 9/15 [00:20<00:08,  1.37s/it] 67%|██████▋   | 10/15 [00:21<00:06,  1.36s/it] 73%|███████▎  | 11/15 [00:23<00:05,  1.29s/it] 80%|████████  | 12/15 [00:24<00:03,  1.24s/it] 87%|████████▋ | 13/15 [00:25<00:02,  1.26s/it] 93%|█████████▎| 14/15 [00:26<00:01,  1.22s/it]100%|██████████| 15/15 [00:28<00:00,  1.26s/it]100%|██████████| 15/15 [00:28<00:00,  1.87s/it]
+2026-01-08 15:45:17 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Training finished.
+2026-01-08 15:45:17 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Start binning.
+2026-01-08 15:45:21 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Number of bins prior to reclustering: 1
+2026-01-08 15:45:21 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Running naive ORF finder
+2026-01-08 15:45:27 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Number of bins after reclustering: 1
+2026-01-08 15:45:27 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Binning finished
+2026-01-08 15:45:27 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Training model and clustering for sample "S2"
+2026-01-08 15:45:27 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Start training from a single sample.
+2026-01-08 15:45:27 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Training model...
+  0%|          | 0/15 [00:00<?, ?it/s]  7%|▋         | 1/15 [00:00<00:02,  5.08it/s] 13%|█▎        | 2/15 [00:00<00:02,  5.21it/s] 20%|██        | 3/15 [00:00<00:02,  5.30it/s] 27%|██▋       | 4/15 [00:00<00:01,  5.50it/s] 33%|███▎      | 5/15 [00:00<00:01,  5.66it/s] 40%|████      | 6/15 [00:01<00:01,  5.65it/s] 47%|████▋     | 7/15 [00:01<00:01,  5.75it/s] 53%|█████▎    | 8/15 [00:01<00:01,  5.76it/s] 60%|██████    | 9/15 [00:01<00:01,  5.83it/s] 67%|██████▋   | 10/15 [00:01<00:00,  5.84it/s] 73%|███████▎  | 11/15 [00:01<00:00,  5.89it/s] 80%|████████  | 12/15 [00:02<00:00,  5.86it/s] 87%|████████▋ | 13/15 [00:02<00:00,  5.88it/s] 93%|█████████▎| 14/15 [00:02<00:00,  4.09it/s]100%|██████████| 15/15 [00:02<00:00,  4.52it/s]100%|██████████| 15/15 [00:02<00:00,  5.25it/s]
+2026-01-08 15:45:30 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Training finished.
+2026-01-08 15:45:30 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Start binning.
+2026-01-08 15:45:31 esrumgpun01fl.unicph.domain SemiBin2[431672] WARNING No bins were created. Please check your input data.
+2026-01-08 15:45:31 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Training model and clustering for sample "S3"
+2026-01-08 15:45:31 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Start training from a single sample.
+2026-01-08 15:45:31 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Training model...
+  0%|          | 0/15 [00:00<?, ?it/s]  7%|▋         | 1/15 [00:01<00:16,  1.21s/it] 13%|█▎        | 2/15 [00:02<00:16,  1.30s/it] 20%|██        | 3/15 [00:04<00:17,  1.44s/it] 27%|██▋       | 4/15 [00:05<00:15,  1.40s/it] 33%|███▎      | 5/15 [00:07<00:14,  1.47s/it] 40%|████      | 6/15 [00:08<00:12,  1.43s/it] 47%|████▋     | 7/15 [00:10<00:11,  1.47s/it] 53%|█████▎    | 8/15 [00:11<00:09,  1.42s/it] 60%|██████    | 9/15 [00:12<00:08,  1.40s/it] 67%|██████▋   | 10/15 [00:14<00:07,  1.46s/it] 73%|███████▎  | 11/15 [00:15<00:05,  1.43s/it] 80%|████████  | 12/15 [00:17<00:04,  1.47s/it] 87%|████████▋ | 13/15 [00:18<00:02,  1.43s/it] 93%|█████████▎| 14/15 [00:19<00:01,  1.41s/it]100%|██████████| 15/15 [00:21<00:00,  1.45s/it]100%|██████████| 15/15 [00:21<00:00,  1.43s/it]
+2026-01-08 15:45:52 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Training finished.
+2026-01-08 15:45:52 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Start binning.
+2026-01-08 15:45:55 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Number of bins prior to reclustering: 2
+2026-01-08 15:45:55 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Running naive ORF finder
+2026-01-08 15:46:02 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Number of bins after reclustering: 2
+2026-01-08 15:46:02 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Binning finished
+2026-01-08 15:46:02 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Training model and clustering for sample "S4"
+2026-01-08 15:46:02 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Start training from a single sample.
+2026-01-08 15:46:02 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Training model...
+  0%|          | 0/15 [00:00<?, ?it/s]  7%|▋         | 1/15 [00:03<00:45,  3.28s/it] 13%|█▎        | 2/15 [00:06<00:43,  3.32s/it] 20%|██        | 3/15 [00:09<00:39,  3.30s/it] 27%|██▋       | 4/15 [00:13<00:36,  3.32s/it] 33%|███▎      | 5/15 [00:16<00:33,  3.30s/it] 40%|████      | 6/15 [00:19<00:29,  3.31s/it] 47%|████▋     | 7/15 [00:23<00:26,  3.31s/it] 53%|█████▎    | 8/15 [00:26<00:23,  3.32s/it] 60%|██████    | 9/15 [00:29<00:19,  3.31s/it] 67%|██████▋   | 10/15 [00:33<00:16,  3.32s/it] 73%|███████▎  | 11/15 [00:36<00:13,  3.31s/it] 80%|████████  | 12/15 [00:39<00:09,  3.32s/it] 87%|████████▋ | 13/15 [00:43<00:06,  3.31s/it] 93%|█████████▎| 14/15 [00:46<00:03,  3.31s/it]100%|██████████| 15/15 [00:49<00:00,  3.30s/it]100%|██████████| 15/15 [00:49<00:00,  3.31s/it]
+2026-01-08 15:46:52 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Training finished.
+2026-01-08 15:46:52 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Start binning.
+2026-01-08 15:46:56 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Number of bins prior to reclustering: 3
+2026-01-08 15:46:56 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Running naive ORF finder
+2026-01-08 15:47:05 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Number of bins after reclustering: 3
+2026-01-08 15:47:05 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Binning finished
+2026-01-08 15:47:05 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Training model and clustering for sample "S5"
+2026-01-08 15:47:05 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Start training from a single sample.
+2026-01-08 15:47:06 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Training model...
+  0%|          | 0/15 [00:00<?, ?it/s]  7%|▋         | 1/15 [00:17<04:08, 17.76s/it] 13%|█▎        | 2/15 [00:35<03:53, 17.96s/it] 20%|██        | 3/15 [00:53<03:34, 17.86s/it] 27%|██▋       | 4/15 [01:11<03:16, 17.86s/it] 33%|███▎      | 5/15 [01:29<02:58, 17.83s/it] 40%|████      | 6/15 [01:47<02:41, 17.89s/it] 47%|████▋     | 7/15 [02:05<02:22, 17.85s/it] 53%|█████▎    | 8/15 [02:23<02:05, 17.98s/it] 60%|██████    | 9/15 [02:41<01:47, 17.91s/it] 67%|██████▋   | 10/15 [02:59<01:29, 17.96s/it] 73%|███████▎  | 11/15 [03:17<01:11, 17.94s/it] 80%|████████  | 12/15 [03:35<00:53, 17.97s/it] 87%|████████▋ | 13/15 [03:52<00:35, 17.93s/it] 93%|█████████▎| 14/15 [04:10<00:17, 17.95s/it]100%|██████████| 15/15 [04:28<00:00, 17.93s/it]100%|██████████| 15/15 [04:28<00:00, 17.92s/it]
+2026-01-08 15:51:34 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Training finished.
+2026-01-08 15:51:34 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Start binning.
+2026-01-08 15:51:54 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Number of bins prior to reclustering: 19
+2026-01-08 15:51:54 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Running naive ORF finder
+2026-01-08 15:52:41 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Number of bins after reclustering: 20
+2026-01-08 15:52:41 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Binning finished
+2026-01-08 15:52:41 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Training model and clustering for sample "S6"
+2026-01-08 15:52:41 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Start training from a single sample.
+2026-01-08 15:52:41 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Training model...
+  0%|          | 0/15 [00:00<?, ?it/s]  7%|▋         | 1/15 [00:01<00:17,  1.22s/it] 13%|█▎        | 2/15 [00:02<00:13,  1.04s/it] 20%|██        | 3/15 [00:03<00:11,  1.01it/s] 27%|██▋       | 4/15 [00:04<00:11,  1.05s/it] 33%|███▎      | 5/15 [00:05<00:10,  1.01s/it] 40%|████      | 6/15 [00:06<00:08,  1.01it/s] 47%|████▋     | 7/15 [00:07<00:07,  1.04it/s] 53%|█████▎    | 8/15 [00:08<00:07,  1.02s/it] 60%|██████    | 9/15 [00:09<00:05,  1.01it/s] 67%|██████▋   | 10/15 [00:10<00:04,  1.03it/s] 73%|███████▎  | 11/15 [00:11<00:04,  1.03s/it] 80%|████████  | 12/15 [00:12<00:03,  1.00s/it] 87%|████████▋ | 13/15 [00:13<00:01,  1.02it/s] 93%|█████████▎| 14/15 [00:13<00:00,  1.03it/s]100%|██████████| 15/15 [00:15<00:00,  1.02s/it]100%|██████████| 15/15 [00:15<00:00,  1.01s/it]
+2026-01-08 15:52:56 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Training finished.
+2026-01-08 15:52:56 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Start binning.
+2026-01-08 15:52:58 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Number of bins prior to reclustering: 1
+2026-01-08 15:52:58 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Running naive ORF finder
+2026-01-08 15:53:04 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Number of bins after reclustering: 1
+2026-01-08 15:53:04 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Binning finished
+2026-01-08 15:53:04 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Training model and clustering for sample "S7"
+2026-01-08 15:53:04 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Start training from a single sample.
+2026-01-08 15:53:04 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Training model...
+  0%|          | 0/15 [00:00<?, ?it/s]  7%|▋         | 1/15 [00:01<00:26,  1.93s/it] 13%|█▎        | 2/15 [00:04<00:26,  2.07s/it] 20%|██        | 3/15 [00:06<00:25,  2.12s/it] 27%|██▋       | 4/15 [00:08<00:22,  2.05s/it] 33%|███▎      | 5/15 [00:10<00:20,  2.09s/it] 40%|████      | 6/15 [00:12<00:18,  2.04s/it] 47%|████▋     | 7/15 [00:14<00:16,  2.07s/it] 53%|█████▎    | 8/15 [00:16<00:14,  2.11s/it] 60%|██████    | 9/15 [00:18<00:12,  2.05s/it] 67%|██████▋   | 10/15 [00:20<00:10,  2.10s/it] 73%|███████▎  | 11/15 [00:22<00:08,  2.06s/it] 80%|████████  | 12/15 [00:24<00:06,  2.10s/it] 87%|████████▋ | 13/15 [00:27<00:04,  2.10s/it] 93%|█████████▎| 14/15 [00:28<00:02,  2.05s/it]100%|██████████| 15/15 [00:31<00:00,  2.09s/it]100%|██████████| 15/15 [00:31<00:00,  2.08s/it]
+2026-01-08 15:53:35 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Training finished.
+2026-01-08 15:53:35 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Start binning.
+2026-01-08 15:53:38 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Number of bins prior to reclustering: 1
+2026-01-08 15:53:38 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Running naive ORF finder
+2026-01-08 15:53:45 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Number of bins after reclustering: 1
+2026-01-08 15:53:45 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Binning finished
+2026-01-08 15:53:45 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Training model and clustering for sample "S8"
+2026-01-08 15:53:45 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Start training from a single sample.
+2026-01-08 15:53:45 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Training model...
+  0%|          | 0/15 [00:00<?, ?it/s]  7%|▋         | 1/15 [00:02<00:40,  2.86s/it] 13%|█▎        | 2/15 [00:05<00:33,  2.58s/it] 20%|██        | 3/15 [00:07<00:29,  2.49s/it] 27%|██▋       | 4/15 [00:09<00:26,  2.37s/it] 33%|███▎      | 5/15 [00:12<00:23,  2.38s/it] 40%|████      | 6/15 [00:14<00:21,  2.38s/it] 47%|████▋     | 7/15 [00:16<00:18,  2.32s/it] 53%|█████▎    | 8/15 [00:19<00:16,  2.32s/it] 60%|██████    | 9/15 [00:21<00:14,  2.34s/it] 67%|██████▋   | 10/15 [00:23<00:11,  2.28s/it] 73%|███████▎  | 11/15 [00:25<00:09,  2.30s/it] 80%|████████  | 12/15 [00:28<00:06,  2.31s/it] 87%|████████▋ | 13/15 [00:30<00:04,  2.27s/it] 93%|█████████▎| 14/15 [00:32<00:02,  2.30s/it]100%|██████████| 15/15 [00:35<00:00,  2.32s/it]100%|██████████| 15/15 [00:35<00:00,  2.35s/it]
+2026-01-08 15:54:20 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Training finished.
+2026-01-08 15:54:20 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Start binning.
+2026-01-08 15:54:23 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Number of bins prior to reclustering: 2
+2026-01-08 15:54:23 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Running naive ORF finder
+2026-01-08 15:54:31 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Number of bins after reclustering: 2
+2026-01-08 15:54:31 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Binning finished
+2026-01-08 15:54:31 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Training model and clustering for sample "S9"
+2026-01-08 15:54:31 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Start training from a single sample.
+2026-01-08 15:54:31 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Training model...
+  0%|          | 0/15 [00:00<?, ?it/s]  7%|▋         | 1/15 [00:00<00:10,  1.39it/s] 13%|█▎        | 2/15 [00:01<00:09,  1.36it/s] 20%|██        | 3/15 [00:02<00:08,  1.35it/s] 27%|██▋       | 4/15 [00:03<00:09,  1.19it/s] 33%|███▎      | 5/15 [00:03<00:08,  1.24it/s] 40%|████      | 6/15 [00:04<00:07,  1.27it/s] 47%|████▋     | 7/15 [00:05<00:06,  1.30it/s] 53%|█████▎    | 8/15 [00:06<00:05,  1.20it/s] 60%|██████    | 9/15 [00:07<00:04,  1.24it/s] 67%|██████▋   | 10/15 [00:07<00:03,  1.27it/s] 73%|███████▎  | 11/15 [00:08<00:03,  1.29it/s] 80%|████████  | 12/15 [00:09<00:02,  1.20it/s] 87%|████████▋ | 13/15 [00:10<00:01,  1.24it/s] 93%|█████████▎| 14/15 [00:11<00:00,  1.27it/s]100%|██████████| 15/15 [00:11<00:00,  1.29it/s]100%|██████████| 15/15 [00:11<00:00,  1.27it/s]
+2026-01-08 15:54:42 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Training finished.
+2026-01-08 15:54:42 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Start binning.
+2026-01-08 15:54:44 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Number of bins prior to reclustering: 1
+2026-01-08 15:54:44 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Running naive ORF finder
+2026-01-08 15:54:48 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Number of bins after reclustering: 1
+2026-01-08 15:54:48 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Binning finished
+2026-01-08 15:54:48 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Training model and clustering for sample "S10"
+2026-01-08 15:54:48 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Start training from a single sample.
+2026-01-08 15:54:48 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Training model...
+  0%|          | 0/15 [00:00<?, ?it/s]  7%|▋         | 1/15 [00:00<00:09,  1.44it/s] 13%|█▎        | 2/15 [00:01<00:08,  1.45it/s] 20%|██        | 3/15 [00:02<00:08,  1.38it/s] 27%|██▋       | 4/15 [00:02<00:06,  1.60it/s] 33%|███▎      | 5/15 [00:03<00:05,  1.81it/s] 40%|████      | 6/15 [00:03<00:04,  1.96it/s] 47%|████▋     | 7/15 [00:03<00:03,  2.07it/s] 53%|█████▎    | 8/15 [00:04<00:03,  2.15it/s] 60%|██████    | 9/15 [00:04<00:02,  2.21it/s] 67%|██████▋   | 10/15 [00:05<00:02,  1.96it/s] 73%|███████▎  | 11/15 [00:05<00:01,  2.08it/s] 80%|████████  | 12/15 [00:06<00:01,  2.12it/s] 87%|████████▋ | 13/15 [00:06<00:00,  2.18it/s] 93%|█████████▎| 14/15 [00:07<00:00,  2.23it/s]100%|██████████| 15/15 [00:07<00:00,  2.26it/s]100%|██████████| 15/15 [00:07<00:00,  1.99it/s]
+2026-01-08 15:54:55 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Training finished.
+2026-01-08 15:54:55 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Start binning.
+2026-01-08 15:54:57 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Number of bins prior to reclustering: 1
+2026-01-08 15:54:57 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Running naive ORF finder
+2026-01-08 15:55:03 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Number of bins after reclustering: 1
+2026-01-08 15:55:03 esrumgpun01fl.unicph.domain SemiBin2[431672] INFO Binning finished
+Traceback (most recent call last):
+  File "/maps/projects/rasmussen/data/taxvamb_benchmarks/refactor_paper_benchmarks/semibin_pixi/.pixi/envs/default/bin/SemiBin2", line 10, in <module>
+    sys.exit(main2())
+             ^^^^^^^
+  File "/maps/projects/rasmussen/data/taxvamb_benchmarks/refactor_paper_benchmarks/semibin_pixi/.pixi/envs/default/lib/python3.12/site-packages/SemiBin/main.py", line 1635, in main2
+    multi_easy_binning(
+  File "/maps/projects/rasmussen/data/taxvamb_benchmarks/refactor_paper_benchmarks/semibin_pixi/.pixi/envs/default/lib/python3.12/site-packages/SemiBin/main.py", line 1394, in multi_easy_binning
+    for bf in os.listdir(os.path.join(args.output, 'samples', sample, bin_dir_name)):
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'vag_infert_PRJNA1078345/semibin/samples/S2/output_recluster_bins'
+[Thu Jan  8 15:55:04 2026]
+Error in rule semibinGPU:
+    jobid: 0
+    input: /maps/projects/rasmussen/data/taxvamb_benchmarks/taxvamb_benchmarks/airways/spades_output/vag/contigs.flt.fna.gz, vag_infert_PRJNA1078345/assembly_mapping_output/mapped_sorted/sample15.sort.bam, vag_infert_PRJNA1078345/assembly_mapping_output/mapped_sorted/sample16.sort.bam, vag_infert_PRJNA1078345/assembly_mapping_output/mapped_sorted/sample17.sort.bam, vag_infert_PRJNA1078345/assembly_mapping_output/mapped_sorted/sample18.sort.bam, vag_infert_PRJNA1078345/assembly_mapping_output/mapped_sorted/sample19.sort.bam, vag_infert_PRJNA1078345/assembly_mapping_output/mapped_sorted/sample20.sort.bam, vag_infert_PRJNA1078345/assembly_mapping_output/mapped_sorted/sample21.sort.bam, vag_infert_PRJNA1078345/assembly_mapping_output/mapped_sorted/sample22.sort.bam, vag_infert_PRJNA1078345/assembly_mapping_output/mapped_sorted/sample23.sort.bam, vag_infert_PRJNA1078345/assembly_mapping_output/mapped_sorted/sample24.sort.bam
+    output: vag_infert_PRJNA1078345/semibin, vag_infert_PRJNA1078345/semibin/bins
+    log: ./log/vag_infert_PRJNA1078345_semibinGPU (check log file(s) for error details)
+    shell:
+        
+            rm -rf vag_infert_PRJNA1078345/semibin
+            module load cuda/12.2
+            CONDA_OVERRIDE_CUDA="12.2" pixi run --manifest-path /maps/projects/rasmussen/data/taxvamb_benchmarks/refactor_paper_benchmarks/semibin_pixi SemiBin2             multi_easy_bin -i /maps/projects/rasmussen/data/taxvamb_benchmarks/taxvamb_benchmarks/airways/spades_output/vag/contigs.flt.fna.gz -b vag_infert_PRJNA1078345/assembly_mapping_output/mapped_sorted/sample15.sort.bam vag_infert_PRJNA1078345/assembly_mapping_output/mapped_sorted/sample16.sort.bam vag_infert_PRJNA1078345/assembly_mapping_output/mapped_sorted/sample17.sort.bam vag_infert_PRJNA1078345/assembly_mapping_output/mapped_sorted/sample18.sort.bam vag_infert_PRJNA1078345/assembly_mapping_output/mapped_sorted/sample19.sort.bam vag_infert_PRJNA1078345/assembly_mapping_output/mapped_sorted/sample20.sort.bam vag_infert_PRJNA1078345/assembly_mapping_output/mapped_sorted/sample21.sort.bam vag_infert_PRJNA1078345/assembly_mapping_output/mapped_sorted/sample22.sort.bam vag_infert_PRJNA1078345/assembly_mapping_output/mapped_sorted/sample23.sort.bam vag_infert_PRJNA1078345/assembly_mapping_output/mapped_sorted/sample24.sort.bam -o vag_infert_PRJNA1078345/semibin             --separator C -t 64 --engine gpu --write-pre-reclustering-bins --self-supervised # &> ./log/vag_infert_PRJNA1078345_semibinGPU
+            
+        (one of the commands exited with non-zero exit code; note that snakemake uses bash strict mode!)
+
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Storing output in storage.
+WorkflowError:
+At least one job did not complete successfully.

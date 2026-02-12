@@ -1,0 +1,693 @@
+Config file /maps/projects/rasmussen/data/taxvamb_benchmarks/refactor_paper_benchmarks/config/config.yaml is extended by additional config specified via the command line.
+The flag 'directory' used in rule format_bins_default_vamb_filtered is only valid for outputs, not inputs.
+The flag 'directory' used in rule default_vamb_checkm is only valid for outputs, not inputs.
+The flag 'temp' used in rule metabat is only valid for outputs, not inputs.
+The flag 'directory' used in rule metabat_checkm is only valid for outputs, not inputs.
+The flag 'directory' used in rule metadecoder_checkm is only valid for outputs, not inputs.
+The flag 'directory' used in rule format_bins_taxvamb_kalmari is only valid for outputs, not inputs.
+The flag 'directory' used in rule format_bins_taxvamb_filtered_kalmari is only valid for outputs, not inputs.
+The flag 'directory' used in rule format_bins_taxvamb_gtdb is only valid for outputs, not inputs.
+The flag 'directory' used in rule format_bins_taxvamb_filtered_gtdb is only valid for outputs, not inputs.
+The flag 'directory' used in rule format_bins_taxvamb_trembl is only valid for outputs, not inputs.
+The flag 'directory' used in rule format_bins_taxvamb_filtered_trembl is only valid for outputs, not inputs.
+The flag 'directory' used in rule trembl_checkm is only valid for outputs, not inputs.
+The flag 'directory' used in rule kalmari_checkm is only valid for outputs, not inputs.
+The flag 'directory' used in rule gtdb_checkm is only valid for outputs, not inputs.
+The flag 'directory' used in rule checkm_class is only valid for outputs, not inputs.
+The flag 'directory' used in rule checkm_class_recluster is only valid for outputs, not inputs.
+host: esrumcmpn08fl.unicph.domain
+Building DAG of jobs...
+Your conda installation is not configured to use strict channel priorities. This is however important for having robust and correct environments (for details, see https://conda-forge.org/docs/user/tipsandtricks.html). Please consider to configure strict priorities by executing 'conda config --set channel_priority strict'.
+Using shell: /usr/bin/bash
+Provided cores: 96
+Rules claiming more threads will be scaled down.
+Provided resources: mem_gb=250
+Select jobs to execute...
+Execute 1 jobs...
+
+[Sun Jan 25 22:31:03 2026]
+localrule gunc:
+    input: /maps/projects/rasmussen/data/taxvamb_benchmarks/rerun_semibin_results/bee_metagenome_PRJNA1007366/comebin/comebin_res/comebin_res_bins
+    output: /maps/projects/rasmussen/data/taxvamb_benchmarks/rerun_semibin_results/bee_metagenome_PRJNA1007366/gunc/comebin, /maps/projects/rasmussen/data/taxvamb_benchmarks/rerun_semibin_results/bee_metagenome_PRJNA1007366/gunc/comebin/GUNC.progenomes_2.1.maxCSS_level.tsv
+    jobid: 0
+    reason: Forced execution
+    wildcards: key=bee_metagenome_PRJNA1007366, bin_dir=comebin
+    threads: 64
+    resources: mem_mb=1000, mem_mib=954, disk_mb=1000, disk_mib=954, tmpdir=/scratch/tmp, walltime=20-00:00:00, mem_gb=250, gpu=
+
+
+        # Input dir should contain files in fasta format -- need to gzip for some
+        rm -rf /maps/projects/rasmussen/data/taxvamb_benchmarks/rerun_semibin_results/bee_metagenome_PRJNA1007366/gunc/comebin
+        mkdir -p /maps/projects/rasmussen/data/taxvamb_benchmarks/rerun_semibin_results/bee_metagenome_PRJNA1007366/gunc/comebin
+
+        if [ "comebin" == "semibin" ]; then
+            gzip -dk /maps/projects/rasmussen/data/taxvamb_benchmarks/rerun_semibin_results/bee_metagenome_PRJNA1007366/comebin/comebin_res/comebin_res_bins/*.gz 
+        fi
+
+        gunc run --input_dir /maps/projects/rasmussen/data/taxvamb_benchmarks/rerun_semibin_results/bee_metagenome_PRJNA1007366/comebin/comebin_res/comebin_res_bins --file_suffix .fa --db_file /maps/projects/rasmussen/data/taxvamb_benchmarks/taxvamb_benchmarks/gunc_db/gunc_database/gunc_db_progenomes2.1.dmnd --threads 64 --out_dir /maps/projects/rasmussen/data/taxvamb_benchmarks/rerun_semibin_results/bee_metagenome_PRJNA1007366/gunc/comebin 
+        
+Activating conda environment: .snakemake/conda/4fc5ff30191f3a957a9da28c47457afe_
+/maps/projects/rasmussen/data/taxvamb_benchmarks/refactor_paper_benchmarks/.snakemake/conda/4fc5ff30191f3a957a9da28c47457afe_/lib/python3.14/site-packages/gunc/get_scores.py:9: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  from pkg_resources import resource_filename
+22:31:07 : START 2026-01-25
+22:31:07 : START Prodigal
+/maps/projects/rasmussen/data/taxvamb_benchmarks/refactor_paper_benchmarks/.snakemake/conda/4fc5ff30191f3a957a9da28c47457afe_/lib/python3.14/site-packages/gunc/get_scores.py:9: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  from pkg_resources import resource_filename
+22:31:43 : END   Prodigal
+22:31:43 : START Diamond
+22:34:10 : END   Diamond
+22:34:10 : No genes mapped to reference: 5879
+22:34:10 : No genes mapped to reference: 15170
+22:34:11 : No genes mapped to reference: 31932
+22:34:11 : No genes mapped to reference: 25219
+22:34:11 : No genes mapped to reference: 47871
+22:34:11 : No genes mapped to reference: 23733
+22:34:11 : No genes mapped to reference: 30077
+22:34:11 : No genes mapped to reference: 74
+22:34:11 : No genes mapped to reference: 24590
+22:34:11 : No genes mapped to reference: 42808
+22:34:11 : No genes mapped to reference: 9207
+22:34:11 : No genes mapped to reference: 206
+22:34:11 : No genes mapped to reference: 15409
+22:34:11 : No genes mapped to reference: 5713
+22:34:11 : No genes mapped to reference: 12055
+22:34:11 : No genes mapped to reference: 5353
+22:34:11 : No genes mapped to reference: 14586
+22:34:11 : No genes mapped to reference: 614
+22:34:11 : No genes mapped to reference: 2231
+22:34:11 : No genes mapped to reference: 25704
+22:34:11 : No genes mapped to reference: 15767
+22:34:11 : No genes mapped to reference: 4290
+22:34:11 : No genes mapped to reference: 12125
+22:34:11 : No genes mapped to reference: 41707
+22:34:11 : No genes mapped to reference: 574
+22:34:11 : No genes mapped to reference: 89
+22:34:11 : No genes mapped to reference: 36632
+22:34:11 : No genes mapped to reference: 20501
+22:34:11 : No genes mapped to reference: 11890
+22:34:11 : No genes mapped to reference: 22653
+22:34:11 : No genes mapped to reference: 12101
+22:34:11 : No genes mapped to reference: 46984
+22:34:11 : No genes mapped to reference: 24769
+22:34:11 : No genes mapped to reference: 15429
+22:34:11 : No genes mapped to reference: 24363
+22:34:11 : No genes mapped to reference: 36810
+22:34:11 : No genes mapped to reference: 14501
+22:34:11 : No genes mapped to reference: 34697
+22:34:11 : No genes mapped to reference: 2347
+22:34:11 : No genes mapped to reference: 9258
+22:34:11 : No genes mapped to reference: 14527
+22:34:11 : No genes mapped to reference: 5838
+22:34:11 : No genes mapped to reference: 12140
+22:34:11 : No genes mapped to reference: 44911
+22:34:11 : No genes mapped to reference: 11175
+22:34:11 : No genes mapped to reference: 9225
+22:34:11 : No genes mapped to reference: 7386
+22:34:11 : No genes mapped to reference: 12930
+22:34:11 : No genes mapped to reference: 5582
+22:34:11 : No genes mapped to reference: 33627
+22:34:11 : No genes mapped to reference: 30531
+22:34:11 : No genes mapped to reference: 40413
+22:34:11 : No genes mapped to reference: 43993
+22:34:11 : No genes mapped to reference: 29780
+22:34:11 : No genes mapped to reference: 42302
+22:34:11 : No genes mapped to reference: 33407
+22:34:11 : No genes mapped to reference: 42386
+22:34:11 : No genes mapped to reference: 14539
+22:34:11 : No genes mapped to reference: 1073
+22:34:11 : No genes mapped to reference: 23415
+22:34:11 : No genes mapped to reference: 5649
+22:34:11 : No genes mapped to reference: 3324
+22:34:11 : No genes mapped to reference: 28626
+22:34:11 : No genes mapped to reference: 3858
+22:34:11 : No genes mapped to reference: 29455
+22:34:11 : No genes mapped to reference: 3310
+22:34:11 : No genes mapped to reference: 22137
+22:34:11 : No genes mapped to reference: 4124
+22:34:11 : No genes mapped to reference: 38016
+22:34:11 : No genes mapped to reference: 5853
+22:34:11 : No genes mapped to reference: 31714
+22:34:11 : No genes mapped to reference: 28632
+22:34:11 : No genes mapped to reference: 2170
+22:34:11 : No genes mapped to reference: 21269
+22:34:11 : No genes mapped to reference: 224
+22:34:11 : No genes mapped to reference: 17291
+22:34:11 : No genes mapped to reference: 24376
+22:34:11 : No genes mapped to reference: 25537
+22:34:11 : No genes mapped to reference: 41833
+22:34:11 : No genes mapped to reference: 2
+22:34:11 : No genes mapped to reference: 10387
+22:34:11 : No genes mapped to reference: 43568
+22:34:11 : No genes mapped to reference: 17139
+22:34:11 : No genes mapped to reference: 32056
+22:34:11 : No genes mapped to reference: 9088
+22:34:11 : No genes mapped to reference: 27765
+22:34:11 : No genes mapped to reference: 14630
+22:34:11 : No genes mapped to reference: 21577
+22:34:11 : No genes mapped to reference: 2276
+22:34:11 : No genes mapped to reference: 14382
+22:34:11 : No genes mapped to reference: 2256
+22:34:11 : No genes mapped to reference: 1667
+22:34:11 : No genes mapped to reference: 21418
+22:34:11 : No genes mapped to reference: 5803
+22:34:11 : No genes mapped to reference: 20951
+22:34:11 : No genes mapped to reference: 15824
+22:34:11 : No genes mapped to reference: 30967
+22:34:11 : No genes mapped to reference: 11287
+22:34:11 : No genes mapped to reference: 33192
+22:34:11 : No genes mapped to reference: 34389
+22:34:11 : No genes mapped to reference: 3691
+22:34:11 : No genes mapped to reference: 3832
+22:34:11 : No genes mapped to reference: 9866
+22:34:11 : No genes mapped to reference: 15328
+22:34:11 : No genes mapped to reference: 2245
+22:34:11 : No genes mapped to reference: 29536
+22:34:11 : No genes mapped to reference: 42397
+22:34:11 : No genes mapped to reference: 30546
+22:34:11 : No genes mapped to reference: 41593
+22:34:11 : No genes mapped to reference: 27510
+22:34:11 : No genes mapped to reference: 43853
+22:34:11 : No genes mapped to reference: 3286
+22:34:11 : No genes mapped to reference: 5516
+22:34:11 : No genes mapped to reference: 5940
+22:34:11 : No genes mapped to reference: 9404
+22:34:11 : No genes mapped to reference: 9910
+22:34:11 : No genes mapped to reference: 6593
+22:34:11 : No genes mapped to reference: 43623
+22:34:11 : No genes mapped to reference: 3102
+22:34:11 : No genes mapped to reference: 40499
+22:34:11 : No genes mapped to reference: 41770
+22:34:11 : No genes mapped to reference: 29239
+22:34:11 : No genes mapped to reference: 1036
+22:34:11 : No genes mapped to reference: 393
+22:34:11 : No genes mapped to reference: 37321
+22:34:11 : No genes mapped to reference: 36491
+22:34:11 : No genes mapped to reference: 2297
+22:34:11 : No genes mapped to reference: 6230
+22:34:11 : No genes mapped to reference: 4149
+22:34:11 : No genes mapped to reference: 3684
+22:34:11 : No genes mapped to reference: 588
+22:34:11 : No genes mapped to reference: 21311
+22:34:11 : No genes mapped to reference: 23590
+22:34:11 : No genes mapped to reference: 33091
+22:34:11 : No genes mapped to reference: 28253
+22:34:11 : No genes mapped to reference: 20278
+22:34:11 : No genes mapped to reference: 2931
+22:34:11 : No genes mapped to reference: 7343
+22:34:11 : No genes mapped to reference: 18994
+22:34:11 : No genes mapped to reference: 32773
+22:34:11 : No genes mapped to reference: 38466
+22:34:11 : No genes mapped to reference: 23102
+22:34:11 : No genes mapped to reference: 3553
+22:34:11 : No genes mapped to reference: 9990
+22:34:11 : No genes mapped to reference: 1482
+22:34:11 : No genes mapped to reference: 2461
+22:34:11 : No genes mapped to reference: 21473
+22:34:11 : No genes mapped to reference: 30787
+22:34:11 : No genes mapped to reference: 29113
+22:34:11 : No genes mapped to reference: 12831
+22:34:11 : No genes mapped to reference: 36220
+22:34:11 : No genes mapped to reference: 911
+22:34:11 : No genes mapped to reference: 6265
+22:34:11 : No genes mapped to reference: 1702
+22:34:11 : No genes mapped to reference: 18348
+22:34:11 : No genes mapped to reference: 29798
+22:34:11 : No genes mapped to reference: 41718
+22:34:11 : No genes mapped to reference: 16652
+22:34:11 : No genes mapped to reference: 29986
+22:34:11 : No genes mapped to reference: 9073
+22:34:11 : No genes mapped to reference: 4849
+22:34:11 : No genes mapped to reference: 46230
+22:34:11 : No genes mapped to reference: 36860
+22:34:11 : No genes mapped to reference: 36603
+22:34:11 : No genes mapped to reference: 210
+22:34:11 : No genes mapped to reference: 26909
+22:34:11 : No genes mapped to reference: 19795
+22:34:11 : No genes mapped to reference: 23872
+22:34:11 : No genes mapped to reference: 25162
+22:34:11 : No genes mapped to reference: 5396
+22:34:11 : No genes mapped to reference: 9276
+22:34:11 : No genes mapped to reference: 3888
+22:34:11 : No genes mapped to reference: 8977
+22:34:11 : No genes mapped to reference: 22944
+22:34:11 : No genes mapped to reference: 32925
+22:34:11 : No genes mapped to reference: 27716
+22:34:11 : No genes mapped to reference: 37966
+22:34:11 : No genes mapped to reference: 3534
+22:34:11 : No genes mapped to reference: 36041
+22:34:11 : No genes mapped to reference: 28470
+22:34:11 : No genes mapped to reference: 6366
+22:34:11 : No genes mapped to reference: 34645
+22:34:11 : No genes mapped to reference: 22973
+22:34:11 : No genes mapped to reference: 19280
+22:34:11 : No genes mapped to reference: 186
+22:34:11 : No genes mapped to reference: 9244
+22:34:11 : No genes mapped to reference: 23342
+22:34:11 : No genes mapped to reference: 32334
+22:34:11 : No genes mapped to reference: 32287
+22:34:11 : No genes mapped to reference: 28582
+22:34:11 : No genes mapped to reference: 2488
+22:34:11 : No genes mapped to reference: 20319
+22:34:11 : No genes mapped to reference: 3946
+22:34:11 : No genes mapped to reference: 9143
+22:34:11 : No genes mapped to reference: 46690
+22:34:11 : No genes mapped to reference: 45632
+22:34:11 : No genes mapped to reference: 41226
+22:34:11 : No genes mapped to reference: 10044
+22:34:11 : No genes mapped to reference: 2495
+22:34:11 : No genes mapped to reference: 1910
+22:34:11 : No genes mapped to reference: 27151
+22:34:11 : No genes mapped to reference: 34595
+22:34:11 : No genes mapped to reference: 4996
+22:34:11 : No genes mapped to reference: 15670
+22:34:11 : No genes mapped to reference: 22927
+22:34:11 : No genes mapped to reference: 24628
+22:34:11 : No genes mapped to reference: 43033
+22:34:11 : No genes mapped to reference: 18379
+22:34:11 : No genes mapped to reference: 31270
+22:34:11 : No genes mapped to reference: 46559
+22:34:11 : No genes mapped to reference: 15484
+22:34:11 : No genes mapped to reference: 16729
+22:34:11 : No genes mapped to reference: 40396
+22:34:11 : No genes mapped to reference: 6500
+22:34:11 : No genes mapped to reference: 24969
+22:34:11 : No genes mapped to reference: 0
+22:34:11 : No genes mapped to reference: 34351
+22:34:11 : No genes mapped to reference: 9294
+22:34:11 : No genes mapped to reference: 21027
+22:34:11 : No genes mapped to reference: 30594
+22:34:11 : No genes mapped to reference: 22068
+22:34:11 : No genes mapped to reference: 4724
+22:34:11 : No genes mapped to reference: 6426
+22:34:11 : No genes mapped to reference: 44041
+22:34:11 : No genes mapped to reference: 12808
+22:34:11 : No genes mapped to reference: 1508
+22:34:11 : No genes mapped to reference: 29374
+22:34:11 : No genes mapped to reference: 32467
+22:34:11 : No genes mapped to reference: 44427
+22:34:11 : No genes mapped to reference: 42378
+22:34:11 : No genes mapped to reference: 35835
+22:34:11 : No genes mapped to reference: 25464
+22:34:11 : No genes mapped to reference: 32700
+22:34:11 : No genes mapped to reference: 40494
+22:34:11 : No genes mapped to reference: 38337
+22:34:11 : No genes mapped to reference: 21526
+22:34:11 : No genes mapped to reference: 15641
+22:34:11 : No genes mapped to reference: 3543
+22:34:11 : No genes mapped to reference: 7554
+22:34:11 : No genes mapped to reference: 6332
+22:34:11 : No genes mapped to reference: 34257
+22:34:11 : No genes mapped to reference: 27837
+22:34:11 : No genes mapped to reference: 36277
+22:34:11 : No genes mapped to reference: 42371
+22:34:11 : No genes mapped to reference: 3458
+22:34:11 : No genes mapped to reference: 12154
+22:34:11 : No genes mapped to reference: 28178
+22:34:11 : No genes mapped to reference: 27630
+22:34:11 : No genes mapped to reference: 24113
+22:34:11 : No genes mapped to reference: 29396
+22:34:11 : No genes mapped to reference: 29062
+22:34:11 : No genes mapped to reference: 36895
+22:34:11 : No genes mapped to reference: 5341
+22:34:11 : No genes mapped to reference: 35644
+22:34:11 : No genes mapped to reference: 34769
+22:34:11 : No genes mapped to reference: 15289
+22:34:11 : No genes mapped to reference: 30425
+22:34:11 : No genes mapped to reference: 36336
+22:34:11 : No genes mapped to reference: 387
+22:34:11 : No genes mapped to reference: 26983
+22:34:11 : No genes mapped to reference: 18863
+22:34:11 : No genes mapped to reference: 42375
+22:34:11 : No genes mapped to reference: 26612
+22:34:11 : No genes mapped to reference: 11380
+22:34:11 : No genes mapped to reference: 27095
+22:34:11 : No genes mapped to reference: 29726
+22:34:11 : No genes mapped to reference: 19467
+22:34:11 : No genes mapped to reference: 36173
+22:34:11 : No genes mapped to reference: 19380
+22:34:11 : No genes mapped to reference: 44982
+22:34:11 : No genes mapped to reference: 20752
+22:34:11 : No genes mapped to reference: 14715
+22:34:11 : No genes mapped to reference: 30054
+22:34:11 : No genes mapped to reference: 2951
+22:34:11 : No genes mapped to reference: 24446
+22:34:11 : No genes mapped to reference: 7460
+22:34:11 : No genes mapped to reference: 41756
+22:34:11 : No genes mapped to reference: 32387
+22:34:11 : No genes mapped to reference: 4827
+22:34:11 : No genes mapped to reference: 11627
+22:34:11 : No genes mapped to reference: 3113
+22:34:11 : No genes mapped to reference: 1453
+22:34:11 : No genes mapped to reference: 33047
+22:34:11 : No genes mapped to reference: 18814
+22:34:11 : No genes mapped to reference: 1615
+22:34:11 : No genes mapped to reference: 14685
+22:34:11 : No genes mapped to reference: 1552
+22:34:11 : No genes mapped to reference: 2568
+22:34:11 : No genes mapped to reference: 5752
+22:34:11 : No genes mapped to reference: 11214
+22:34:11 : No genes mapped to reference: 5862
+22:34:11 : No genes mapped to reference: 22749
+22:34:11 : No genes mapped to reference: 3295
+22:34:11 : No genes mapped to reference: 38537
+22:34:11 : No genes mapped to reference: 32861
+22:34:11 : No genes mapped to reference: 3474
+22:34:11 : No genes mapped to reference: 4108
+22:34:11 : No genes mapped to reference: 26489
+22:34:11 : No genes mapped to reference: 11656
+22:34:11 : No genes mapped to reference: 37
+22:34:11 : No genes mapped to reference: 26691
+22:34:11 : No genes mapped to reference: 38499
+22:34:11 : No genes mapped to reference: 13
+22:34:11 : No genes mapped to reference: 9641
+22:34:11 : No genes mapped to reference: 45492
+22:34:11 : No genes mapped to reference: 2471
+22:34:11 : No genes mapped to reference: 4311
+22:34:11 : No genes mapped to reference: 19062
+22:34:11 : No genes mapped to reference: 16538
+22:34:11 : No genes mapped to reference: 40162
+22:34:11 : No genes mapped to reference: 2047
+22:34:11 : No genes mapped to reference: 9572
+22:34:11 : No genes mapped to reference: 3338
+22:34:11 : No genes mapped to reference: 21791
+22:34:11 : No genes mapped to reference: 9322
+22:34:11 : No genes mapped to reference: 39694
+22:34:11 : No genes mapped to reference: 5901
+22:34:11 : No genes mapped to reference: 9952
+22:34:11 : No genes mapped to reference: 21717
+22:34:11 : No genes mapped to reference: 44688
+22:34:11 : No genes mapped to reference: 7508
+22:34:11 : No genes mapped to reference: 17935
+22:34:11 : No genes mapped to reference: 230
+22:34:11 : No genes mapped to reference: 41759
+22:34:11 : No genes mapped to reference: 3084
+22:34:11 : No genes mapped to reference: 3242
+22:34:11 : No genes mapped to reference: 38080
+22:34:11 : No genes mapped to reference: 17885
+22:34:11 : No genes mapped to reference: 27899
+22:34:11 : No genes mapped to reference: 7570
+22:34:11 : No genes mapped to reference: 610
+22:34:11 : No genes mapped to reference: 9880
+22:34:11 : No genes mapped to reference: 36928
+22:34:11 : No genes mapped to reference: 9726
+22:34:11 : No genes mapped to reference: 16802
+22:34:11 : No genes mapped to reference: 1240
+22:34:11 : No genes mapped to reference: 31612
+22:34:11 : No genes mapped to reference: 11763
+22:34:11 : No genes mapped to reference: 25045
+22:34:11 : No genes mapped to reference: 365
+22:34:11 : No genes mapped to reference: 42258
+22:34:11 : No genes mapped to reference: 3147
+22:34:11 : No genes mapped to reference: 3515
+22:34:11 : No genes mapped to reference: 18697
+22:34:11 : No genes mapped to reference: 30654
+22:34:11 : No genes mapped to reference: 2313
+22:34:11 : No genes mapped to reference: 38250
+22:34:11 : No genes mapped to reference: 16988
+22:34:11 : No genes mapped to reference: 33238
+22:34:11 : No genes mapped to reference: 4893
+22:34:11 : No genes mapped to reference: 11926
+22:34:11 : No genes mapped to reference: 3076
+22:34:11 : No genes mapped to reference: 11433
+22:34:11 : No genes mapped to reference: 21927
+22:34:11 : No genes mapped to reference: 22707
+22:34:11 : No genes mapped to reference: 16587
+22:34:11 : No genes mapped to reference: 17251
+22:34:11 : No genes mapped to reference: 20257
+22:34:11 : No genes mapped to reference: 40367
+22:34:11 : No genes mapped to reference: 948
+22:34:11 : No genes mapped to reference: 40089
+22:34:11 : No genes mapped to reference: 44478
+22:34:11 : No genes mapped to reference: 9452
+22:34:11 : No genes mapped to reference: 27375
+22:34:11 : No genes mapped to reference: 38064
+22:34:11 : No genes mapped to reference: 38403
+22:34:11 : No genes mapped to reference: 42204
+22:34:11 : No genes mapped to reference: 14860
+22:34:11 : No genes mapped to reference: 4
+22:34:11 : No genes mapped to reference: 4910
+22:34:11 : No genes mapped to reference: 31134
+22:34:11 : No genes mapped to reference: 29484
+22:34:11 : No genes mapped to reference: 33694
+22:34:11 : No genes mapped to reference: 1600
+22:34:11 : No genes mapped to reference: 42392
+22:34:11 : No genes mapped to reference: 20145
+22:34:11 : No genes mapped to reference: 7
+22:34:11 : No genes mapped to reference: 28619
+22:34:11 : No genes mapped to reference: 1496
+22:34:11 : No genes mapped to reference: 28571
+22:34:11 : No genes mapped to reference: 34454
+22:34:11 : No genes mapped to reference: 20128
+22:34:11 : No genes mapped to reference: 44309
+22:34:11 : No genes mapped to reference: 3720
+22:34:11 : No genes mapped to reference: 34988
+22:34:11 : No genes mapped to reference: 34843
+22:34:11 : No genes mapped to reference: 33886
+22:34:11 : No genes mapped to reference: 3316
+22:34:11 : No genes mapped to reference: 33583
+22:34:11 : No genes mapped to reference: 28441
+22:34:11 : No genes mapped to reference: 3926
+22:34:11 : No genes mapped to reference: 48443
+22:34:11 : No genes mapped to reference: 9554
+22:34:11 : No genes mapped to reference: 5967
+22:34:11 : No genes mapped to reference: 20489
+22:34:11 : No genes mapped to reference: 45170
+22:34:11 : No genes mapped to reference: 20234
+22:34:11 : No genes mapped to reference: 43566
+22:34:11 : No genes mapped to reference: 20828
+22:34:11 : No genes mapped to reference: 29979
+22:34:11 : No genes mapped to reference: 9013
+22:34:11 : No genes mapped to reference: 36666
+22:34:11 : No genes mapped to reference: 14841
+22:34:11 : No genes mapped to reference: 567
+22:34:11 : No genes mapped to reference: 40699
+22:34:11 : No genes mapped to reference: 4928
+22:34:11 : No genes mapped to reference: 1562
+22:34:11 : No genes mapped to reference: 2529
+22:34:11 : No genes mapped to reference: 29735
+22:34:11 : No genes mapped to reference: 20922
+22:34:11 : No genes mapped to reference: 42872
+22:34:11 : No genes mapped to reference: 25436
+22:34:11 : No genes mapped to reference: 41704
+22:34:11 : No genes mapped to reference: 8934
+22:34:11 : No genes mapped to reference: 974
+22:34:11 : No genes mapped to reference: 43762
+22:34:11 : No genes mapped to reference: 34476
+22:34:11 : No genes mapped to reference: 35460
+22:34:11 : No genes mapped to reference: 12577
+22:34:11 : No genes mapped to reference: 4267
+22:34:11 : No genes mapped to reference: 25627
+22:34:11 : No genes mapped to reference: 32512
+22:34:11 : No genes mapped to reference: 24215
+22:34:11 : No genes mapped to reference: 37400
+22:34:11 : No genes mapped to reference: 35902
+22:34:11 : No genes mapped to reference: 22003
+22:34:11 : No genes mapped to reference: 2187
+22:34:11 : No genes mapped to reference: 45063
+22:34:11 : No genes mapped to reference: 20767
+22:34:11 : No genes mapped to reference: 46507
+22:34:11 : No genes mapped to reference: 39362
+22:34:11 : No genes mapped to reference: 41656
+22:34:11 : No genes mapped to reference: 35999
+22:34:11 : No genes mapped to reference: 32583
+22:34:11 : No genes mapped to reference: 19112
+22:34:11 : No genes mapped to reference: 23026
+22:34:11 : No genes mapped to reference: 32974
+22:34:11 : No genes mapped to reference: 25851
+22:34:11 : No genes mapped to reference: 22839
+22:34:11 : No genes mapped to reference: 3349
+22:34:11 : No genes mapped to reference: 6525
+22:34:11 : No genes mapped to reference: 6279
+22:34:11 : No genes mapped to reference: 23
+22:34:11 : No genes mapped to reference: 29517
+22:34:11 : No genes mapped to reference: 25738
+22:34:11 : No genes mapped to reference: 30137
+22:34:11 : No genes mapped to reference: 9747
+22:34:11 : No genes mapped to reference: 25367
+22:34:11 : No genes mapped to reference: 15221
+22:34:11 : No genes mapped to reference: 19938
+22:34:11 : No genes mapped to reference: 9767
+22:34:11 : No genes mapped to reference: 32239
+22:34:11 : No genes mapped to reference: 38611
+22:34:11 : No genes mapped to reference: 18643
+22:34:11 : No genes mapped to reference: 40751
+22:34:11 : No genes mapped to reference: 9825
+22:34:11 : No genes mapped to reference: 14931
+22:34:12 : No genes mapped to reference: 36915
+22:34:12 : No genes mapped to reference: 18538
+22:34:12 : No genes mapped to reference: 29936
+22:34:12 : No genes mapped to reference: 8899
+22:34:12 : No genes mapped to reference: 41714
+22:34:12 : No genes mapped to reference: 27296
+22:34:12 : No genes mapped to reference: 3880
+22:34:12 : No genes mapped to reference: 34763
+22:34:12 : No genes mapped to reference: 9041
+22:34:12 : No genes mapped to reference: 43485
+22:34:12 : No genes mapped to reference: 3569
+22:34:12 : No genes mapped to reference: 1022
+22:34:12 : No genes mapped to reference: 26832
+22:34:12 : No genes mapped to reference: 4749
+22:34:12 : No genes mapped to reference: 43440
+22:34:12 : No genes mapped to reference: 22150
+22:34:12 : No genes mapped to reference: 191
+22:34:12 : No genes mapped to reference: 11334
+22:34:12 : No genes mapped to reference: 41725
+22:34:12 : No genes mapped to reference: 3955
+22:34:12 : No genes mapped to reference: 30324
+22:34:12 : No genes mapped to reference: 2924
+22:34:12 : No genes mapped to reference: 19601
+22:34:12 : No genes mapped to reference: 43570
+22:34:12 : No genes mapped to reference: 43994
+22:34:12 : No genes mapped to reference: 33642
+22:34:12 : No genes mapped to reference: 40465
+22:34:12 : No genes mapped to reference: 19333
+22:34:12 : No genes mapped to reference: 3587
+22:34:12 : No genes mapped to reference: 19924
+22:34:12 : No genes mapped to reference: 195
+22:34:12 : No genes mapped to reference: 22622
+22:34:12 : No genes mapped to reference: 3422
+22:34:12 : No genes mapped to reference: 46867
+22:34:12 : No genes mapped to reference: 5274
+22:34:12 : No genes mapped to reference: 9100
+22:34:12 : No genes mapped to reference: 17211
+22:34:12 : No genes mapped to reference: 2333
+22:34:12 : No genes mapped to reference: 20601
+22:34:12 : No genes mapped to reference: 20669
+22:34:12 : No genes mapped to reference: 13088
+22:34:12 : No genes mapped to reference: 21079
+22:34:12 : No genes mapped to reference: 12944
+22:34:12 : No genes mapped to reference: 20537
+22:34:12 : No genes mapped to reference: 28407
+22:34:12 : No genes mapped to reference: 1281
+22:34:12 : No genes mapped to reference: 39475
+22:34:12 : No genes mapped to reference: 38568
+22:34:12 : No genes mapped to reference: 22534
+22:34:12 : No genes mapped to reference: 36082
+22:34:12 : No genes mapped to reference: 4867
+22:34:12 : No genes mapped to reference: 7421
+22:34:12 : No genes mapped to reference: 43995
+22:34:12 : No genes mapped to reference: 16938
+22:34:12 : No genes mapped to reference: 12214
+22:34:12 : No genes mapped to reference: 18438
+22:34:12 : No genes mapped to reference: 24781
+22:34:12 : No genes mapped to reference: 19242
+22:34:12 : No genes mapped to reference: 14792
+22:34:12 : No genes mapped to reference: 44767
+22:34:12 : No genes mapped to reference: 24047
+22:34:12 : No genes mapped to reference: 20706
+22:34:12 : No genes mapped to reference: 5680
+22:34:12 : No genes mapped to reference: 32161
+22:34:12 : No genes mapped to reference: 45886
+22:34:12 : No genes mapped to reference: 16759
+22:34:12 : No genes mapped to reference: 5293
+22:34:12 : No genes mapped to reference: 44016
+22:34:12 : No genes mapped to reference: 40239
+22:34:12 : No genes mapped to reference: 2054
+22:34:12 : No genes mapped to reference: 30720
+22:34:12 : No genes mapped to reference: 37901
+22:34:12 : No genes mapped to reference: 33329
+22:34:12 : No genes mapped to reference: 34777
+22:34:12 : No genes mapped to reference: 22554
+22:34:12 : No genes mapped to reference: 1
+22:34:12 : No genes mapped to reference: 4939
+22:34:12 : No genes mapped to reference: 1849
+22:34:12 : No genes mapped to reference: 43329
+22:34:12 : No genes mapped to reference: 7584
+22:34:12 : No genes mapped to reference: 39851
+22:34:12 : No genes mapped to reference: 30207
+22:34:12 : No genes mapped to reference: 65
+22:34:12 : No genes mapped to reference: 5538
+22:34:12 : No genes mapped to reference: 31761
+22:34:12 : No genes mapped to reference: 3377
+22:34:12 : No genes mapped to reference: 3058
+22:34:12 : No genes mapped to reference: 21225
+22:34:12 : No genes mapped to reference: 23763
+22:34:12 : No genes mapped to reference: 40023
+22:34:12 : No genes mapped to reference: 4961
+22:34:12 : No genes mapped to reference: 5378
+22:34:12 : No genes mapped to reference: 42406
+22:34:12 : No genes mapped to reference: 9605
+22:34:12 : No genes mapped to reference: 38943
+22:34:12 : No genes mapped to reference: 23440
+22:34:12 : No genes mapped to reference: 31116
+22:34:12 : No genes mapped to reference: 38131
+22:34:12 : No genes mapped to reference: 3800
+22:34:12 : No genes mapped to reference: 6293
+22:34:12 : No genes mapped to reference: 22934
+22:34:12 : No genes mapped to reference: 31661
+22:34:12 : No genes mapped to reference: 36963
+22:34:12 : No genes mapped to reference: 27696
+22:34:12 : No genes mapped to reference: 14414
+22:34:12 : No genes mapped to reference: 21804
+22:34:12 : No genes mapped to reference: 45609
+22:34:12 : No genes mapped to reference: 39964
+22:34:12 : No genes mapped to reference: 29214
+22:34:12 : No genes mapped to reference: 46962
+22:34:12 : No genes mapped to reference: 28678
+22:34:12 : No genes mapped to reference: 31212
+22:34:12 : No genes mapped to reference: 32824
+22:34:12 : No genes mapped to reference: 28121
+22:34:12 : No genes mapped to reference: 23359
+22:34:12 : No genes mapped to reference: 34942
+22:34:12 : No genes mapped to reference: 2578
+22:34:12 : No genes mapped to reference: 13010
+22:34:12 : No genes mapped to reference: 1031
+22:34:12 : No genes mapped to reference: 361
+22:34:12 : No genes mapped to reference: 45745
+22:34:12 : No genes mapped to reference: 2181
+22:34:12 : No genes mapped to reference: 27579
+22:34:12 : No genes mapped to reference: 31995
+22:34:12 : No genes mapped to reference: 11364
+22:34:12 : No genes mapped to reference: 43998
+22:34:12 : No genes mapped to reference: 966
+22:34:12 : No genes mapped to reference: 24672
+22:34:12 : No genes mapped to reference: 31820
+22:34:12 : No genes mapped to reference: 19491
+22:34:12 : No genes mapped to reference: 6405
+22:34:12 : No genes mapped to reference: 41433
+22:34:12 : No genes mapped to reference: 4281
+22:34:12 : No genes mapped to reference: 43481
+22:34:12 : No genes mapped to reference: 3637
+22:34:12 : No genes mapped to reference: 21151
+22:34:12 : No genes mapped to reference: 38695
+22:34:12 : No genes mapped to reference: 402
+22:34:12 : No genes mapped to reference: 3446
+22:34:12 : No genes mapped to reference: 20720
+22:34:12 : No genes mapped to reference: 36529
+22:34:12 : No genes mapped to reference: 34903
+22:34:12 : No genes mapped to reference: 23807
+22:34:12 : No genes mapped to reference: 2197
+22:34:12 : No genes mapped to reference: 3793
+22:34:12 : No genes mapped to reference: 39769
+22:34:12 : No genes mapped to reference: 35961
+22:34:12 : No genes mapped to reference: 12166
+22:34:12 : No genes mapped to reference: 24194
+22:34:12 : No genes mapped to reference: 6355
+22:34:12 : No genes mapped to reference: 2425
+22:34:12 : No genes mapped to reference: 22028
+22:34:12 : No diamond output files.
+[Sun Jan 25 22:34:12 2026]
+Error in rule gunc:
+    jobid: 0
+    input: /maps/projects/rasmussen/data/taxvamb_benchmarks/rerun_semibin_results/bee_metagenome_PRJNA1007366/comebin/comebin_res/comebin_res_bins
+    output: /maps/projects/rasmussen/data/taxvamb_benchmarks/rerun_semibin_results/bee_metagenome_PRJNA1007366/gunc/comebin, /maps/projects/rasmussen/data/taxvamb_benchmarks/rerun_semibin_results/bee_metagenome_PRJNA1007366/gunc/comebin/GUNC.progenomes_2.1.maxCSS_level.tsv
+    conda-env: /maps/projects/rasmussen/data/taxvamb_benchmarks/refactor_paper_benchmarks/.snakemake/conda/4fc5ff30191f3a957a9da28c47457afe_
+    shell:
+        
+        # Input dir should contain files in fasta format -- need to gzip for some
+        rm -rf /maps/projects/rasmussen/data/taxvamb_benchmarks/rerun_semibin_results/bee_metagenome_PRJNA1007366/gunc/comebin
+        mkdir -p /maps/projects/rasmussen/data/taxvamb_benchmarks/rerun_semibin_results/bee_metagenome_PRJNA1007366/gunc/comebin
+
+        if [ "comebin" == "semibin" ]; then
+            gzip -dk /maps/projects/rasmussen/data/taxvamb_benchmarks/rerun_semibin_results/bee_metagenome_PRJNA1007366/comebin/comebin_res/comebin_res_bins/*.gz 
+        fi
+
+        gunc run --input_dir /maps/projects/rasmussen/data/taxvamb_benchmarks/rerun_semibin_results/bee_metagenome_PRJNA1007366/comebin/comebin_res/comebin_res_bins --file_suffix .fa --db_file /maps/projects/rasmussen/data/taxvamb_benchmarks/taxvamb_benchmarks/gunc_db/gunc_database/gunc_db_progenomes2.1.dmnd --threads 64 --out_dir /maps/projects/rasmussen/data/taxvamb_benchmarks/rerun_semibin_results/bee_metagenome_PRJNA1007366/gunc/comebin 
+        
+        (one of the commands exited with non-zero exit code; note that snakemake uses bash strict mode!)
+
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Storing output in storage.
+WorkflowError:
+At least one job did not complete successfully.

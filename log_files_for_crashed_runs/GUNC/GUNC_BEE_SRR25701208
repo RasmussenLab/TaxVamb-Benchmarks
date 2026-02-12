@@ -1,0 +1,96 @@
+Config file /maps/projects/rasmussen/data/taxvamb_benchmarks/refactor_paper_benchmarks/config/config.yaml is extended by additional config specified via the command line.
+The flag 'directory' used in rule format_bins_default_vamb_filtered is only valid for outputs, not inputs.
+The flag 'directory' used in rule default_vamb_checkm is only valid for outputs, not inputs.
+The flag 'temp' used in rule metabat is only valid for outputs, not inputs.
+The flag 'directory' used in rule metabat_checkm is only valid for outputs, not inputs.
+The flag 'directory' used in rule metadecoder_checkm is only valid for outputs, not inputs.
+The flag 'directory' used in rule format_bins_taxvamb_kalmari is only valid for outputs, not inputs.
+The flag 'directory' used in rule format_bins_taxvamb_filtered_kalmari is only valid for outputs, not inputs.
+The flag 'directory' used in rule format_bins_taxvamb_gtdb is only valid for outputs, not inputs.
+The flag 'directory' used in rule format_bins_taxvamb_filtered_gtdb is only valid for outputs, not inputs.
+The flag 'directory' used in rule format_bins_taxvamb_trembl is only valid for outputs, not inputs.
+The flag 'directory' used in rule format_bins_taxvamb_filtered_trembl is only valid for outputs, not inputs.
+The flag 'directory' used in rule trembl_checkm is only valid for outputs, not inputs.
+The flag 'directory' used in rule kalmari_checkm is only valid for outputs, not inputs.
+The flag 'directory' used in rule gtdb_checkm is only valid for outputs, not inputs.
+The flag 'directory' used in rule checkm_class is only valid for outputs, not inputs.
+The flag 'directory' used in rule checkm_class_recluster is only valid for outputs, not inputs.
+host: esrumcmpn08fl.unicph.domain
+Building DAG of jobs...
+Your conda installation is not configured to use strict channel priorities. This is however important for having robust and correct environments (for details, see https://conda-forge.org/docs/user/tipsandtricks.html). Please consider to configure strict priorities by executing 'conda config --set channel_priority strict'.
+Using shell: /usr/bin/bash
+Provided cores: 96
+Rules claiming more threads will be scaled down.
+Provided resources: mem_gb=250
+Select jobs to execute...
+Execute 1 jobs...
+
+[Sun Jan 25 22:09:49 2026]
+localrule gunc:
+    input: /maps/projects/rasmussen/data/taxvamb_benchmarks/remap_bio/BEE_SRR25701208/comebin/comebin_res/comebin_res_bins
+    output: /maps/projects/rasmussen/data/taxvamb_benchmarks/remap_bio/BEE_SRR25701208/gunc/comebin, /maps/projects/rasmussen/data/taxvamb_benchmarks/remap_bio/BEE_SRR25701208/gunc/comebin/GUNC.progenomes_2.1.maxCSS_level.tsv
+    jobid: 0
+    reason: Forced execution
+    wildcards: key=BEE_SRR25701208, bin_dir=comebin
+    threads: 64
+    resources: mem_mb=1000, mem_mib=954, disk_mb=1000, disk_mib=954, tmpdir=/scratch/tmp, walltime=20-00:00:00, mem_gb=250, gpu=
+
+
+        # Input dir should contain files in fasta format -- need to gzip for some
+        rm -rf /maps/projects/rasmussen/data/taxvamb_benchmarks/remap_bio/BEE_SRR25701208/gunc/comebin
+        mkdir -p /maps/projects/rasmussen/data/taxvamb_benchmarks/remap_bio/BEE_SRR25701208/gunc/comebin
+
+        if [ "comebin" == "semibin" ]; then
+            gzip -dk /maps/projects/rasmussen/data/taxvamb_benchmarks/remap_bio/BEE_SRR25701208/comebin/comebin_res/comebin_res_bins/*.gz 
+        fi
+
+        gunc run --input_dir /maps/projects/rasmussen/data/taxvamb_benchmarks/remap_bio/BEE_SRR25701208/comebin/comebin_res/comebin_res_bins --file_suffix .fa --db_file /maps/projects/rasmussen/data/taxvamb_benchmarks/taxvamb_benchmarks/gunc_db/gunc_database/gunc_db_progenomes2.1.dmnd --threads 64 --out_dir /maps/projects/rasmussen/data/taxvamb_benchmarks/remap_bio/BEE_SRR25701208/gunc/comebin 
+        
+Activating conda environment: .snakemake/conda/4fc5ff30191f3a957a9da28c47457afe_
+/maps/projects/rasmussen/data/taxvamb_benchmarks/refactor_paper_benchmarks/.snakemake/conda/4fc5ff30191f3a957a9da28c47457afe_/lib/python3.14/site-packages/gunc/get_scores.py:9: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  from pkg_resources import resource_filename
+22:10:19 : START 2026-01-25
+22:10:19 : START Prodigal
+/maps/projects/rasmussen/data/taxvamb_benchmarks/refactor_paper_benchmarks/.snakemake/conda/4fc5ff30191f3a957a9da28c47457afe_/lib/python3.14/site-packages/gunc/get_scores.py:9: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  from pkg_resources import resource_filename
+22:10:27 : END   Prodigal
+22:10:27 : START Diamond
+22:13:27 : END   Diamond
+22:13:27 : No genes mapped to reference: 2
+22:13:27 : No genes mapped to reference: 422
+22:13:27 : No genes mapped to reference: 911
+22:13:27 : No genes mapped to reference: 0
+22:13:27 : No genes mapped to reference: 761
+22:13:27 : No genes mapped to reference: 266
+22:13:28 : No genes mapped to reference: 128
+22:13:28 : No genes mapped to reference: 235
+22:13:28 : No genes mapped to reference: 176
+22:13:28 : No genes mapped to reference: 855
+22:13:28 : No genes mapped to reference: 208
+22:13:28 : No genes mapped to reference: 25
+22:13:28 : No diamond output files.
+[Sun Jan 25 22:13:28 2026]
+Error in rule gunc:
+    jobid: 0
+    input: /maps/projects/rasmussen/data/taxvamb_benchmarks/remap_bio/BEE_SRR25701208/comebin/comebin_res/comebin_res_bins
+    output: /maps/projects/rasmussen/data/taxvamb_benchmarks/remap_bio/BEE_SRR25701208/gunc/comebin, /maps/projects/rasmussen/data/taxvamb_benchmarks/remap_bio/BEE_SRR25701208/gunc/comebin/GUNC.progenomes_2.1.maxCSS_level.tsv
+    conda-env: /maps/projects/rasmussen/data/taxvamb_benchmarks/refactor_paper_benchmarks/.snakemake/conda/4fc5ff30191f3a957a9da28c47457afe_
+    shell:
+        
+        # Input dir should contain files in fasta format -- need to gzip for some
+        rm -rf /maps/projects/rasmussen/data/taxvamb_benchmarks/remap_bio/BEE_SRR25701208/gunc/comebin
+        mkdir -p /maps/projects/rasmussen/data/taxvamb_benchmarks/remap_bio/BEE_SRR25701208/gunc/comebin
+
+        if [ "comebin" == "semibin" ]; then
+            gzip -dk /maps/projects/rasmussen/data/taxvamb_benchmarks/remap_bio/BEE_SRR25701208/comebin/comebin_res/comebin_res_bins/*.gz 
+        fi
+
+        gunc run --input_dir /maps/projects/rasmussen/data/taxvamb_benchmarks/remap_bio/BEE_SRR25701208/comebin/comebin_res/comebin_res_bins --file_suffix .fa --db_file /maps/projects/rasmussen/data/taxvamb_benchmarks/taxvamb_benchmarks/gunc_db/gunc_database/gunc_db_progenomes2.1.dmnd --threads 64 --out_dir /maps/projects/rasmussen/data/taxvamb_benchmarks/remap_bio/BEE_SRR25701208/gunc/comebin 
+        
+        (one of the commands exited with non-zero exit code; note that snakemake uses bash strict mode!)
+
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Storing output in storage.
+WorkflowError:
+At least one job did not complete successfully.

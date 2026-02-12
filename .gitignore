@@ -77,9 +77,6 @@ dereplicate_me
 drep_output/data
 failed_runs_output/semibin
 gut_map
-log_files_for_crashed_runs
-log_files_for_crashed_runs
-log_files_for_crashed_runs
 failed_runs_output
 remap_config
 Forest_soil_Comebin.log

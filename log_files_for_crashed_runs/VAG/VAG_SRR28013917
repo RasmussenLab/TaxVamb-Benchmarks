@@ -1,0 +1,353 @@
+Config file /maps/projects/rasmussen/data/taxvamb_benchmarks/refactor_paper_benchmarks/config/config.yaml is extended by additional config specified via the command line.
+The flag 'directory' used in rule format_bins_default_vamb_filtered is only valid for outputs, not inputs.
+The flag 'directory' used in rule default_vamb_checkm is only valid for outputs, not inputs.
+The flag 'temp' used in rule metabat is only valid for outputs, not inputs.
+The flag 'directory' used in rule metabat_checkm is only valid for outputs, not inputs.
+The flag 'directory' used in rule metadecoder_checkm is only valid for outputs, not inputs.
+The flag 'directory' used in rule format_bins_taxvamb_kalmari is only valid for outputs, not inputs.
+The flag 'directory' used in rule format_bins_taxvamb_filtered_kalmari is only valid for outputs, not inputs.
+The flag 'directory' used in rule format_bins_taxvamb_gtdb is only valid for outputs, not inputs.
+The flag 'directory' used in rule format_bins_taxvamb_filtered_gtdb is only valid for outputs, not inputs.
+The flag 'directory' used in rule format_bins_taxvamb_trembl is only valid for outputs, not inputs.
+The flag 'directory' used in rule format_bins_taxvamb_filtered_trembl is only valid for outputs, not inputs.
+The flag 'directory' used in rule trembl_checkm is only valid for outputs, not inputs.
+The flag 'directory' used in rule kalmari_checkm is only valid for outputs, not inputs.
+The flag 'directory' used in rule gtdb_checkm is only valid for outputs, not inputs.
+The flag 'directory' used in rule checkm_class is only valid for outputs, not inputs.
+The flag 'directory' used in rule checkm_class_recluster is only valid for outputs, not inputs.
+host: esrumcmpn03fl.unicph.domain
+Building DAG of jobs...
+Your conda installation is not configured to use strict channel priorities. This is however important for having robust and correct environments (for details, see https://conda-forge.org/docs/user/tipsandtricks.html). Please consider to configure strict priorities by executing 'conda config --set channel_priority strict'.
+Using shell: /usr/bin/bash
+Provided cores: 96
+Rules claiming more threads will be scaled down.
+Provided resources: mem_gb=500, load=1
+Select jobs to execute...
+Execute 1 jobs...
+
+[Mon Jan 19 23:21:25 2026]
+localrule comebin:
+    input: /maps/projects/rasmussen/data/taxvamb_benchmarks/remap_bio/VAG_SRR28013917/assembly_mapping_output/contigs.flt.fna.gz, /maps/projects/rasmussen/data/taxvamb_benchmarks/remap_bio/VAG_SRR28013917/assembly_mapping_output/mapped_sorted/sample36_SRR28013917.sort.bam, /maps/projects/rasmussen/data/taxvamb_benchmarks/remap_bio/VAG_SRR28013917/metadecoder/VAG_SRR28013917_contigs.flt.fna
+    output: /maps/projects/rasmussen/data/taxvamb_benchmarks/remap_bio/VAG_SRR28013917/comebin, /maps/projects/rasmussen/data/taxvamb_benchmarks/remap_bio/VAG_SRR28013917/comebin/comebin_res/comebin_res_bins
+    log: /maps/projects/rasmussen/data/taxvamb_benchmarks/remap_bio/log/VAG_SRR28013917_comebin
+    jobid: 0
+    benchmark: benchmark/VAG_SRR28013917_comebin
+    reason: Forced execution
+    wildcards: key=VAG_SRR28013917
+    threads: 64
+    resources: mem_mb=4437, mem_mib=4232, disk_mb=4437, disk_mib=4232, tmpdir=/scratch/tmp, walltime=1088:00:00, mem_gb=500, gpu=, load=1
+
+
+	rm -rf /maps/projects/rasmussen/data/taxvamb_benchmarks/remap_bio/VAG_SRR28013917/comebin
+        run_comebin.sh -a /maps/projects/rasmussen/data/taxvamb_benchmarks/remap_bio/VAG_SRR28013917/metadecoder/VAG_SRR28013917_contigs.flt.fna         -o /maps/projects/rasmussen/data/taxvamb_benchmarks/remap_bio/VAG_SRR28013917/comebin         -p /maps/projects/rasmussen/data/taxvamb_benchmarks/remap_bio/VAG_SRR28013917/assembly_mapping_output/mapped_sorted         -t 64 # &> /maps/projects/rasmussen/data/taxvamb_benchmarks/remap_bio/log/VAG_SRR28013917_comebin
+        
+Activating conda environment: .snakemake/conda/7f034c812de37907407222bc60b6632a_
+Batch size: 79
+N50: 3572
+Tau(temperature): 0.15
+/maps/projects/rasmussen/data/taxvamb_benchmarks/remap_bio/VAG_SRR28013917/comebin/data_augmentation does not exist.
+Running data augmentation.
+2026-01-19 23:21:33,516 - generate_aug_data: fastafile
+2026-01-19 23:21:33,670 - aug:	1
+2026-01-19 23:21:33,748 - aug:	2
+2026-01-19 23:21:33,825 - aug:	3
+2026-01-19 23:21:33,895 - aug:	4
+2026-01-19 23:21:34,677 - aug:	5
+2026-01-19 23:21:34,770 - Generate coverage files from bam files.
+2026-01-19 23:21:35,261 - Processing `/maps/projects/rasmussen/data/taxvamb_benchmarks/remap_bio/VAG_SRR28013917/assembly_mapping_output/mapped_sorted/sample36_SRR28013917.sort.bam`
+2026-01-19 23:22:31,388 - Processed:/maps/projects/rasmussen/data/taxvamb_benchmarks/remap_bio/VAG_SRR28013917/assembly_mapping_output/mapped_sorted/sample36_SRR28013917.sort.bam
+2026-01-19 23:22:32,451 - Processed:/maps/projects/rasmussen/data/taxvamb_benchmarks/remap_bio/VAG_SRR28013917/comebin/data_augmentation/depth/sample36_SRR28013917.sort.bam_0_depth.txt
+2026-01-19 23:22:33,273 - Processed:/maps/projects/rasmussen/data/taxvamb_benchmarks/remap_bio/VAG_SRR28013917/comebin/data_augmentation/depth/sample36_SRR28013917.sort.bam_0_depth.txt
+2026-01-19 23:22:33,482 - Finish calculating coverage for aug_1
+2026-01-19 23:22:34,182 - Processed:/maps/projects/rasmussen/data/taxvamb_benchmarks/remap_bio/VAG_SRR28013917/comebin/data_augmentation/depth/sample36_SRR28013917.sort.bam_0_depth.txt
+2026-01-19 23:22:34,525 - Finish calculating coverage for aug_2
+2026-01-19 23:22:35,262 - Processed:/maps/projects/rasmussen/data/taxvamb_benchmarks/remap_bio/VAG_SRR28013917/comebin/data_augmentation/depth/sample36_SRR28013917.sort.bam_0_depth.txt
+2026-01-19 23:22:35,583 - Finish calculating coverage for aug_3
+2026-01-19 23:22:36,371 - Processed:/maps/projects/rasmussen/data/taxvamb_benchmarks/remap_bio/VAG_SRR28013917/comebin/data_augmentation/depth/sample36_SRR28013917.sort.bam_0_depth.txt
+2026-01-19 23:22:36,632 - Finish calculating coverage for aug_4
+2026-01-19 23:22:37,730 - Processed:/maps/projects/rasmussen/data/taxvamb_benchmarks/remap_bio/VAG_SRR28013917/comebin/data_augmentation/depth/sample36_SRR28013917.sort.bam_0_depth.txt
+2026-01-19 23:22:38,012 - Finish calculating coverage for aug_5
+2026-01-19 23:22:38,026 - Generate coverage variance files from bam files.
+2026-01-19 23:22:38,796 - Processed:/maps/projects/rasmussen/data/taxvamb_benchmarks/remap_bio/VAG_SRR28013917/comebin/data_augmentation/depth/sample36_SRR28013917.sort.bam_0_depth.txt
+2026-01-19 23:22:39,796 - Processed:/maps/projects/rasmussen/data/taxvamb_benchmarks/remap_bio/VAG_SRR28013917/comebin/data_augmentation/depth/sample36_SRR28013917.sort.bam_0_depth.txt
+2026-01-19 23:22:40,071 - Finish calculating coverage variance for aug_1
+2026-01-19 23:22:40,894 - Processed:/maps/projects/rasmussen/data/taxvamb_benchmarks/remap_bio/VAG_SRR28013917/comebin/data_augmentation/depth/sample36_SRR28013917.sort.bam_0_depth.txt
+2026-01-19 23:22:41,182 - Finish calculating coverage variance for aug_2
+2026-01-19 23:22:41,918 - Processed:/maps/projects/rasmussen/data/taxvamb_benchmarks/remap_bio/VAG_SRR28013917/comebin/data_augmentation/depth/sample36_SRR28013917.sort.bam_0_depth.txt
+2026-01-19 23:22:42,131 - Finish calculating coverage variance for aug_3
+2026-01-19 23:22:42,822 - Processed:/maps/projects/rasmussen/data/taxvamb_benchmarks/remap_bio/VAG_SRR28013917/comebin/data_augmentation/depth/sample36_SRR28013917.sort.bam_0_depth.txt
+2026-01-19 23:22:43,107 - Finish calculating coverage variance for aug_4
+2026-01-19 23:22:43,908 - Processed:/maps/projects/rasmussen/data/taxvamb_benchmarks/remap_bio/VAG_SRR28013917/comebin/data_augmentation/depth/sample36_SRR28013917.sort.bam_0_depth.txt
+2026-01-19 23:22:45,966 - Finish calculating coverage variance for aug_5
+/maps/projects/rasmussen/data/taxvamb_benchmarks/remap_bio/VAG_SRR28013917/comebin/comebin_res does not exist.
+Running getting representation.
+2026-01-19 23:22:48,932 - train
+2026-01-19 23:22:49,092 - Generate features for the data.
+  0%|          | 0/1 [00:00<?, ?it/s]/maps/projects/rasmussen/data/taxvamb_benchmarks/refactor_paper_benchmarks/.snakemake/conda/7f034c812de37907407222bc60b6632a_/lib/python3.7/site-packages/torch/autocast_mode.py:141: UserWarning: User provided device_type of 'cuda', but CUDA is not available. Disabling
+  warnings.warn('User provided device_type of \'cuda\', but CUDA is not available. Disabling')
+100%|██████████| 1/1 [00:01<00:00,  1.19s/it]100%|██████████| 1/1 [00:03<00:00,  3.37s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:01<00:00,  1.54s/it]100%|██████████| 1/1 [00:01<00:00,  1.61s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:01<00:00,  1.77s/it]100%|██████████| 1/1 [00:01<00:00,  1.94s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:02<00:00,  2.07s/it]100%|██████████| 1/1 [00:02<00:00,  2.16s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:02<00:00,  2.13s/it]100%|██████████| 1/1 [00:02<00:00,  2.27s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:02<00:00,  2.06s/it]100%|██████████| 1/1 [00:02<00:00,  2.27s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:01<00:00,  1.91s/it]100%|██████████| 1/1 [00:02<00:00,  2.05s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:02<00:00,  2.42s/it]100%|██████████| 1/1 [00:02<00:00,  2.56s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:01<00:00,  1.90s/it]100%|██████████| 1/1 [00:02<00:00,  2.01s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:01<00:00,  1.87s/it]100%|██████████| 1/1 [00:01<00:00,  1.99s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:02<00:00,  2.08s/it]100%|██████████| 1/1 [00:02<00:00,  2.23s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:01<00:00,  1.87s/it]100%|██████████| 1/1 [00:02<00:00,  2.03s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:01<00:00,  1.93s/it]100%|██████████| 1/1 [00:02<00:00,  2.09s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:01<00:00,  1.76s/it]100%|██████████| 1/1 [00:01<00:00,  1.90s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:02<00:00,  2.20s/it]100%|██████████| 1/1 [00:02<00:00,  2.32s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:02<00:00,  2.09s/it]100%|██████████| 1/1 [00:02<00:00,  2.17s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:02<00:00,  2.05s/it]100%|██████████| 1/1 [00:02<00:00,  2.16s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:02<00:00,  2.07s/it]100%|██████████| 1/1 [00:02<00:00,  2.24s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:02<00:00,  2.01s/it]100%|██████████| 1/1 [00:02<00:00,  2.14s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:02<00:00,  2.21s/it]100%|██████████| 1/1 [00:03<00:00,  3.84s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:02<00:00,  2.36s/it]100%|██████████| 1/1 [00:02<00:00,  2.56s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:01<00:00,  1.73s/it]100%|██████████| 1/1 [00:01<00:00,  1.87s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:02<00:00,  2.14s/it]100%|██████████| 1/1 [00:02<00:00,  2.29s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:01<00:00,  1.93s/it]100%|██████████| 1/1 [00:02<00:00,  2.09s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:02<00:00,  2.09s/it]100%|██████████| 1/1 [00:02<00:00,  2.20s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:02<00:00,  2.15s/it]100%|██████████| 1/1 [00:02<00:00,  2.27s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:02<00:00,  2.14s/it]100%|██████████| 1/1 [00:02<00:00,  2.27s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:01<00:00,  1.78s/it]100%|██████████| 1/1 [00:01<00:00,  1.88s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:01<00:00,  1.82s/it]100%|██████████| 1/1 [00:01<00:00,  1.98s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:01<00:00,  1.91s/it]100%|██████████| 1/1 [00:02<00:00,  2.03s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:02<00:00,  2.19s/it]100%|██████████| 1/1 [00:02<00:00,  2.27s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:02<00:00,  2.14s/it]100%|██████████| 1/1 [00:02<00:00,  2.27s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:02<00:00,  2.03s/it]100%|██████████| 1/1 [00:02<00:00,  2.16s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:01<00:00,  1.84s/it]100%|██████████| 1/1 [00:01<00:00,  1.99s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:02<00:00,  2.39s/it]100%|██████████| 1/1 [00:02<00:00,  2.54s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:02<00:00,  2.27s/it]100%|██████████| 1/1 [00:02<00:00,  2.39s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:02<00:00,  2.12s/it]100%|██████████| 1/1 [00:02<00:00,  2.27s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:01<00:00,  1.98s/it]100%|██████████| 1/1 [00:05<00:00,  5.51s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:02<00:00,  2.27s/it]100%|██████████| 1/1 [00:02<00:00,  2.42s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:02<00:00,  2.23s/it]100%|██████████| 1/1 [00:02<00:00,  2.33s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:02<00:00,  2.15s/it]100%|██████████| 1/1 [00:02<00:00,  2.34s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:02<00:00,  2.39s/it]100%|██████████| 1/1 [00:02<00:00,  2.52s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:02<00:00,  2.15s/it]100%|██████████| 1/1 [00:02<00:00,  2.25s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:02<00:00,  2.30s/it]100%|██████████| 1/1 [00:02<00:00,  2.40s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:02<00:00,  2.32s/it]100%|██████████| 1/1 [00:02<00:00,  2.47s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:02<00:00,  2.01s/it]100%|██████████| 1/1 [00:02<00:00,  2.22s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:02<00:00,  2.01s/it]100%|██████████| 1/1 [00:02<00:00,  2.14s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:01<00:00,  2.00s/it]100%|██████████| 1/1 [00:02<00:00,  2.09s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:02<00:00,  2.20s/it]100%|██████████| 1/1 [00:02<00:00,  2.31s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:02<00:00,  2.10s/it]100%|██████████| 1/1 [00:02<00:00,  2.23s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:02<00:00,  2.02s/it]100%|██████████| 1/1 [00:02<00:00,  2.16s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:02<00:00,  2.03s/it]100%|██████████| 1/1 [00:02<00:00,  2.11s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:01<00:00,  1.92s/it]100%|██████████| 1/1 [00:02<00:00,  2.10s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:02<00:00,  2.04s/it]100%|██████████| 1/1 [00:02<00:00,  2.24s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:02<00:00,  2.05s/it]100%|██████████| 1/1 [00:02<00:00,  2.21s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:01<00:00,  1.96s/it]100%|██████████| 1/1 [00:02<00:00,  2.09s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:02<00:00,  2.20s/it]100%|██████████| 1/1 [00:02<00:00,  2.41s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:02<00:00,  2.30s/it]100%|██████████| 1/1 [00:02<00:00,  2.42s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:02<00:00,  2.28s/it]100%|██████████| 1/1 [00:02<00:00,  2.41s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:02<00:00,  2.49s/it]100%|██████████| 1/1 [00:02<00:00,  2.60s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:02<00:00,  2.29s/it]100%|██████████| 1/1 [00:02<00:00,  2.42s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:02<00:00,  2.59s/it]100%|██████████| 1/1 [00:02<00:00,  2.76s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:02<00:00,  2.06s/it]100%|██████████| 1/1 [00:02<00:00,  2.60s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:02<00:00,  2.01s/it]100%|██████████| 1/1 [00:02<00:00,  2.14s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:02<00:00,  2.36s/it]100%|██████████| 1/1 [00:02<00:00,  2.50s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:02<00:00,  2.18s/it]100%|██████████| 1/1 [00:02<00:00,  2.33s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:01<00:00,  1.97s/it]100%|██████████| 1/1 [00:02<00:00,  2.07s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:01<00:00,  1.95s/it]100%|██████████| 1/1 [00:02<00:00,  2.07s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:02<00:00,  2.10s/it]100%|██████████| 1/1 [00:02<00:00,  2.23s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:01<00:00,  1.91s/it]100%|██████████| 1/1 [00:03<00:00,  3.75s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:02<00:00,  2.17s/it]100%|██████████| 1/1 [00:02<00:00,  2.29s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:02<00:00,  2.18s/it]100%|██████████| 1/1 [00:02<00:00,  2.32s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:02<00:00,  2.07s/it]100%|██████████| 1/1 [00:02<00:00,  2.18s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:02<00:00,  2.19s/it]100%|██████████| 1/1 [00:02<00:00,  2.30s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:02<00:00,  2.25s/it]100%|██████████| 1/1 [00:02<00:00,  2.53s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:01<00:00,  1.95s/it]100%|██████████| 1/1 [00:02<00:00,  2.59s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:02<00:00,  2.17s/it]100%|██████████| 1/1 [00:02<00:00,  2.31s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:02<00:00,  2.05s/it]100%|██████████| 1/1 [00:03<00:00,  3.87s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:02<00:00,  2.20s/it]100%|██████████| 1/1 [00:02<00:00,  2.55s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:02<00:00,  2.08s/it]100%|██████████| 1/1 [00:02<00:00,  2.22s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:02<00:00,  2.29s/it]100%|██████████| 1/1 [00:02<00:00,  2.43s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:01<00:00,  1.84s/it]100%|██████████| 1/1 [00:07<00:00,  7.28s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:02<00:00,  2.41s/it]100%|██████████| 1/1 [00:02<00:00,  2.61s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:02<00:00,  2.36s/it]100%|██████████| 1/1 [00:02<00:00,  2.48s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:02<00:00,  2.60s/it]100%|██████████| 1/1 [00:04<00:00,  4.23s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:02<00:00,  2.52s/it]100%|██████████| 1/1 [00:02<00:00,  2.70s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:02<00:00,  2.31s/it]100%|██████████| 1/1 [00:02<00:00,  2.42s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:02<00:00,  2.21s/it]100%|██████████| 1/1 [00:02<00:00,  2.33s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:02<00:00,  2.11s/it]100%|██████████| 1/1 [00:02<00:00,  2.24s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:02<00:00,  2.06s/it]100%|██████████| 1/1 [00:02<00:00,  2.20s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:02<00:00,  2.12s/it]100%|██████████| 1/1 [00:02<00:00,  2.28s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:02<00:00,  2.20s/it]100%|██████████| 1/1 [00:02<00:00,  2.40s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:02<00:00,  2.59s/it]100%|██████████| 1/1 [00:02<00:00,  2.78s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:02<00:00,  2.17s/it]100%|██████████| 1/1 [00:02<00:00,  2.27s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:02<00:00,  2.24s/it]100%|██████████| 1/1 [00:02<00:00,  2.37s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:02<00:00,  2.17s/it]100%|██████████| 1/1 [00:02<00:00,  2.32s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:02<00:00,  2.17s/it]100%|██████████| 1/1 [00:02<00:00,  2.31s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:02<00:00,  2.05s/it]100%|██████████| 1/1 [00:02<00:00,  2.21s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:02<00:00,  2.37s/it]100%|██████████| 1/1 [00:03<00:00,  3.16s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:02<00:00,  2.38s/it]100%|██████████| 1/1 [00:02<00:00,  2.50s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:01<00:00,  1.73s/it]100%|██████████| 1/1 [00:01<00:00,  1.85s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:02<00:00,  2.15s/it]100%|██████████| 1/1 [00:02<00:00,  2.29s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:01<00:00,  1.96s/it]100%|██████████| 1/1 [00:02<00:00,  2.07s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:02<00:00,  2.28s/it]100%|██████████| 1/1 [00:03<00:00,  3.27s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:02<00:00,  2.20s/it]100%|██████████| 1/1 [00:02<00:00,  2.33s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:01<00:00,  1.95s/it]100%|██████████| 1/1 [00:02<00:00,  2.50s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:01<00:00,  1.92s/it]100%|██████████| 1/1 [00:02<00:00,  2.07s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:02<00:00,  2.28s/it]100%|██████████| 1/1 [00:02<00:00,  2.41s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:02<00:00,  2.18s/it]100%|██████████| 1/1 [00:04<00:00,  4.46s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:02<00:00,  2.39s/it]100%|██████████| 1/1 [00:02<00:00,  2.49s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:01<00:00,  1.94s/it]100%|██████████| 1/1 [00:02<00:00,  2.10s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:02<00:00,  2.39s/it]100%|██████████| 1/1 [00:02<00:00,  2.55s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:02<00:00,  2.38s/it]100%|██████████| 1/1 [00:02<00:00,  2.51s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:02<00:00,  2.32s/it]100%|██████████| 1/1 [00:02<00:00,  2.47s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:02<00:00,  2.29s/it]100%|██████████| 1/1 [00:02<00:00,  2.48s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:02<00:00,  2.28s/it]100%|██████████| 1/1 [00:02<00:00,  2.39s/it]
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:02<00:00,  2.25s/it]100%|██████████| 1/1 [00:02<00:00,  2.37s/it]
+2026-01-19 23:27:41,091 - Finish training.
+6
+2026-01-19 23:27:46,738 - bin
+2026-01-19 23:27:46,755 - exec cmd: /maps/projects/rasmussen/data/taxvamb_benchmarks/refactor_paper_benchmarks/.snakemake/conda/7f034c812de37907407222bc60b6632a_/bin/COMEBin/../auxiliary/test_getmarker_2quarter.pl /maps/projects/rasmussen/data/taxvamb_benchmarks/remap_bio/VAG_SRR28013917/metadecoder/VAG_SRR28013917_contigs.flt.fna.bacar_marker.hmmout /maps/projects/rasmussen/data/taxvamb_benchmarks/remap_bio/VAG_SRR28013917/metadecoder/VAG_SRR28013917_contigs.flt.fna 1001 /maps/projects/rasmussen/data/taxvamb_benchmarks/remap_bio/VAG_SRR28013917/metadecoder/VAG_SRR28013917_contigs.flt.fna.bacar_marker.2quarter_lencutoff_1001.seed
+2026-01-19 23:27:46,856 - markerCmd failed! Not exist: /maps/projects/rasmussen/data/taxvamb_benchmarks/refactor_paper_benchmarks/.snakemake/conda/7f034c812de37907407222bc60b6632a_/bin/COMEBin/../auxiliary/test_getmarker_2quarter.pl /maps/projects/rasmussen/data/taxvamb_benchmarks/remap_bio/VAG_SRR28013917/metadecoder/VAG_SRR28013917_contigs.flt.fna.bacar_marker.hmmout /maps/projects/rasmussen/data/taxvamb_benchmarks/remap_bio/VAG_SRR28013917/metadecoder/VAG_SRR28013917_contigs.flt.fna 1001 /maps/projects/rasmussen/data/taxvamb_benchmarks/remap_bio/VAG_SRR28013917/metadecoder/VAG_SRR28013917_contigs.flt.fna.bacar_marker.2quarter_lencutoff_1001.seed
+2026-01-19 23:27:46,856 - Start clustering.
+2026-01-19 23:27:46,899 - N50:	3572
+Traceback (most recent call last):
+  File "main.py", line 369, in <module>
+    main()
+  File "main.py", line 299, in main
+    cluster(logger, args)
+  File "/maps/projects/rasmussen/data/taxvamb_benchmarks/refactor_paper_benchmarks/.snakemake/conda/7f034c812de37907407222bc60b6632a_/bin/COMEBin/cluster.py", line 364, in cluster
+    seed_namelist = pd.read_csv(seed_file, header=None, sep='\t', usecols=range(1)).values[:, 0]
+  File "/maps/projects/rasmussen/data/taxvamb_benchmarks/refactor_paper_benchmarks/.snakemake/conda/7f034c812de37907407222bc60b6632a_/lib/python3.7/site-packages/pandas/util/_decorators.py", line 311, in wrapper
+    return func(*args, **kwargs)
+  File "/maps/projects/rasmussen/data/taxvamb_benchmarks/refactor_paper_benchmarks/.snakemake/conda/7f034c812de37907407222bc60b6632a_/lib/python3.7/site-packages/pandas/io/parsers/readers.py", line 586, in read_csv
+    return _read(filepath_or_buffer, kwds)
+  File "/maps/projects/rasmussen/data/taxvamb_benchmarks/refactor_paper_benchmarks/.snakemake/conda/7f034c812de37907407222bc60b6632a_/lib/python3.7/site-packages/pandas/io/parsers/readers.py", line 482, in _read
+    parser = TextFileReader(filepath_or_buffer, **kwds)
+  File "/maps/projects/rasmussen/data/taxvamb_benchmarks/refactor_paper_benchmarks/.snakemake/conda/7f034c812de37907407222bc60b6632a_/lib/python3.7/site-packages/pandas/io/parsers/readers.py", line 811, in __init__
+    self._engine = self._make_engine(self.engine)
+  File "/maps/projects/rasmussen/data/taxvamb_benchmarks/refactor_paper_benchmarks/.snakemake/conda/7f034c812de37907407222bc60b6632a_/lib/python3.7/site-packages/pandas/io/parsers/readers.py", line 1040, in _make_engine
+    return mapping[engine](self.f, **self.options)  # type: ignore[call-arg]
+  File "/maps/projects/rasmussen/data/taxvamb_benchmarks/refactor_paper_benchmarks/.snakemake/conda/7f034c812de37907407222bc60b6632a_/lib/python3.7/site-packages/pandas/io/parsers/c_parser_wrapper.py", line 51, in __init__
+    self._open_handles(src, kwds)
+  File "/maps/projects/rasmussen/data/taxvamb_benchmarks/refactor_paper_benchmarks/.snakemake/conda/7f034c812de37907407222bc60b6632a_/lib/python3.7/site-packages/pandas/io/parsers/base_parser.py", line 229, in _open_handles
+    errors=kwds.get("encoding_errors", "strict"),
+  File "/maps/projects/rasmussen/data/taxvamb_benchmarks/refactor_paper_benchmarks/.snakemake/conda/7f034c812de37907407222bc60b6632a_/lib/python3.7/site-packages/pandas/io/common.py", line 707, in get_handle
+    newline="",
+FileNotFoundError: [Errno 2] No such file or directory: '/maps/projects/rasmussen/data/taxvamb_benchmarks/remap_bio/VAG_SRR28013917/metadecoder/VAG_SRR28013917_contigs.flt.fna.bacar_marker.2quarter_lencutoff_1001.seed'
+2026-01-19 23:27:49,420 - get_result
+2026-01-19 23:27:49,474 - exec cmd: /maps/projects/rasmussen/data/taxvamb_benchmarks/refactor_paper_benchmarks/.snakemake/conda/7f034c812de37907407222bc60b6632a_/bin/COMEBin/../auxiliary/test_getmarker_2quarter.pl /maps/projects/rasmussen/data/taxvamb_benchmarks/remap_bio/VAG_SRR28013917/metadecoder/VAG_SRR28013917_contigs.flt.fna.bacar_marker.hmmout /maps/projects/rasmussen/data/taxvamb_benchmarks/remap_bio/VAG_SRR28013917/metadecoder/VAG_SRR28013917_contigs.flt.fna 1001 /maps/projects/rasmussen/data/taxvamb_benchmarks/remap_bio/VAG_SRR28013917/metadecoder/VAG_SRR28013917_contigs.flt.fna.bacar_marker.2quarter_lencutoff_1001.seed
+2026-01-19 23:27:49,494 - markerCmd failed! Not exist: /maps/projects/rasmussen/data/taxvamb_benchmarks/refactor_paper_benchmarks/.snakemake/conda/7f034c812de37907407222bc60b6632a_/bin/COMEBin/../auxiliary/test_getmarker_2quarter.pl /maps/projects/rasmussen/data/taxvamb_benchmarks/remap_bio/VAG_SRR28013917/metadecoder/VAG_SRR28013917_contigs.flt.fna.bacar_marker.hmmout /maps/projects/rasmussen/data/taxvamb_benchmarks/remap_bio/VAG_SRR28013917/metadecoder/VAG_SRR28013917_contigs.flt.fna 1001 /maps/projects/rasmussen/data/taxvamb_benchmarks/remap_bio/VAG_SRR28013917/metadecoder/VAG_SRR28013917_contigs.flt.fna.bacar_marker.2quarter_lencutoff_1001.seed
+2026-01-19 23:27:49,494 - Seed_num:	0
+2026-01-19 23:27:49,494 - Run unitem profile:	0
+[2026-01-19 23:27:54] INFO: CheckM v1.1.3
+[2026-01-19 23:27:54] INFO: checkm analyze -t 64 -x fa /maps/projects/rasmussen/data/taxvamb_benchmarks/refactor_paper_benchmarks/.snakemake/conda/7f034c812de37907407222bc60b6632a_/bin/COMEBin/scripts/checkm_ms/bacteria.ms /maps/projects/rasmussen/data/taxvamb_benchmarks/remap_bio/VAG_SRR28013917/comebin/comebin_res/cluster_res/weight_seed_kmeans_k_0_result.tsv_bins /maps/projects/rasmussen/data/taxvamb_benchmarks/remap_bio/VAG_SRR28013917/comebin/comebin_res/cluster_res/unitem_profile/binning_methods/weight_seed_kmeans_k_0_result.tsv/checkm_bac
+[2026-01-19 23:27:54] INFO: [CheckM - analyze] Identifying marker genes in bins.
+
+Unexpected error: <class 'FileNotFoundError'>
+Traceback (most recent call last):
+  File "/maps/projects/rasmussen/data/taxvamb_benchmarks/refactor_paper_benchmarks/.snakemake/conda/7f034c812de37907407222bc60b6632a_/bin/checkm", line 611, in <module>
+    checkmParser.parseOptions(args)
+  File "/maps/projects/rasmussen/data/taxvamb_benchmarks/refactor_paper_benchmarks/.snakemake/conda/7f034c812de37907407222bc60b6632a_/lib/python3.7/site-packages/checkm/main.py", line 846, in parseOptions
+    self.analyze(options)
+  File "/maps/projects/rasmussen/data/taxvamb_benchmarks/refactor_paper_benchmarks/.snakemake/conda/7f034c812de37907407222bc60b6632a_/lib/python3.7/site-packages/checkm/main.py", line 252, in analyze
+    binFiles = self.binFiles(options.bin_dir, options.extension)
+  File "/maps/projects/rasmussen/data/taxvamb_benchmarks/refactor_paper_benchmarks/.snakemake/conda/7f034c812de37907407222bc60b6632a_/lib/python3.7/site-packages/checkm/main.py", line 85, in binFiles
+    all_files = os.listdir(binFolder)
+FileNotFoundError: [Errno 2] No such file or directory: '/maps/projects/rasmussen/data/taxvamb_benchmarks/remap_bio/VAG_SRR28013917/comebin/comebin_res/cluster_res/weight_seed_kmeans_k_0_result.tsv_bins'
+[2026-01-19 23:27:55] INFO: CheckM v1.1.3
+[2026-01-19 23:27:55] INFO: checkm qa -t 64 -o 5 --tab_table -f /maps/projects/rasmussen/data/taxvamb_benchmarks/remap_bio/VAG_SRR28013917/comebin/comebin_res/cluster_res/unitem_profile/binning_methods/weight_seed_kmeans_k_0_result.tsv/checkm_bac/marker_gene_table.tsv /maps/projects/rasmussen/data/taxvamb_benchmarks/refactor_paper_benchmarks/.snakemake/conda/7f034c812de37907407222bc60b6632a_/bin/COMEBin/scripts/checkm_ms/bacteria.ms /maps/projects/rasmussen/data/taxvamb_benchmarks/remap_bio/VAG_SRR28013917/comebin/comebin_res/cluster_res/unitem_profile/binning_methods/weight_seed_kmeans_k_0_result.tsv/checkm_bac
+[2026-01-19 23:27:55] INFO: [CheckM - qa] Tabulating genome statistics.
+[2026-01-19 23:27:55] INFO: Calculating AAI between multi-copy marker genes.
+
+Unexpected error: <class 'FileNotFoundError'>
+Traceback (most recent call last):
+  File "/maps/projects/rasmussen/data/taxvamb_benchmarks/refactor_paper_benchmarks/.snakemake/conda/7f034c812de37907407222bc60b6632a_/bin/checkm", line 611, in <module>
+    checkmParser.parseOptions(args)
+  File "/maps/projects/rasmussen/data/taxvamb_benchmarks/refactor_paper_benchmarks/.snakemake/conda/7f034c812de37907407222bc60b6632a_/lib/python3.7/site-packages/checkm/main.py", line 848, in parseOptions
+    self.qa(options)
+  File "/maps/projects/rasmussen/data/taxvamb_benchmarks/refactor_paper_benchmarks/.snakemake/conda/7f034c812de37907407222bc60b6632a_/lib/python3.7/site-packages/checkm/main.py", line 357, in qa
+    aai.run(options.aai_strain, options.analyze_dir, options.alignment_file)
+  File "/maps/projects/rasmussen/data/taxvamb_benchmarks/refactor_paper_benchmarks/.snakemake/conda/7f034c812de37907407222bc60b6632a_/lib/python3.7/site-packages/checkm/aminoAcidIdentity.py", line 49, in run
+    binIds = getBinIdsFromOutDir(outDir)
+  File "/maps/projects/rasmussen/data/taxvamb_benchmarks/refactor_paper_benchmarks/.snakemake/conda/7f034c812de37907407222bc60b6632a_/lib/python3.7/site-packages/checkm/common.py", line 39, in getBinIdsFromOutDir
+    for f in os.listdir(binDir):
+FileNotFoundError: [Errno 2] No such file or directory: '/maps/projects/rasmussen/data/taxvamb_benchmarks/remap_bio/VAG_SRR28013917/comebin/comebin_res/cluster_res/unitem_profile/binning_methods/weight_seed_kmeans_k_0_result.tsv/checkm_bac/bins'
+[2026-01-19 23:27:57] INFO: CheckM v1.1.3
+[2026-01-19 23:27:57] INFO: checkm qa -t 64 -o 2 --tab_table -f /maps/projects/rasmussen/data/taxvamb_benchmarks/remap_bio/VAG_SRR28013917/comebin/comebin_res/cluster_res/unitem_profile/binning_methods/weight_seed_kmeans_k_0_result.tsv/checkm_bac/genome_quality.tsv /maps/projects/rasmussen/data/taxvamb_benchmarks/refactor_paper_benchmarks/.snakemake/conda/7f034c812de37907407222bc60b6632a_/bin/COMEBin/scripts/checkm_ms/bacteria.ms /maps/projects/rasmussen/data/taxvamb_benchmarks/remap_bio/VAG_SRR28013917/comebin/comebin_res/cluster_res/unitem_profile/binning_methods/weight_seed_kmeans_k_0_result.tsv/checkm_bac
+[2026-01-19 23:27:57] INFO: [CheckM - qa] Tabulating genome statistics.
+[2026-01-19 23:27:57] INFO: Calculating AAI between multi-copy marker genes.
+
+Unexpected error: <class 'FileNotFoundError'>
+Traceback (most recent call last):
+  File "/maps/projects/rasmussen/data/taxvamb_benchmarks/refactor_paper_benchmarks/.snakemake/conda/7f034c812de37907407222bc60b6632a_/bin/checkm", line 611, in <module>
+    checkmParser.parseOptions(args)
+  File "/maps/projects/rasmussen/data/taxvamb_benchmarks/refactor_paper_benchmarks/.snakemake/conda/7f034c812de37907407222bc60b6632a_/lib/python3.7/site-packages/checkm/main.py", line 848, in parseOptions
+    self.qa(options)
+  File "/maps/projects/rasmussen/data/taxvamb_benchmarks/refactor_paper_benchmarks/.snakemake/conda/7f034c812de37907407222bc60b6632a_/lib/python3.7/site-packages/checkm/main.py", line 357, in qa
+    aai.run(options.aai_strain, options.analyze_dir, options.alignment_file)
+  File "/maps/projects/rasmussen/data/taxvamb_benchmarks/refactor_paper_benchmarks/.snakemake/conda/7f034c812de37907407222bc60b6632a_/lib/python3.7/site-packages/checkm/aminoAcidIdentity.py", line 49, in run
+    binIds = getBinIdsFromOutDir(outDir)
+  File "/maps/projects/rasmussen/data/taxvamb_benchmarks/refactor_paper_benchmarks/.snakemake/conda/7f034c812de37907407222bc60b6632a_/lib/python3.7/site-packages/checkm/common.py", line 39, in getBinIdsFromOutDir
+    for f in os.listdir(binDir):
+FileNotFoundError: [Errno 2] No such file or directory: '/maps/projects/rasmussen/data/taxvamb_benchmarks/remap_bio/VAG_SRR28013917/comebin/comebin_res/cluster_res/unitem_profile/binning_methods/weight_seed_kmeans_k_0_result.tsv/checkm_bac/bins'
+[2026-01-19 23:27:58] INFO: CheckM v1.1.3
+[2026-01-19 23:27:58] INFO: checkm analyze -t 64 -x fa /maps/projects/rasmussen/data/taxvamb_benchmarks/refactor_paper_benchmarks/.snakemake/conda/7f034c812de37907407222bc60b6632a_/bin/COMEBin/scripts/checkm_ms/archaea.ms /maps/projects/rasmussen/data/taxvamb_benchmarks/remap_bio/VAG_SRR28013917/comebin/comebin_res/cluster_res/weight_seed_kmeans_k_0_result.tsv_bins /maps/projects/rasmussen/data/taxvamb_benchmarks/remap_bio/VAG_SRR28013917/comebin/comebin_res/cluster_res/unitem_profile/binning_methods/weight_seed_kmeans_k_0_result.tsv/checkm_ar
+[2026-01-19 23:27:58] INFO: [CheckM - analyze] Identifying marker genes in bins.
+
+Unexpected error: <class 'FileNotFoundError'>
+Traceback (most recent call last):
+  File "/maps/projects/rasmussen/data/taxvamb_benchmarks/refactor_paper_benchmarks/.snakemake/conda/7f034c812de37907407222bc60b6632a_/bin/checkm", line 611, in <module>
+    checkmParser.parseOptions(args)
+  File "/maps/projects/rasmussen/data/taxvamb_benchmarks/refactor_paper_benchmarks/.snakemake/conda/7f034c812de37907407222bc60b6632a_/lib/python3.7/site-packages/checkm/main.py", line 846, in parseOptions
+    self.analyze(options)
+  File "/maps/projects/rasmussen/data/taxvamb_benchmarks/refactor_paper_benchmarks/.snakemake/conda/7f034c812de37907407222bc60b6632a_/lib/python3.7/site-packages/checkm/main.py", line 252, in analyze
+    binFiles = self.binFiles(options.bin_dir, options.extension)
+  File "/maps/projects/rasmussen/data/taxvamb_benchmarks/refactor_paper_benchmarks/.snakemake/conda/7f034c812de37907407222bc60b6632a_/lib/python3.7/site-packages/checkm/main.py", line 85, in binFiles
+    all_files = os.listdir(binFolder)
+FileNotFoundError: [Errno 2] No such file or directory: '/maps/projects/rasmussen/data/taxvamb_benchmarks/remap_bio/VAG_SRR28013917/comebin/comebin_res/cluster_res/weight_seed_kmeans_k_0_result.tsv_bins'
+[2026-01-19 23:28:00] INFO: CheckM v1.1.3
+[2026-01-19 23:28:00] INFO: checkm qa -t 64 -o 5 --tab_table -f /maps/projects/rasmussen/data/taxvamb_benchmarks/remap_bio/VAG_SRR28013917/comebin/comebin_res/cluster_res/unitem_profile/binning_methods/weight_seed_kmeans_k_0_result.tsv/checkm_ar/marker_gene_table.tsv /maps/projects/rasmussen/data/taxvamb_benchmarks/refactor_paper_benchmarks/.snakemake/conda/7f034c812de37907407222bc60b6632a_/bin/COMEBin/scripts/checkm_ms/archaea.ms /maps/projects/rasmussen/data/taxvamb_benchmarks/remap_bio/VAG_SRR28013917/comebin/comebin_res/cluster_res/unitem_profile/binning_methods/weight_seed_kmeans_k_0_result.tsv/checkm_ar
+[2026-01-19 23:28:00] INFO: [CheckM - qa] Tabulating genome statistics.
+[2026-01-19 23:28:00] INFO: Calculating AAI between multi-copy marker genes.
+
+Unexpected error: <class 'FileNotFoundError'>
+Traceback (most recent call last):
+  File "/maps/projects/rasmussen/data/taxvamb_benchmarks/refactor_paper_benchmarks/.snakemake/conda/7f034c812de37907407222bc60b6632a_/bin/checkm", line 611, in <module>
+    checkmParser.parseOptions(args)
+  File "/maps/projects/rasmussen/data/taxvamb_benchmarks/refactor_paper_benchmarks/.snakemake/conda/7f034c812de37907407222bc60b6632a_/lib/python3.7/site-packages/checkm/main.py", line 848, in parseOptions
+    self.qa(options)
+  File "/maps/projects/rasmussen/data/taxvamb_benchmarks/refactor_paper_benchmarks/.snakemake/conda/7f034c812de37907407222bc60b6632a_/lib/python3.7/site-packages/checkm/main.py", line 357, in qa
+    aai.run(options.aai_strain, options.analyze_dir, options.alignment_file)
+  File "/maps/projects/rasmussen/data/taxvamb_benchmarks/refactor_paper_benchmarks/.snakemake/conda/7f034c812de37907407222bc60b6632a_/lib/python3.7/site-packages/checkm/aminoAcidIdentity.py", line 49, in run
+    binIds = getBinIdsFromOutDir(outDir)
+  File "/maps/projects/rasmussen/data/taxvamb_benchmarks/refactor_paper_benchmarks/.snakemake/conda/7f034c812de37907407222bc60b6632a_/lib/python3.7/site-packages/checkm/common.py", line 39, in getBinIdsFromOutDir
+    for f in os.listdir(binDir):
+FileNotFoundError: [Errno 2] No such file or directory: '/maps/projects/rasmussen/data/taxvamb_benchmarks/remap_bio/VAG_SRR28013917/comebin/comebin_res/cluster_res/unitem_profile/binning_methods/weight_seed_kmeans_k_0_result.tsv/checkm_ar/bins'
+[2026-01-19 23:28:01] INFO: CheckM v1.1.3
+[2026-01-19 23:28:01] INFO: checkm qa -t 64 -o 2 --tab_table -f /maps/projects/rasmussen/data/taxvamb_benchmarks/remap_bio/VAG_SRR28013917/comebin/comebin_res/cluster_res/unitem_profile/binning_methods/weight_seed_kmeans_k_0_result.tsv/checkm_ar/genome_quality.tsv /maps/projects/rasmussen/data/taxvamb_benchmarks/refactor_paper_benchmarks/.snakemake/conda/7f034c812de37907407222bc60b6632a_/bin/COMEBin/scripts/checkm_ms/archaea.ms /maps/projects/rasmussen/data/taxvamb_benchmarks/remap_bio/VAG_SRR28013917/comebin/comebin_res/cluster_res/unitem_profile/binning_methods/weight_seed_kmeans_k_0_result.tsv/checkm_ar
+[2026-01-19 23:28:01] INFO: [CheckM - qa] Tabulating genome statistics.
+[2026-01-19 23:28:01] INFO: Calculating AAI between multi-copy marker genes.
+
+Unexpected error: <class 'FileNotFoundError'>
+Traceback (most recent call last):
+  File "/maps/projects/rasmussen/data/taxvamb_benchmarks/refactor_paper_benchmarks/.snakemake/conda/7f034c812de37907407222bc60b6632a_/bin/checkm", line 611, in <module>
+    checkmParser.parseOptions(args)
+  File "/maps/projects/rasmussen/data/taxvamb_benchmarks/refactor_paper_benchmarks/.snakemake/conda/7f034c812de37907407222bc60b6632a_/lib/python3.7/site-packages/checkm/main.py", line 848, in parseOptions
+    self.qa(options)
+  File "/maps/projects/rasmussen/data/taxvamb_benchmarks/refactor_paper_benchmarks/.snakemake/conda/7f034c812de37907407222bc60b6632a_/lib/python3.7/site-packages/checkm/main.py", line 357, in qa
+    aai.run(options.aai_strain, options.analyze_dir, options.alignment_file)
+  File "/maps/projects/rasmussen/data/taxvamb_benchmarks/refactor_paper_benchmarks/.snakemake/conda/7f034c812de37907407222bc60b6632a_/lib/python3.7/site-packages/checkm/aminoAcidIdentity.py", line 49, in run
+    binIds = getBinIdsFromOutDir(outDir)
+  File "/maps/projects/rasmussen/data/taxvamb_benchmarks/refactor_paper_benchmarks/.snakemake/conda/7f034c812de37907407222bc60b6632a_/lib/python3.7/site-packages/checkm/common.py", line 39, in getBinIdsFromOutDir
+    for f in os.listdir(binDir):
+FileNotFoundError: [Errno 2] No such file or directory: '/maps/projects/rasmussen/data/taxvamb_benchmarks/remap_bio/VAG_SRR28013917/comebin/comebin_res/cluster_res/unitem_profile/binning_methods/weight_seed_kmeans_k_0_result.tsv/checkm_ar/bins'
+Missing quality table for weight_seed_kmeans_k_0_result.tsv.
+Please verify there were bins in the bin directory specified for this method.
+Waiting at most 90 seconds for missing files.
+MissingOutputException in rule comebin in file /maps/projects/rasmussen/data/taxvamb_benchmarks/refactor_paper_benchmarks/snakemake_modules/comebin.smk, line 2:
+Job 0 completed successfully, but some output files are missing. Missing files after 90 seconds. This might be due to filesystem latency. If that is the case, consider to increase the wait time with --latency-wait:
+/maps/projects/rasmussen/data/taxvamb_benchmarks/remap_bio/VAG_SRR28013917/comebin/comebin_res/comebin_res_bins (missing locally, parent dir contents: cluster_res, config.yml, events.out.tfevents.1768861369.esrumcmpn03fl.unicph.domain.2045994.0, checkpoint_0200.pth.tar, covembeddings.tsv, embeddings.tsv, comebin.log, training.log)
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Storing output in storage.
+WorkflowError:
+At least one job did not complete successfully.
