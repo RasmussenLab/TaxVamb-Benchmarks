@@ -2,7 +2,7 @@
 
 A Snakemake workflow for benchmarking metagenomic binning tools, developed for the Taxvamb paper.
 
-This benchmarking workflow was developed, and is maintained by Lasse Schnell Danielsen (Github: @las02).
+This snakemake workflow was developed, and is maintained by Lasse Schnell Danielsen (Github: @las02).
 For questions regarding pipeline execution or to report bugs, please [open an issue](https://github.com/RasmussenLab/TaxVamb-Benchmarks/issues).
 
 ## Overview
