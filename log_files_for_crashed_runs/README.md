@@ -19,13 +19,13 @@ Since multi-sample COMEBin crashed on these datasets, they were run in single-sa
 
 ## COMEBin (single-sample)
 COMEBin (single-sample) crashes on some of the samples in the Bee Hives (11 samples), Human Gut Antibiotics (1 sample), Human Gut IBS (2 samples), and Vaginal (7 samples) datasets.
-COMEBin's internal `markerCmd` (`test_getmarker_2quarter.pl`) fails, causing the k-means clustering to produce no bins. COMEBin's internal CheckM then fails, and `comebin_res_bins` is never produced. This is the same issue as https://github.com/ziyewang/COMEBin/issues/17. This only happens to some samples in the single-sample mode. 
+COMEBin's internal `markerCmd` (`test_getmarker_2quarter.pl`) fails, causing the k-means clustering to produce no bins. COMEBin's internal CheckM then fails, and `comebin_res_bins` is never produced. This only happens to some samples in the single-sample mode. 
 - **Resources**: mem_gb=500, walltime=1088:00:00, 64 threads, no GPU.
 - **Log files**: `comebin_singlesample/bee_hives/`, `comebin_singlesample/human_gut_antibiotics/`, `comebin_singlesample/human_gut_ibs/`, `comebin_singlesample/vaginal/`.
 
 ## GUNC
-GUNC crashes on Bee Hives COMEBin bins (multi-sample + 6 single-samples) and Bee Hives SemiBin bins.
+GUNC crashes on Bee Hives.
 GUNC's Diamond step finds no genes mapped to the reference database, producing no output files ("No diamond output files").
 This was resolved by implementing the fix described in https://github.com/grp-bork/gunc/issues/42.
 - **Resources**: mem_gb=250, walltime=20-00:00:00, 64 threads.
-- **Log files**: `gunc_bee_hives_comebin_multisample.log`, `gunc_bee_hives_comebin_singlesample/`, `gunc_bee_hives_semibin.log`.
+- **Log files**: `gunc_bee_hives_comebin_multisample.log`, `gunc_bee_hives_comebin_singlesample/`, `gunc_bee_hives_semibin.log`, `gunc_bee_hives_comebin_singlesample`.
