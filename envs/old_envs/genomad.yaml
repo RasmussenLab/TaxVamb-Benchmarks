@@ -1,7 +1,0 @@
-name: genomad
-channels:
-  - conda-forge
-  - bioconda
-
-dependencies:
-  - genomad
