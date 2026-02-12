@@ -45,6 +45,7 @@ conda activate Benchmark_binners
 
 For running some of the TaxVamb Benchmarks **Taxconverter** should also be installed in the conda environment see [Taxconverter documentation](https://github.com/RasmussenLab/taxconverter/tree/a32d4fc) for installation instructions (link is to the commit used in the pipeline).
 
+
 ### Database Requirements
 
 The pipeline requires several databases. Install them and configure their paths in `config/config.yaml` (Notice: install all databases takes around ~1TB of storage):
@@ -60,6 +61,19 @@ The pipeline requires several databases. Install them and configure their paths 
 | **CheckM2**    | Diamond db                  | Install using `checkm2 database --download` |
 | **GUNC**       | gunc db                     | Install using `gunc download_db` |
 --- 
+
+### Common problems
+
+On some systems when running the pipeline you might get:
+```
+/usr/bin/bash: conda: command not found
+WorkflowError:
+Error running conda info. Is conda installed and accessible? Error: Command 'conda info --json' returned non-zero exit status 127.
+```
+To fix this install conda inside the conda environment:
+```
+conda install conda
+```
 
 ## Running the Workflow
 
