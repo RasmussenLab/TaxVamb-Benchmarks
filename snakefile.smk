@@ -119,13 +119,13 @@ rule sort:
 
 ## Files which should be reclusterd
 all_bin_dirs_recluster = {
-    # "default_vamb": OUTDIR / "{key}/vamb_default",
-    # "kraken_taxvamb_default": OUTDIR / "{key}/kraken_taxvamb_default",
-    # "run_taxvamb_centrifuge": OUTDIR / "{key}/centrifuge_taxvamb",
+    "default_vamb": OUTDIR / "{key}/vamb_default",
+    "kraken_taxvamb_default": OUTDIR / "{key}/kraken_taxvamb_default",
+    "run_taxvamb_centrifuge": OUTDIR / "{key}/centrifuge_taxvamb",
     "run_taxvamb_gtdb_w_unknown": OUTDIR / "{key}/gtdb_taxvamb_default_w_unknown",
-    # "metabuli_taxvamb_default": OUTDIR / "{key}/metabuli_taxvamb_default",
-    # "kalmari_taxvamb_default": OUTDIR / "{key}/kalmari_taxvamb_default",
-    # "trembl_taxvamb_default": OUTDIR / "{key}/trembl_taxvamb_default",
+    "metabuli_taxvamb_default": OUTDIR / "{key}/metabuli_taxvamb_default",
+    "kalmari_taxvamb_default": OUTDIR / "{key}/kalmari_taxvamb_default",
+    "trembl_taxvamb_default": OUTDIR / "{key}/trembl_taxvamb_default",
 }
 bin_dir_names_recluster = all_bin_dirs_recluster.keys()
 
@@ -140,9 +140,9 @@ rule all:
         checkm_metadecoder = expand(OUTDIR /  "{key}/checkm2/metadecoder", key=sample_id.keys()),
         checkm_metabat = expand(OUTDIR /  "{key}/checkm2/metabat", key=sample_id.keys()),
         checkm_default_vamb = expand(OUTDIR /  "{key}/checkm2/default_vamb",key=sample_id.keys()),
-        # checkm2_taxvamb = expand(OUTDIR /  "{key}/tmp/checkm.done",key=sample_id.keys()), 
-        # gunc = expand(OUTDIR / "{key}/tmp/gunc.done", key=sample_id.keys()),
-        # directory = expand(OUTDIR / "{key}/checkm2/reclustering/{bins_recluster}",key=sample_id.keys(), bins_recluster=bin_dir_names_recluster), 
+        checkm2_taxvamb = expand(OUTDIR /  "{key}/tmp/checkm.done",key=sample_id.keys()), 
+        gunc = expand(OUTDIR / "{key}/tmp/gunc.done", key=sample_id.keys()),
+        directory = expand(OUTDIR / "{key}/checkm2/reclustering/{bins_recluster}",key=sample_id.keys(), bins_recluster=bin_dir_names_recluster), 
 
 rule all_reclustering:
     input:
