@@ -90,3 +90,5 @@ d
 move_files.sh
 salvia.py
 submit.sh
+.Makefile.swp
+.swp
