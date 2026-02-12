@@ -51,7 +51,7 @@ For running some of the TaxVamb Benchmarks **Taxconverter** should also be insta
 
 ### Database Requirements
 
-The pipeline requires several databases. Install them and configure their paths in `config/config.yaml` (Notice: install all databases takes around ~1TB of storage):
+The pipeline requires several databases. Install them and configure their paths in `config/config.yaml` (Notice: installing all databases takes around ~1TB of storage):
 
 | Tool           | Database Version            | Description / Notes |
 |:---------------|:----------------------------| :--- |
