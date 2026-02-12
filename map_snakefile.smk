@@ -54,7 +54,7 @@ sample_id = collections.defaultdict(list)
 sample_id_path = collections.defaultdict(dict)
 sample_id_path_assembly = collections.defaultdict(dict)
 for id, (sample, read1, read2, contig) in enumerate(zip( df["sample"], df.read1, df.read2, df.contig)):
-    id = f"{Path(read1).stem.split("_")[0]}" # TODO: Change to be more robust
+    id = f"{id}_{Path(read1).stem}" 
     sample_id[sample].append(id)
     sample_id_path[sample][id] = [read1, read2]
     sample_id_path_assembly[sample][id] = [contig]

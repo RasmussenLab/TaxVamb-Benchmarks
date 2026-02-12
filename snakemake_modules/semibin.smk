@@ -1,6 +1,5 @@
 Semibin_use_GPU = config.get("semibin_use_gpu")
 
-# TODO: Remove --sequencing-type=long_read
 if Semibin_use_GPU:
     rulename = "semibinGPU"
     rule semibinGPU:
@@ -21,7 +20,7 @@ if Semibin_use_GPU:
             rm -rf {output.semibin}
             module load cuda/12.2
             CONDA_OVERRIDE_CUDA="12.2" pixi run --manifest-path {params.env} SemiBin2 \
-            multi_easy_bin --sequencing-type=long_read -i {input.contigs} -b {input.bamfiles} -o {output.semibin} \
+            multi_easy_bin -i {input.contigs} -b {input.bamfiles} -o {output.semibin} \
             --separator C -t {threads} --engine gpu --self-supervised # &> {log}
             # --separator C -t {threads} --engine gpu --write-pre-reclustering-bins --self-supervised # &> {log}
             """

@@ -78,7 +78,7 @@ if config.get("bam_contig") != None:
     sample_id_path = collections.defaultdict(dict)
     contigs = collections.defaultdict(list)
     for id, (sample, bamfile, contig) in enumerate(zip(df["sample"], df.bamfile, df.contig)):
-        id = f"sample{str(id)}_{Path(bamfile).stem}" # TODO: refactor to be more robust
+        id = f"sample{str(id)}_{Path(bamfile).stem}" 
         sample = sample
         sample_id[sample].append(id)
         sample_id_path[sample][id] = [bamfile]
