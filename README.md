@@ -30,7 +30,6 @@ All binners are assessed using CheckM2 and GUNC. Vamb and TaxVamb are evaluated 
 
 1. **Conda/Mamba** - For environment management
 2. **Singularity/Apptainer** - Required for MetaBAT2 (runs as Docker image). See the [Singularity installation guide](https://docs.sylabs.io/guides/3.0/user-guide/installation.html)
-3. **Pixi** - For building Semibin and for Reclustering
 
 ### Setup
 
