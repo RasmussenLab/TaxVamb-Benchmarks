@@ -305,7 +305,8 @@ On some systems when running the pipeline you might get:
 WorkflowError:
 Error running conda info. Is conda installed and accessible? Error: Command 'conda info --json' returned non-zero exit status 127.
 ```
-To fix this install conda inside the conda environment:
+This is a common error for snakemake when running it inside a conda environment.
+One fix for this is to install conda inside the conda environment:
 ```
 conda install conda
 ```
