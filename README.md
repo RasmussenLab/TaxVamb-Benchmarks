@@ -43,7 +43,7 @@ conda activate Benchmark_binners
 
 ### Additional Dependencies
 
-**Taxconverter** must be installed in a separate conda environment named `taxconv`. See the [Taxconverter documentation](https://github.com/RasmussenLab/taxconverter/tree/a32d4fc) for installation instructions (link is to the commit used in the pipeline).
+For running some of the TaxVamb Benchmarks **Taxconverter** should also be installed in the conda environment see [Taxconverter documentation](https://github.com/RasmussenLab/taxconverter/tree/a32d4fc) for installation instructions (link is to the commit used in the pipeline).
 
 ### Database Requirements
 

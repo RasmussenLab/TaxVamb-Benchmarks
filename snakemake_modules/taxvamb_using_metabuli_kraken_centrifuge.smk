@@ -32,7 +32,6 @@ rule metabuli_taxconv:
    resources: walltime = walltime_fn(rulename), mem_gb = mem_gb_fn(rulename), gpu=gpu_fn(rulename)
    benchmark: BENCHMARK_DIR + "{key}_" + rulename
    log: LOG_DIR + "{key}_" + rulename
-   conda: "taxconv"
    shell:
        """
        taxconverter metabuli -c {input.metabuli_classification} -r {input.metabuli_report} -o {output.metabuli_classification}
@@ -91,7 +90,6 @@ rule kraken_taxconv:
     resources: walltime = walltime_fn(rulename), mem_gb = mem_gb_fn(rulename), gpu=gpu_fn(rulename)
     benchmark: BENCHMARK_DIR + "{key}_" + rulename
     log: LOG_DIR + "{key}_" + rulename
-    conda: "taxconv"
     shell:
         """
         taxconverter kraken2 -i {input.kraken2} -o {output.kraken2}
@@ -152,7 +150,6 @@ rule centri_taxconv:
     resources: walltime = walltime_fn(rulename), mem_gb = mem_gb_fn(rulename), gpu=gpu_fn(rulename)
     benchmark: BENCHMARK_DIR + "{key}_" + rulename
     log: LOG_DIR + "{key}_" + rulename
-    conda: "taxconv"
     shell:
         """
         taxconverter centrifuge -i {input.centrifuge} -o {output.centrifuge}
