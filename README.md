@@ -62,19 +62,6 @@ The pipeline requires several databases. Install them and configure their paths 
 | **GUNC**       | gunc db                     | Install using `gunc download_db` |
 --- 
 
-### Common problems
-
-On some systems when running the pipeline you might get:
-```
-/usr/bin/bash: conda: command not found
-WorkflowError:
-Error running conda info. Is conda installed and accessible? Error: Command 'conda info --json' returned non-zero exit status 127.
-```
-To fix this install conda inside the conda environment:
-```
-conda install conda
-```
-
 ## Running the Workflow
 
 ### Quick Start
@@ -307,3 +294,15 @@ Different taxonomy classifiers produce outputs in varying formats with inconsist
 
 > **Note:** The [Taxconverter](https://github.com/RasmussenLab/taxconverter) tool handles Metabuli conversions, but does not support TrEMBL or Kalamari databases. These are included in this pipeline to assess how different annotations affect Taxvamb performance.
 
+### Common problems
+
+On some systems when running the pipeline you might get:
+```
+/usr/bin/bash: conda: command not found
+WorkflowError:
+Error running conda info. Is conda installed and accessible? Error: Command 'conda info --json' returned non-zero exit status 127.
+```
+To fix this install conda inside the conda environment:
+```
+conda install conda
+```
