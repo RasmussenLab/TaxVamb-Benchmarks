@@ -65,7 +65,7 @@ contigs =  lambda wildcards: Path(sample_id_path_assembly[wildcards.key][wildcar
 read_fw = lambda wildcards: sample_id_path[wildcards.key][wildcards.id][0]
 read_rv =  lambda wildcards: sample_id_path[wildcards.key][wildcards.id][1]
 
-bamfiles_before =  str(OUTDIR) +  "/{key}/assembly_mapping_output/mapped/{id}.bam"
+bamfiles_before =  str(OUTDIR / "{key}/assembly_mapping_output/mapped/{id}.bam")
 
 INDEX_SIZE = "12G"
 MIN_CONTIG_LEN = 2000
@@ -73,7 +73,7 @@ MIN_CONTIG_LEN = 2000
 print(sample_id)
 rule all:
     input:
-        [OUTDIR / bamfiles_before.format(key=k, id=i) for k, v in sample_id.items() for i in v]
+        [bamfiles_before.format(key=k, id=i) for k, v in sample_id.items() for i in v]
         # expand(bamfiles_before, key=sample_id.keys(), id=sample_id.values())
         # expand(OUTDIR / "{key}/assembly_mapping_output/contigs.flt.fna.gz", key=sample_id.keys())
 

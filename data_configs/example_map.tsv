@@ -1,0 +1,3 @@
+sample      read1                              read2                              contig
+test                test_data/read/sample_0.fv.fq   test_data/read/sample_0.rv.fq     test_data/contigs/contigs.fasta
+test                test_data/read/sample_1.fv.fq     test_data/read/sample_1.rv.fq     test_data/contigs/contigs.fasta
