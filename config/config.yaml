@@ -1,5 +1,3 @@
-# Use cuda for the vamb part of the pipeline. Uncomment to use cuda
-# cuda: "True"
 
 ## Databases used by the workflow
 ## These should all be set to correct locations
