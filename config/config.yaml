@@ -2,12 +2,11 @@
 # cuda: "True"
 
 ## Databases used by the workflow
+## These should all be set to correct locations
 gunc_database: "/maps/projects/rasmussen/data/taxvamb_benchmarks/taxvamb_benchmarks/gunc_db/gunc_database/gunc_db_progenomes2.1.dmnd"
 checkm2_database: "/maps/projects/rasmussen/data/taxvamb_benchmarks/taxvamb_benchmarks/checkm2_database/CheckM2_database/uniref100.KO.1.dmnd"
 kraken2_database: "/maps/projects/rasmussen/data/taxvamb_benchmarks/taxvamb_benchmarks/airways/kraken_database_download"
-
 metabuli_database: "/maps/projects/rasmussen/data/taxvamb_benchmarks/taxvamb_benchmarks/metabuli_db/gtdb"
-
 centrifuge_database_dir: "/maps/projects/rasmussen/data/taxvamb_benchmarks/taxvamb_benchmarks/centri"
 centrifuge_database_name: "abv"
 
@@ -16,10 +15,9 @@ mmseqs_db_gtdb: "/maps/projects/rasmussen/data/taxvamb_benchmarks/taxvamb_benchm
 mmseqs_db_trembl: "/maps/projects/rasmussen/data/taxvamb_benchmarks/taxvamb_benchmarks/download_trembl/trembl_mmseqs"
 mmseqs_db_kalmari: "/maps/projects/rasmussen/data/taxvamb_benchmarks/taxvamb_benchmarks/download_kalmari/kalmari_mmseqs"
 
-
+## Use GPU for vamb/semibin
 semibin_use_gpu: False
 vamb_use_gpu: False
-
 
 ## Default resources
 # This is the default resources used by the different rules
