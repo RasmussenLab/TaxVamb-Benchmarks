@@ -1,7 +1,0 @@
-name: comebin
-channels:
-  - conda-forge
-  - bioconda
-  - defaults
-dependencies:
-  - semibin==2.1.0-0
