@@ -89,3 +89,8 @@ salvia.py
 submit.sh
 .Makefile.swp
 .swp
+2
+2:
+Airways_contigs.flt.fna.2500.metadecoder.dpgmm
+Airways_contigs.flt.fna.2500.metadecoder.kmers
+centrifuge_report.tsv

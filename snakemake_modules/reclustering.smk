@@ -36,10 +36,10 @@ rule recluster:
         rm -rf {output.directory}
         mkdir -p {output.directory}
         pixi run --manifest-path {params.env} start --num_process {threads} \
-        {input.bins} {input.directory}/vaevae_latent.npz \
-        {input.contigs_decompressed} \
-        {output.headers} \
-        {output.directory} \
+        $(realpath {input.bins}) $(realpath {input.directory}/vaevae_latent.npz) \
+        $(realpath {input.contigs_decompressed}) \
+        $(realpath {output.headers}) \
+        $(realpath {output.directory}) \
         kmeans \
         """
 
